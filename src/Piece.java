@@ -7,10 +7,16 @@ public abstract class Piece {
 	//team = false means black
 	
 	
-	public boolean validmove(){
+	public boolean ValidMove(){
 		
 		return false;
 	}
 	
+	public ArrayList<Array> PossibleMoves(){
+		
+	}
 	
+	public boolean KingCheck(){
+		
+	}
 }
