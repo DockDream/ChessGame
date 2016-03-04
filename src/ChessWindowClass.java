@@ -60,6 +60,7 @@ public class ChessWindowClass implements ActionListener{
 		frmJavaholicsChess.getContentPane().setLayout(new GridLayout(8, 8, 0, 0));
 		
 		//String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H"};
+		String fileName;
 		
 		for (int i = 0; i < 8; i++) {
 			for (int ii = 0; ii < 8; ii++) {
@@ -67,12 +68,47 @@ public class ChessWindowClass implements ActionListener{
 				if ((((ii % 2) == 0) && ((i % 2) == 0)) || ((ii % 2) == 1) && ((i % 2) == 1)) {
 				
 					chessSquares[i][ii] = new JButton(); 			//Creates JButtons representing squares on board
-					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/board-white1.jpg")));
+					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/board-white.png")));
 				}
 				else {
 					chessSquares[i][ii] = new JButton();
-					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/board-black1.jpg")));
+					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/board-black.png")));
 				}
+				
+				// piece initialization
+				// back row black setup
+				if(i == 0){
+					fileName = ("/Images/" + i + "" + ii + ".png");
+					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource(fileName)));
+						} // end black back row setup
+				
+				// front row black setup
+				if(i == 1){
+					if(ii % 2 == 0){
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BPawnBBoard.png")));
+					} // end black pawn black square
+					else{
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BPawnWBoard.png")));
+					} // end black pawn white square
+				} // end front row black setup
+				
+				// front row white setup
+				if(i == 6){
+					if(ii % 2 == 0){
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WPawnWBoard.png")));
+					} // end white pawn white square
+					else{
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WPawnBBoard.png")));
+					} // end white pawn black square
+				} // end front row white setup
+				
+				// back row white setup
+				if(i == 7){
+					fileName = ("/Images/" + i + "" + ii + ".png");
+					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource(fileName)));
+						} // end white back row setup
+				
+				
 				//chessSquares[i][ii].setToolTipText("" + alphabet[i] + ii);		//Creates tooltip of position
 				frmJavaholicsChess.getContentPane().add(chessSquares[i][ii]); 	//Adds each created JButton to grid				
 				chessSquares[i][ii].addActionListener(this);					//Adds ActionListeners to All JButtons on grid
