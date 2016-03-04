@@ -128,34 +128,38 @@ public class ChessWindowClass implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {		//Used for picking which piece to move
-		Object pick = e.getSource();	
+	    if (count == 0) {
+		    Object pick = e.getSource();	
 		
-		for (int i = 0; i < 8; i ++) {
-			for (int ii = 0; i < 8; i++) {
-				if (pick == chessSquares[i][ii]) {
-					startLocROW = i;	//Stores clicked piece ROW location
-					startLocCOL = ii;	//Stores clicked piece COLUMN location
+		    for (int i = 0; i < 8; i ++) {
+			    for (int ii = 0; i < 8; i++) {
+				    if (pick == chessSquares[i][ii]) {
+					    startLocROW = i;	//Stores clicked piece ROW location
+					    startLocCOL = ii;	//Stores clicked piece COLUMN location
 
-					//getInitial(startLocROW,startLocCOL);    /Sends location of chosen piece to backend
-					count++;
-				}
-			}
-		}
+					    //getInitial(startLocROW,startLocCOL);    /Sends location of chosen piece to backend
+					    count++;
+				    }
+			    }
+		    }
+	    }
 	}
 	
 	public void actionPerformed1(ActionEvent e1) {		//Used for placing piece to desired location
-		Object place = e1.getSource();
+	    if (count == 1) {
+	    	Object place = e1.getSource();
 		
-		for (int i = 0; i < 8; i ++) {
-			for (int ii = 0; i < 8; i++) {
-				if (place == chessSquares[i][ii]) {
-					endLocROW = i;		//Stores second-clicked place ROW location
-					endLocCOL = ii;		//Stores second-clicked place COLUMN location
+	    	for (int i = 0; i < 8; i ++) {
+		    	for (int ii = 0; i < 8; i++) {
+		      		if (place == chessSquares[i][ii]) {
+		    			endLocROW = i;		//Stores second-clicked place ROW location
+			    		endLocCOL = ii;		//Stores second-clicked place COLUMN location
 					
-					//getInitial(endLocROW, endLocCOL);    /Sends location to place piece to backend
-					count--;
-				}
-			}
+			    		//getInitial(endLocROW, endLocCOL);    /Sends location to place piece to backend
+			    		count--;
+			    	}
+		    	}
+		    }
 		}
 	}
 }
