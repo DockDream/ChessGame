@@ -26,13 +26,13 @@ public class Game {
 	//Starts the Board at Initial Configuration
 	public void InitializeGame(){
 		ChessBoard[0][0] = new Rook();
-		ChessBoard[0][1] = new Rook();
-		ChessBoard[0][2] = new Horse();
-		ChessBoard[0][3] = new Bishop();
-		ChessBoard[0][4] = new Queen();
-		ChessBoard[0][5] = new King();
-		ChessBoard[0][6] = new Bishop();
-		ChessBoard[0][7] = new Horse();
+		ChessBoard[0][1] = new Horse();
+		ChessBoard[0][2] = new Bishop();
+		ChessBoard[0][3] = new Queen();
+		ChessBoard[0][4] = new King();
+		ChessBoard[0][5] = new Bishop();
+		ChessBoard[0][6] = new Horse();
+		ChessBoard[0][7] = new Rook();
 		
 		for (int i = 0; i < 8; i++){
 			ChessBoard[1][i] = new Pawn();

@@ -1,40 +1,67 @@
 import java.util.ArrayList;
 
-
 public abstract class Piece {
-	
+
 	boolean team;
-	ArrayList<int[]> possibleMoves; //store all possible moves for each piece
-	
-	
-	//team = true means white
-	//team = false means black
-	
-	
-	public boolean ValidMove(int destRow, int destColumn){
-		for (int i = 0; i < possibleMoves.size(); i++){
-			if (possibleMoves.get(i)[0] == destRow && possibleMoves.get(i)[1] == destColumn){
+	ArrayList<int[]> possibleMoves = null; // store all possible moves for each
+											// piece
+
+	// team = true means white
+	// team = false means black
+
+	public boolean ValidMove(int destRow, int destColumn) {
+		for (int i = 0; i < possibleMoves.size(); i++) {
+			if (possibleMoves.get(i)[0] == destRow && possibleMoves.get(i)[1] == destColumn) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public ArrayList<int[]> ReturnPossibleMoves(){
+
+	public ArrayList<int[]> ReturnPossibleMoves() {
 		return null;
-		//Array = [row, column]
+		// Array = [row, column]
 	}
-	
-	public boolean KingCheck(Piece[][] currentBoard){
-		
-		for (int i = 0; i < possibleMoves.size(); i++){
+
+	public boolean KingCheck(Piece[][] currentBoard) {
+
+		for (int i = 0; i < possibleMoves.size(); i++) {
 			if (currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]] instanceof King
-					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team){
+					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team) {
 				return true;
 			}
 		}
-		
 		return false;
+	}
+
+	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
+			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
+
+		ArrayList<int[]> tempList = new ArrayList<int[]>();
+		int[] currentArray = { startRow, startColumn };
+
+		for (int i = 0; i < 8; i++) {
+
+			currentArray[0] = currentArray[0] + rowIncrement;
+			currentArray[1] = currentArray[1] + columnIncrement;
+
+			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
+					currentArray[0] >= 0 && currentArray[1] >= 0) {
+				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
+					tempList.add(currentArray);
+				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
+						currentBoard[startRow][startColumn].team) {
+					tempList.add(currentArray);
+					break;
+				} else {
+					break;
+				}
+			} else {
+				break;
+			}
+		}
+		
+		return tempList;
 	}
 }

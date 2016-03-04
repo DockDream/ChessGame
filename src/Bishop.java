@@ -1,32 +1,60 @@
 import java.util.ArrayList;
 
-public class Bishop extends Piece{
+public class Bishop extends Piece {
 
-	
-	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
+	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		possibleMoves.clear();
 		
-		int[] currentArray = new int[2];
+		//might throw an error
+		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, 1, 1, currentBoard);
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 1, -1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, -1, currentBoard));
 		
-		currentArray[0] = startRow;
-		currentArray[1] = startColumn;
-		
-		//Incrementing both row and column
-		for (int i = 0; i < 8; i++){
-			currentArray[0]++;
-			currentArray[1]++;
-			
-			if (currentArray[0] >= 8 && currentArray[1] >= 8){
-				break;
-			}
-		}
-		
-		//Decrementing both row and column
-		for (int i = 7; i > 0; i++){
-			
-		}
-		
+//		// Just bottom right
+//		for (int i = 0; i < 8; i++) {
+//			currentArray[0]++;
+//			currentArray[1]++;
+//
+//			if (currentArray[0] <= 7 && currentArray[1] <= 7) {
+//				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
+//					possibleMoves.add(currentArray);
+//				} else if (currentBoard[currentArray[0]][currentArray[1]].team != currentBoard[startRow][startColumn].team) {
+//					possibleMoves.add(currentArray);
+//					break;
+//				} else {
+//					break;
+//				}
+//			} else{
+//				break;
+//			}
+//		}
+//		
+//		// Just bottom right
+//		for (int i = 0; i < 8; i++) {
+//			currentArray[0]--;
+//			currentArray[1]--;
+//
+//			if (currentArray[0] <= 7 && currentArray[1] <= 7) {
+//				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
+//					possibleMoves.add(currentArray);
+//				} else if (currentBoard[currentArray[0]][currentArray[1]].team != currentBoard[startRow][startColumn].team) {
+//					possibleMoves.add(currentArray);
+//					break;
+//				} else {
+//					break;
+//				}
+//			} else{
+//				break;
+//			}
+//		}
+//
+//		// Decrementing both row and column
+//		for (int i = 7; i > 0; i++) {
+//
+//		}
+//
 		return possibleMoves;
 	}
-	
+
 }
