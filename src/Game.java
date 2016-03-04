@@ -12,14 +12,11 @@ public class Game {
 		
 		FirstGame.InitializeGame();
 		
+		
 		if (ClickedRow<=8 && ClickedRow>=0 && ClickedColumn<=8 && ClickedColumn >=0){
-			
+			//Check if first click is the same as the second click then just return a true;
 		}else{
 			System.out.println("ClickedRow and ClickedColumn Values sent are invalid");
-		}
-		
-		if (FirstGame.ChessBoard[ClickedRow][ClickedColumn] == null){
-			//Not a valid Click
 		}
 		
 		
