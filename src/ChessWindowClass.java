@@ -128,7 +128,7 @@ public class ChessWindowClass implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e) {		//Used for picking which piece to move
-	    if (count == 0) {
+	    if (count == 0) {                               //IF first click
 		    Object pick = e.getSource();	
 		
 		    for (int i = 0; i < 8; i ++) {
@@ -146,7 +146,7 @@ public class ChessWindowClass implements ActionListener{
 	}
 	
 	public void actionPerformed1(ActionEvent e1) {		//Used for placing piece to desired location
-	    if (count == 1) {
+	    if (count == 1) {                               //IF second click
 	    	Object place = e1.getSource();
 		
 	    	for (int i = 0; i < 8; i ++) {
