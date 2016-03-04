@@ -21,7 +21,7 @@ public abstract class Piece {
 		return false;
 	}
 	
-	public ArrayList<int[]> PossibleMoves(){
+	public ArrayList<int[]> ReturnPossibleMoves(){
 		return null;
 		//Array = [row, column]
 	}

@@ -2,8 +2,10 @@ import java.util.ArrayList;
 
 public class Queen extends Piece{
 	
-	public ArrayList<int[]> PossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
-		return null;
+	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
+		possibleMoves.clear();
+		
+		return possibleMoves;
 	}
 	
 	

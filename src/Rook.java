@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Rook extends Piece{
 	
-	public ArrayList<int[]> PossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
+	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
 		possibleMoves.clear();
 		
 		int[] currentArray = new int[2];
