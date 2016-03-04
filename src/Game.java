@@ -1,4 +1,4 @@
-
+// typing a test comment - Chris
 public class Game {
 	
 	Piece [][] ChessBoard = new Piece[8][8];
