@@ -8,7 +8,14 @@ public abstract class Piece {
 
 	// team = true means white
 	// team = false means black
+	
+	
+	//Sets the team of the piece
+	public void setTeam(boolean sentTeam){
+		this.team = sentTeam;
+	}
 
+	//returning a boolean saying whether the move is valid or not.
 	public boolean ValidMove(int destRow, int destColumn) {
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			if (possibleMoves.get(i)[0] == destRow && possibleMoves.get(i)[1] == destColumn) {
@@ -19,13 +26,15 @@ public abstract class Piece {
 		return false;
 	}
 
+	//Just making a list of all the possible moves that the respectiv piece can perform
 	public ArrayList<int[]> ReturnPossibleMoves() {
 		return null;
 		// Array = [row, column]
 	}
 
+	//Checking to see if the king of the opposite team is in check
 	public boolean KingCheck(Piece[][] currentBoard) {
-
+		this.ReturnPossibleMoves();
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			if (currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]] instanceof King
 					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team) {
