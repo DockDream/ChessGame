@@ -75,10 +75,10 @@ public class Game {
 			if (ChessBoard[saved1stClick[0]][saved1stClick[1]].team == whoseTurn){
 				saved1stClick = click;
 			}else{
-				//Show a message that says not right team
+				//TODO: Show a message that says not right team
 			}
 		}else{
-			//Show message saying that they didn't click the right piece
+			//TODO: Show message saying that they didn't click the right piece
 		}
 	}
 	
@@ -115,10 +115,10 @@ public class Game {
 			}
 			
 			if (ChessBoard[saved2ndClick[0]][saved2ndClick[1]].KingCheck(ChessBoard)){
-				//Show a message saying that the king is in check;
+				//TODO: Show a message saying that the king is in check;
 			}	
 		}else{
-			//not a valid move and tell the user that it is not a valid move
+			//TODO: not a valid move and tell the user that it is not a valid move
 		}
 	}
 	

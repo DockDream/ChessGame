@@ -5,10 +5,15 @@ public class Bishop extends Piece {
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		possibleMoves.clear();
 		
-		//might throw an error
+		//Moving towards the right down corner
 		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, 1, 1, currentBoard);
+		
+		//Moving toward the left down corner
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 1, -1, currentBoard));
+		
+		//Moving toward top 
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 1, currentBoard));
+		
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, -1, currentBoard));
 		
 //		// Just bottom right

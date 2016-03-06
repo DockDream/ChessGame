@@ -13,6 +13,7 @@ public abstract class Piece {
 	//Sets the team of the piece
 	public void setTeam(boolean sentTeam){
 		this.team = sentTeam;
+		
 	}
 
 	//returning a boolean saying whether the move is valid or not.
