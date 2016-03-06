@@ -27,8 +27,8 @@ public abstract class Piece {
 	}
 
 	//Just making a list of all the possible moves that the respectiv piece can perform
-	public ArrayList<int[]> ReturnPossibleMoves() {
-		return null;
+	public void ReturnPossibleMoves() {
+		
 		// Array = [row, column]
 	}
 
@@ -48,6 +48,8 @@ public abstract class Piece {
 			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
+		tempList.clear();
+		
 		int[] currentArray = { startRow, startColumn };
 
 		for (int i = 0; i < 8; i++) {
@@ -55,8 +57,10 @@ public abstract class Piece {
 			currentArray[0] = currentArray[0] + rowIncrement;
 			currentArray[1] = currentArray[1] + columnIncrement;
 
+			
 			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
 					currentArray[0] >= 0 && currentArray[1] >= 0) {
+				
 				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
 					tempList.add(currentArray);
 				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 

@@ -70,10 +70,12 @@ public class Game {
 	
 	//Handling all the first click functions
 	public void FirstClick(int[] click){
-		saved1stClick = click;
-		if (this.IsPieceAtLocation(saved1stClick)){
-			if (this.ValidateRightTeam(saved1stClick)){
-				selectedPiece = ChessBoard[saved1stClick[0]][saved1stClick[1]];
+		saved1stClick = null;
+		if (this.IsPieceAtLocation(click)){
+			if (ChessBoard[saved1stClick[0]][saved1stClick[1]].team == whoseTurn){
+				saved1stClick = click;
+			}else{
+				//Show a message that says not right team
 			}
 		}else{
 			//Show message saying that they didn't click the right piece
@@ -92,7 +94,7 @@ public class Game {
 		
 		
 		//First Set possible moves
-		ArrayList<int[]> m = ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves();
+		ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves();
 		
 		
 		

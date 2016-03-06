@@ -2,13 +2,21 @@ import java.util.ArrayList;
 
 public class Rook extends Piece{
 	
-	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
 		possibleMoves.clear();
 		
 		//The four lines below might throw an error
+		
+		//Moving to the up
 		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, 1, 0, currentBoard);
+		
+		//Move Down
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 0, currentBoard));
+		
+		//Moving to the right
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 0, 1, currentBoard));
+		
+		//Moving to the left
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 0, -1, currentBoard));
 		
 //		
@@ -81,6 +89,5 @@ public class Rook extends Piece{
 //			}
 //		}
 //		
-		return possibleMoves;
 	}
 }
