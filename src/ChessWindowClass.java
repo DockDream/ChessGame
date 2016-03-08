@@ -148,10 +148,6 @@ public class ChessWindowClass implements ActionListener{
          } // end for ii
 		} // end for i
 		
-		/**
-		 * Test Code Below - Remove from final
-		 */
-		
 		
 		
 		frmJavaholicsChess.setTitle("Javaholics Chess"); //Sets title for window
@@ -172,10 +168,7 @@ public class ChessWindowClass implements ActionListener{
 	public void movePiece(int sLR, int sLC, int eLR, int eLC, String piece){
 		/**
 		 * This block will set starting square to unoccupied and correct color
-		 * Needs move validation from backend
-		 * To write both blocks as a method, will need 4 ints 1 String as arguments.
 		 */
-		
 		if((startLocROW + startLocCOL) % 2 == 0){
 			chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
 		}
@@ -183,10 +176,8 @@ public class ChessWindowClass implements ActionListener{
 			chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
 		}
 		
-		
 		/**
 		 * This block will set end square to correct piece and color
-		 * Needs move validation from backend
 		 */
 		piece = new StringBuilder(piece).reverse().toString();
 		Scanner s = new Scanner(piece).useDelimiter("\\W");
