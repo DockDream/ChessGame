@@ -100,6 +100,9 @@ public class Game {
 		
 		if (ChessBoard[saved1stClick[0]][saved1stClick[1]].ValidMove(click[0], click[1])){
 			//Move the respective piece to its destination
+			//TODO: Add code for front end to move the piece
+			
+			
 			
 			//Make the piece in the first click place to the second click place so that our 2d array is up to date
 			ChessBoard[saved2ndClick[0]][saved2ndClick[1]] = ChessBoard[saved1stClick[0]][saved1stClick[1]];
