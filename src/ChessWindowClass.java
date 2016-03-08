@@ -21,10 +21,8 @@ public class ChessWindowClass implements ActionListener{
 	
 	private JFrame frmJavaholicsChess;
 	private JButton[][] chessSquares = new JButton[8][8];
-	public int startLocROW;	//Used for piece chosen, ROW.
-	public int startLocCOL;	//Used for piece chosen, COLUMN.
-	public int endLocROW;	//Used for place chosen, ROW.
-	public int endLocCOL; 	//Used for place chosen, COLUMN.
+	public int [] start = new int [2]; //Used for piece chosen [ROW, COL]
+	public int [] end = new int [2]; //Used for place chosen [ROW, COL]
 	private int count = 0;
 
 	/**
@@ -165,15 +163,15 @@ public class ChessWindowClass implements ActionListener{
 	/**
 	 * Move piece method - will be called from Action Listener
 	 */
-	public void movePiece(int sLR, int sLC, int eLR, int eLC, String piece){
+	public void movePiece(int [] start, int [] end, String piece){
 		/**
 		 * This block will set starting square to unoccupied and correct color
 		 */
-		if((startLocROW + startLocCOL) % 2 == 0){
-			chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+		if((start[0] + start[1]) % 2 == 0){
+			chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
 		}
 		else{
-			chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+			chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
 		}
 		
 		/**
@@ -190,13 +188,13 @@ public class ChessWindowClass implements ActionListener{
 		sb.append("/");
 		piece = sb.reverse().toString();
 		piece = piece.substring(0, piece.length()-10);
-		if((endLocROW + endLocCOL) % 2 == 0 ){
+		if((end[0] + end[1]) % 2 == 0 ){
 			piece = piece + "WBoard.png";
 		} // end if even square
-		else if((endLocROW + endLocCOL) % 2 == 1 ){
+		else if((end[0] + end[1]) % 2 == 1 ){
 			piece = piece + "BBoard.png";
 		} // end else if odd square
-		chessSquares[endLocROW][endLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
+		chessSquares[end[0]][end[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 	} // end movePiece method
 	
 	public void actionPerformed(ActionEvent e) {		//Used for picking which piece to move
@@ -206,8 +204,8 @@ public class ChessWindowClass implements ActionListener{
 		    for (int i = 0; i < 8; i ++) {
 			    for (int ii = 0; i < 8; i++) {
 				    if (pick == chessSquares[i][ii]) {
-					    startLocROW = i;	//Stores clicked piece ROW location
-					    startLocCOL = ii;	//Stores clicked piece COLUMN location
+					    start[0] = i;	//Stores clicked piece ROW location
+					    start[1] = ii;	//Stores clicked piece COLUMN location
 
 					    //getInitial(startLocROW,startLocCOL);    /Sends location of chosen piece to backend
 					    count++;
@@ -224,15 +222,15 @@ public class ChessWindowClass implements ActionListener{
 	    	for (int i = 0; i < 8; i ++) {
 		    	for (int ii = 0; i < 8; i++) {
 		      		if (place == chessSquares[i][ii]) {
-		    			endLocROW = i;		//Stores second-clicked place ROW location
-			    		endLocCOL = ii;		//Stores second-clicked place COLUMN location
+		    			end[0] = i;		//Stores second-clicked place ROW location
+			    		end[1] = ii;		//Stores second-clicked place COLUMN location
 					
 			    		//getInitial(endLocROW, endLocCOL);    /Sends location to place piece to backend
 			    		count--;
 			    		// String 'piece' needed for movePiece method
-			    		String piece = chessSquares[startLocROW][startLocCOL].getIcon().toString();
+			    		String piece = chessSquares[start[0]][start[1]].getIcon().toString();
 			    		// call to movePiece method
-			    		movePiece(startLocROW, startLocCOL, endLocROW, endLocCOL, piece);
+			    		movePiece(start, end, piece);
 			    		
 			    		
 			    	} // end if place == 
