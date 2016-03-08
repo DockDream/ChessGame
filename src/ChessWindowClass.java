@@ -61,7 +61,6 @@ public class ChessWindowClass implements ActionListener{
 		frmJavaholicsChess.getContentPane().setLayout(new GridLayout(8, 8, 0, 0));
 		
 		//String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H"};
-		String fileName;
 		
 		for (int i = 0; i < 8; i++) {
 			for (int ii = 0; ii < 8; ii++) {
@@ -146,8 +145,8 @@ public class ChessWindowClass implements ActionListener{
 				//chessSquares[i][ii].setToolTipText("" + alphabet[i] + ii);		//Creates tooltip of position
 				frmJavaholicsChess.getContentPane().add(chessSquares[i][ii]); 	//Adds each created JButton to grid				
 				chessSquares[i][ii].addActionListener(this);					//Adds ActionListeners to All JButtons on grid
-         }
-		}
+         } // end for ii
+		} // end for i
 		
 		/**
 		 * Test Code Below - Remove from final
@@ -165,7 +164,49 @@ public class ChessWindowClass implements ActionListener{
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Options"); //Creates item Options to MenuBar
 		menuBar.add(mntmNewMenuItem);	//Adds item to MenuBar
-	}
+	} // end initialize method
+	
+	/**
+	 * Move piece method - will be called from Action Listener
+	 */
+	public void movePiece(int sLR, int sLC, int eLR, int eLC, String piece){
+		/**
+		 * This block will set starting square to unoccupied and correct color
+		 * Needs move validation from backend
+		 * To write both blocks as a method, will need 4 ints 1 String as arguments.
+		 */
+		
+		if((startLocROW + startLocCOL) % 2 == 0){
+			chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+		}
+		else{
+			chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+		}
+		
+		
+		/**
+		 * This block will set end square to correct piece and color
+		 * Needs move validation from backend
+		 */
+		piece = new StringBuilder(piece).reverse().toString();
+		Scanner s = new Scanner(piece).useDelimiter("\\W");
+		StringBuilder sb = new StringBuilder();
+		sb.append(s.next());
+		sb.append(".");
+		sb.append(s.next());
+		sb.append("/");
+		sb.append(s.next());
+		sb.append("/");
+		piece = sb.reverse().toString();
+		piece = piece.substring(0, piece.length()-10);
+		if((endLocROW + endLocCOL) % 2 == 0 ){
+			piece = piece + "WBoard.png";
+		} // end if even square
+		else if((endLocROW + endLocCOL) % 2 == 1 ){
+			piece = piece + "BBoard.png";
+		} // end else if odd square
+		chessSquares[endLocROW][endLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
+	} // end movePiece method
 	
 	public void actionPerformed(ActionEvent e) {		//Used for picking which piece to move
 	    if (count == 0) {                               //IF first click
@@ -197,46 +238,15 @@ public class ChessWindowClass implements ActionListener{
 					
 			    		//getInitial(endLocROW, endLocCOL);    /Sends location to place piece to backend
 			    		count--;
+			    		// String 'piece' needed for movePiece method
+			    		String piece = chessSquares[startLocROW][startLocCOL].getIcon().toString();
+			    		// call to movePiece method
+			    		movePiece(startLocROW, startLocCOL, endLocROW, endLocCOL, piece);
 			    		
-			    		/**
-						 * This block will set starting square to unoccupied and correct color
-						 * Needs move validation from backend
-						 */
-						String piece = chessSquares[startLocROW][startLocCOL].getIcon().toString();
-						if((startLocROW + startLocCOL) % 2 == 0){
-							chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-						}
-						else{
-							chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-						}
-						
-						
-						/**
-						 * This block will set end square to correct piece and color
-						 * Needs move validation from backend
-						 */
-						piece = new StringBuilder(piece).reverse().toString();
-						Scanner s = new Scanner(piece).useDelimiter("\\W");
-						StringBuilder sb = new StringBuilder();
-						sb.append(s.next());
-						sb.append(".");
-						sb.append(s.next());
-						sb.append("/");
-						sb.append(s.next());
-						sb.append("/");
-						piece = sb.reverse().toString();
-						piece = piece.substring(0, piece.length()-10);
-						if((endLocROW + endLocCOL) % 2 == 0 ){
-							piece = piece + "WBoard.png";
-						} // end if even square
-						else if((endLocROW + endLocCOL) % 2 == 1 ){
-							piece = piece + "BBoard.png";
-						} // end else if odd square
-						chessSquares[endLocROW][endLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 			    		
-			    	}
-		    	}
-		    }
-		}
-	}
-}
+			    	} // end if place == 
+		    	} // end for ii
+		    } // end for i
+		} // end if count = 1
+	} // end Action e1
+} // end ChessWindowClass
