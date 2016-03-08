@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 import javax.imageio.ImageIO;
@@ -148,6 +149,12 @@ public class ChessWindowClass implements ActionListener{
          }
 		}
 		
+		/**
+		 * Test Code Below - Remove from final
+		 */
+		
+		
+		
 		frmJavaholicsChess.setTitle("Javaholics Chess"); //Sets title for window
 		frmJavaholicsChess.setAlwaysOnTop(true);		//Makes window on top of all windows
 		frmJavaholicsChess.setBounds(100, 100, 800, 798);	//Sets size of window
@@ -195,7 +202,7 @@ public class ChessWindowClass implements ActionListener{
 						 * This block will set starting square to unoccupied and correct color
 						 * Needs move validation from backend
 						 */
-						String startSquare = chessSquares[startLocROW][startLocCOL].getIcon().toString();
+						String piece = chessSquares[startLocROW][startLocCOL].getIcon().toString();
 						if((startLocROW + startLocCOL) % 2 == 0){
 							chessSquares[startLocROW][startLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
 						}
@@ -208,14 +215,24 @@ public class ChessWindowClass implements ActionListener{
 						 * This block will set end square to correct piece and color
 						 * Needs move validation from backend
 						 */
-						String Piece = startSquare.substring(55, (startSquare.length()-10));
+						piece = new StringBuilder(piece).reverse().toString();
+						Scanner s = new Scanner(piece).useDelimiter("\\W");
+						StringBuilder sb = new StringBuilder();
+						sb.append(s.next());
+						sb.append(".");
+						sb.append(s.next());
+						sb.append("/");
+						sb.append(s.next());
+						sb.append("/");
+						piece = sb.reverse().toString();
+						piece = piece.substring(0, piece.length()-10);
 						if((endLocROW + endLocCOL) % 2 == 0 ){
-							Piece = Piece + "WBoard.png";
+							piece = piece + "WBoard.png";
 						} // end if even square
 						else if((endLocROW + endLocCOL) % 2 == 1 ){
-							Piece = Piece + "BBoard.png";
+							piece = piece + "BBoard.png";
 						} // end else if odd square
-						chessSquares[endLocROW][endLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource(Piece)));
+						chessSquares[endLocROW][endLocCOL].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 			    		
 			    	}
 		    	}
