@@ -24,6 +24,8 @@ public class ChessWindowClass implements ActionListener{
 	public int [] start = new int [2]; //Used for piece chosen [ROW, COL]
 	public int [] end = new int [2]; //Used for place chosen [ROW, COL]
 	private int count = 0;
+   Game fClick = new Game();
+   //Piece valid = new Piece(); //Trying to use Validation from Piece.java, ValidMove(int, int) function
 
 	/**
 	 * Launch the application.
@@ -196,46 +198,52 @@ public class ChessWindowClass implements ActionListener{
 		} // end else if odd square
 		chessSquares[end[0]][end[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 	} // end movePiece method
-	
-	public void actionPerformed(ActionEvent e) {		//Used for picking which piece to move
-	    if (count == 0) {                               //IF first click
-		    Object pick = e.getSource();	
-		
-		    for (int i = 0; i < 8; i ++) {
-			    for (int ii = 0; i < 8; i++) {
-				    if (pick == chessSquares[i][ii]) {
-					    start[0] = i;	//Stores clicked piece ROW location
-					    start[1] = ii;	//Stores clicked piece COLUMN location
-
-					    //getInitial(startLocROW,startLocCOL);    /Sends location of chosen piece to backend
-					    count++;
-				    }
-			    }
-		    }
-	    }
-	}
-	
-	public void actionPerformed1(ActionEvent e1) {		//Used for placing piece to desired location
-	    if (count == 1) {                               //IF second click
-	    	Object place = e1.getSource();
-		
-	    	for (int i = 0; i < 8; i ++) {
-		    	for (int ii = 0; i < 8; i++) {
-		      		if (place == chessSquares[i][ii]) {
-		    			end[0] = i;		//Stores second-clicked place ROW location
-			    		end[1] = ii;		//Stores second-clicked place COLUMN location
-					
-			    		//getInitial(endLocROW, endLocCOL);    /Sends location to place piece to backend
-			    		count--;
-			    		// String 'piece' needed for movePiece method
-			    		String piece = chessSquares[start[0]][start[1]].getIcon().toString();
-			    		// call to movePiece method
-			    		movePiece(start, end, piece);
-			    		
-			    		
-			    	} // end if place == 
-		    	} // end for ii
-		    } // end for i
-		} // end if count = 1
-	} // end Action e1
+   
+   public void actionPerformed(ActionEvent e) { //Used for picking which piece to move
+        Object pick = e.getSource();
+        
+        if (count == 0) {
+            for (int i = 0; i < 8; i ++) {
+                for (int ii = 0; ii < 8; ii++) {
+                    if (pick == chessSquares[i][ii]) {
+                        //chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BQueenBBoard.png"))); //FOR TESTING
+                        start[0] = i;     //Stores first-clicked place ROW location
+                        start[1] = ii;    //Stores first-clicked place ROW location                     
+                        fClick.FirstClick(start); //Sends location of chosen piece to backend */                        
+                        count++; //Used for keeping track of first and second click, converts to next action for second click
+                    }
+                }
+            }
+        }
+        
+        else {    
+            for (int i = 0; i < 8; i ++) {
+                for (int ii = 0; ii < 8; ii++) {
+                        if (pick == chessSquares[i][ii]) {
+                            //chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png"))); //FOR TESTING
+                            end[0] = i;		//Stores second-clicked place ROW location
+			    		          end[1] = ii;		//Stores second-clicked place COLUMN location
+                            
+                            String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
+			    		         
+                            movePiece(start, end, piece);    // call to movePiece method
+                            
+                            /* if (valid.ValidMove(i, ii) == true) {                //Sends location of chosen piece to backend
+			    		            String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
+			    		         
+                              movePiece(start, end, piece);    // call to movePiece method
+                              }
+                              else { //ELSE reset click and send invalid move error
+                                 count--;
+                                    //SEND ERROR MESSAGE TO PICK ANOTHER SPOT - PSEUDO
+                                }
+                            } */
+                            
+                            count--; //Used for keeping track of first and second click, converts to next action for first click
+                        }
+                }
+            }
+        }
+     }
+    
 } // end ChessWindowClass
