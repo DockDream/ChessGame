@@ -27,15 +27,15 @@ public abstract class Piece {
 		return false;
 	}
 
-	//Just making a list of all the possible moves that the respectiv piece can perform
-	public void ReturnPossibleMoves() {
+	//Just making a list of all the possible moves that the respective piece can perform
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		
 		// Array = [row, column]
 	}
 
 	//Checking to see if the king of the opposite team is in check
-	public boolean KingCheck(Piece[][] currentBoard) {
-		this.ReturnPossibleMoves();
+	public boolean KingCheck(int destRow,int destColumn, Piece[][] currentBoard) {
+		this.ReturnPossibleMoves(destRow,destColumn,currentBoard);
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			if (currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]] instanceof King
 					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team) {
@@ -49,9 +49,13 @@ public abstract class Piece {
 			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
-		tempList.clear();
 		
-		int[] currentArray = { startRow, startColumn };
+		int[] currentArray = new int[2];
+		
+		currentArray[0] = startRow;
+		currentArray[1] = startColumn;
+		
+		int[] tempArray = new int[2];
 
 		for (int i = 0; i < 8; i++) {
 
@@ -59,14 +63,22 @@ public abstract class Piece {
 			currentArray[1] = currentArray[1] + columnIncrement;
 
 			
+			
 			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
 					currentArray[0] >= 0 && currentArray[1] >= 0) {
 				
 				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
-					tempList.add(currentArray);
+					System.out.println("Adding empty spaces");
+					System.out.println("Row: "+currentArray[0]+" Column: "+currentArray[1]);
+					tempArray[0] = currentArray[0];
+					tempArray[1] = currentArray[1];
+					tempList.add(tempArray); //for some reason, it is currently adding currentArray without the increments
+					//the system out above says the right things but, when this statement comes around it doesn't
 				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
 						currentBoard[startRow][startColumn].team) {
-					tempList.add(currentArray);
+					tempArray[0] = currentArray[0];
+					tempArray[1] = currentArray[1];
+					tempList.add(tempArray);
 					break;
 				} else {
 					break;
@@ -75,7 +87,22 @@ public abstract class Piece {
 				break;
 			}
 		}
-		
+		this.PrintPossibleMovesList(tempList);
 		return tempList;
+		
+	}
+	
+	//Method to printPossibleMoves for testing purposes
+	public void PrintPossibleMovesList(ArrayList<int[]> ListofItems){
+		System.out.println("");
+		if (ListofItems == null){
+			System.out.println("There is nothing in possibleMoves");
+			return;
+		}
+		
+		for (int i =0; i < ListofItems.size();i++){
+			System.out.println("Row: "+ListofItems.get(i)[0]+" Column: "+ListofItems.get(i)[1]);
+		}
+		System.out.println("");
 	}
 }

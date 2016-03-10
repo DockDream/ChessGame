@@ -3,7 +3,10 @@ import java.util.ArrayList;
 public class Queen extends Piece{
 	
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
-		possibleMoves.clear();
+		if (possibleMoves != null){
+			possibleMoves.clear();
+		}
+		
 //		ArrayList<int[]> bishopMoves;
 //		
 		Rook queenRook = new Rook();

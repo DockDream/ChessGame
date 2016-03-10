@@ -34,8 +34,10 @@ public class King extends Piece {
 		return tempList;
 	}
 	
-	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
-		possibleMoves.clear();
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+		if (possibleMoves != null){
+			possibleMoves.clear();
+		}
 		
 		//move down by 1
 		possibleMoves = this.KingReturnMovesAddon(startRow, startColumn, startRow+1, startColumn, currentBoard);
@@ -54,7 +56,6 @@ public class King extends Piece {
 		//move up and left by 1
 		possibleMoves.addAll(this.KingReturnMovesAddon(startRow, startColumn, startRow-1, startColumn-1, currentBoard));
 		
-		return possibleMoves;
 	}
 }//end King Class
 		

@@ -3,7 +3,9 @@ import java.util.ArrayList;
 public class Bishop extends Piece {
 
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
-		possibleMoves.clear();
+		if (possibleMoves != null){
+			possibleMoves.clear();
+		}
 		
 		//Moving towards the right down corner
 		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, 1, 1, currentBoard);
@@ -15,6 +17,7 @@ public class Bishop extends Piece {
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 1, currentBoard));
 		
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, -1, currentBoard));
+		
 		
 //		// Just bottom right
 //		for (int i = 0; i < 8; i++) {

@@ -23,7 +23,7 @@ public class ChessWindowClass implements ActionListener{
 	private JButton[][] chessSquares = new JButton[8][8];
 	public int [] start = new int [2]; //Used for piece chosen [ROW, COL]
 	public int [] end = new int [2]; //Used for place chosen [ROW, COL]
-	private int count = 0;
+	private int count;
    Game fClick = new Game();
    //Piece valid = new Piece(); //Trying to use Validation from Piece.java, ValidMove(int, int) function
 
@@ -59,6 +59,9 @@ public class ChessWindowClass implements ActionListener{
 	private void initialize() throws IOException {
 		frmJavaholicsChess = new JFrame();
 		frmJavaholicsChess.getContentPane().setLayout(new GridLayout(8, 8, 0, 0));
+		
+		//Initialize Backend Code
+		fClick.InitializeGame();
 		
 		//String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H"};
 		
@@ -209,8 +212,13 @@ public class ChessWindowClass implements ActionListener{
                         //chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BQueenBBoard.png"))); //FOR TESTING
                         start[0] = i;     //Stores first-clicked place ROW location
                         start[1] = ii;    //Stores first-clicked place ROW location                     
-                        fClick.FirstClick(start); //Sends location of chosen piece to backend */                        
-                        count++; //Used for keeping track of first and second click, converts to next action for second click
+                        
+                        //validates the first click and makes sure second click is only reached when first is valid
+                        if (fClick.FirstClick(start)){
+                        	count++; //Used for keeping track of first and second click, converts to next action for second click
+                        }else{                         
+                        	count = 0; //keeps everything within the first click;
+                        }
                     }
                 }
             }
@@ -221,13 +229,20 @@ public class ChessWindowClass implements ActionListener{
                 for (int ii = 0; ii < 8; ii++) {
                         if (pick == chessSquares[i][ii]) {
                             //chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png"))); //FOR TESTING
-                            end[0] = i;		//Stores second-clicked place ROW location
-			    		          end[1] = ii;		//Stores second-clicked place COLUMN location
                             
+                        	end[0] = i;		//Stores second-clicked place ROW location
+			    		    end[1] = ii;		//Stores second-clicked place COLUMN location
+                            
+			    		    if (fClick.SecondClick(end)){
                             String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
 			    		         
                             movePiece(start, end, piece);    // call to movePiece method
-                            
+			    		    }else{
+			    		    	//not a valid move
+			    		    }
+			    		    
+			    		    //Need to check if the king is in check here
+			    		    
                             /* if (valid.ValidMove(i, ii) == true) {                //Sends location of chosen piece to backend
 			    		            String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
 			    		         
@@ -239,7 +254,7 @@ public class ChessWindowClass implements ActionListener{
                                 }
                             } */
                             
-                            count--; //Used for keeping track of first and second click, converts to next action for first click
+                            count = 0; //Used for keeping track of first and second click, converts to next action for first click
                         }
                 }
             }

@@ -56,24 +56,45 @@ public class Game {
 		}
 	}
 	
-	//Handling all the first click functions
-	public void FirstClick(int[] click){
+	//Handling all the first click functions 
+	// and returning true if it is valid click otherwise returning false
+	public boolean FirstClick(int[] click){
 		saved1stClick = null;
+		
+		System.out.println("1st Click");
+		
 		if (this.IsPieceAtLocation(click)){
-			if (ChessBoard[saved1stClick[0]][saved1stClick[1]].team == whoseTurn){
+			if (ChessBoard[click[0]][click[1]].team == whoseTurn){
+				//Turn and team evaluated
 				saved1stClick = click;
+				return true;
 			}else{
 				//TODO: Show a message that says not right team
+				System.out.println("Not your turn");
+				return false;
+				
 			}
 		}else{
 			//TODO: Show message saying that they didn't click the right piece
+			System.out.println("Clicked an empty spot");
+			
+			return false;
 		}
 	}
 	
 	
 	//handling all the second click functions
-	public void SecondClick(int[] click){
+	// returning true if it is a valid click otherwise returning false
+	public boolean SecondClick(int[] click){
+		
+		if (saved1stClick == null){
+			System.out.println("Second click function is being called before first click is called");
+			return false;
+		}
+		
 		saved2ndClick = click;
+		
+		System.out.println("2nd Click");
 		
 		//If the first click is the same as the second click
 		if (saved2ndClick[0] == saved1stClick[0] && saved2ndClick[1] == saved1stClick[1]){
@@ -82,15 +103,14 @@ public class Game {
 		
 		
 		//First Set possible moves
-		ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves();
-		
+		ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves(saved1stClick[0],saved1stClick[1],ChessBoard);
 		
 		
 		if (ChessBoard[saved1stClick[0]][saved1stClick[1]].ValidMove(click[0], click[1])){
 			//Move the respective piece to its destination
 			//TODO: Add code for front end to move the piece
 			
-			
+			System.out.println("Valid 2nd Click");
 			
 			//Make the piece in the first click place to the second click place so that our 2d array is up to date
 			ChessBoard[saved2ndClick[0]][saved2ndClick[1]] = ChessBoard[saved1stClick[0]][saved1stClick[1]];
@@ -105,13 +125,22 @@ public class Game {
 				whoseTurn = true;
 			}
 			
-			if (ChessBoard[saved2ndClick[0]][saved2ndClick[1]].KingCheck(ChessBoard)){
-				//TODO: Show a message saying that the king is in check;
-			}	
+			return true;
+//			if (ChessBoard[saved2ndClick[0]][saved2ndClick[1]].KingCheck(ChessBoard)){
+//				//TODO: Show a message saying that the king is in check;
+//			}	
 		}else{
 			//TODO: not a valid move and tell the user that it is not a valid move
+			return false;
 		}
 	}
+	
+	//For now not doing anything if the king is in check
+	public boolean IsKingInCheck(){
+		return false;
+	}
+	
+
 	
 	
 }

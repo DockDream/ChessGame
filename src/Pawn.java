@@ -25,8 +25,11 @@ public class Pawn extends Piece {
 	}
 					
 	
-	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
-		possibleMoves.clear();
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+		
+		if (possibleMoves != null){
+			possibleMoves.clear();
+		}
 		
 		if(team){ //if white pieces
 			if(startRow>0) possibleMoves = this.PawnReturnMovesAddon(startRow-1, startColumn, currentBoard); //move 1 up
@@ -45,7 +48,8 @@ public class Pawn extends Piece {
 				}
 			}
 		}
-		return possibleMoves;
+		
+		
 	}
 }// end Pawn Class
 

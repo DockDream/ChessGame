@@ -28,8 +28,10 @@ public class Knight extends Piece {
 			return tempList;
 		}
 	
-	public ArrayList<int[]> ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
-		possibleMoves.clear();
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+		if (possibleMoves != null){
+			possibleMoves.clear();
+		}
 		
 		//move up 2 and 1 to the left
 		possibleMoves = this.KnightReturnMovesAddon(startRow, startColumn, startRow-2, startColumn-1, currentBoard);
@@ -48,7 +50,6 @@ public class Knight extends Piece {
 		//move down 1 and 2 to the right
 		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow+1, startColumn+2, currentBoard));
 		
-		return possibleMoves;
 	}
 		
 
