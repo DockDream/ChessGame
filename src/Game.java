@@ -58,13 +58,15 @@ public class Game {
 	
 	//Handling all the first click functions
 	public void FirstClick(int[] click){
-		saved1stClick = click;
-		if (this.IsPieceAtLocation(saved1stClick)){
-			if (this.ValidateRightTeam(saved1stClick)){
-				selectedPiece = ChessBoard[saved1stClick[0]][saved1stClick[1]];
+		saved1stClick = null;
+		if (this.IsPieceAtLocation(click)){
+			if (ChessBoard[saved1stClick[0]][saved1stClick[1]].team == whoseTurn){
+				saved1stClick = click;
+			}else{
+				//TODO: Show a message that says not right team
 			}
 		}else{
-			//Show message saying that they didn't click the right piece
+			//TODO: Show message saying that they didn't click the right piece
 		}
 	}
 	
@@ -80,12 +82,15 @@ public class Game {
 		
 		
 		//First Set possible moves
-		ArrayList<int[]> m = ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves();
+		ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves();
 		
 		
 		
 		if (ChessBoard[saved1stClick[0]][saved1stClick[1]].ValidMove(click[0], click[1])){
 			//Move the respective piece to its destination
+			//TODO: Add code for front end to move the piece
+			
+			
 			
 			//Make the piece in the first click place to the second click place so that our 2d array is up to date
 			ChessBoard[saved2ndClick[0]][saved2ndClick[1]] = ChessBoard[saved1stClick[0]][saved1stClick[1]];
@@ -101,10 +106,10 @@ public class Game {
 			}
 			
 			if (ChessBoard[saved2ndClick[0]][saved2ndClick[1]].KingCheck(ChessBoard)){
-				//Show a message saying that the king is in check;
+				//TODO: Show a message saying that the king is in check;
 			}	
 		}else{
-			//not a valid move and tell the user that it is not a valid move
+			//TODO: not a valid move and tell the user that it is not a valid move
 		}
 	}
 	

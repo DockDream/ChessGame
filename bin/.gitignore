@@ -6,7 +6,11 @@
 /Piece.class
 /Queen.class
 /Rook.class
+<<<<<<< HEAD
 /Knight.class
 /ChessWindowClass$1.class
 /ChessWindowClass.class
 /Images/
+=======
+/PIECE.class
+>>>>>>> refs/remotes/origin/CommonIncrementMethod
