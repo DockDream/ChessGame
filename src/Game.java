@@ -8,18 +8,6 @@ public class Game {
 	int[] saved1stClick;
 	int[] saved2ndClick;
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		int[] testArray = {2,3};
-		
-		//Code for outside of game;
-		Game FirstGame = new Game();
-		
-		FirstGame.InitializeGame();
-		
-	}
-	
 	//Starts the Board at Initial Configuration
 	public void InitializeGame(){
 		this.whoseTurn = true;
