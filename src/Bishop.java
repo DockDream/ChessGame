@@ -1,22 +1,22 @@
-import java.util.ArrayList;
+
 
 public class Bishop extends Piece {
 
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard) {
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}
 		
 		//Moving towards the right down corner
-		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, 1, 1, currentBoard);
+		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, 1, 1, destRow, destColumn, currentBoard);
 		
 		//Moving toward the left down corner
-		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 1, -1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 1, -1, destRow, destColumn, currentBoard));
 		
 		//Moving toward top 
-		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 1, destRow, destColumn, currentBoard));
 		
-		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, -1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, -1, destRow, destColumn, currentBoard));
 		
 		
 //		// Just bottom right

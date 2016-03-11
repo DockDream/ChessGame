@@ -34,7 +34,7 @@ public class King extends Piece {
 		return tempList;
 	}
 	
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard) {
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}

@@ -1,8 +1,8 @@
-import java.util.ArrayList;
+
 
 public class Queen extends Piece{
 	
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
+	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard){
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}
@@ -12,9 +12,9 @@ public class Queen extends Piece{
 		Rook queenRook = new Rook();
 		Bishop queenBishop = new Bishop();
 		
-		queenRook.ReturnPossibleMoves(startRow, startColumn, currentBoard);
+		queenRook.ReturnPossibleMoves(startRow, startColumn, destRow, destColumn, currentBoard);
 		
-		queenBishop.ReturnPossibleMoves(startRow,startColumn,currentBoard);
+		queenBishop.ReturnPossibleMoves(startRow,startColumn,destRow, destColumn, currentBoard);
 		
 		possibleMoves = queenRook.possibleMoves;
 		possibleMoves.addAll(queenBishop.possibleMoves);

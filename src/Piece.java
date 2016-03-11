@@ -28,14 +28,14 @@ public abstract class Piece {
 	}
 
 	//Just making a list of all the possible moves that the respective piece can perform
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard) {
 		
 		// Array = [row, column]
 	}
 
 	//Checking to see if the king of the opposite team is in check
-	public boolean KingCheck(int destRow,int destColumn, Piece[][] currentBoard) {
-		this.ReturnPossibleMoves(destRow,destColumn,currentBoard);
+	public boolean KingCheck(int startRow, int startColumn, int destRow,int destColumn, Piece[][] currentBoard) {
+		this.ReturnPossibleMoves(startRow, startColumn, destRow,destColumn,currentBoard);
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			if (currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]] instanceof King
 					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team) {
@@ -46,7 +46,7 @@ public abstract class Piece {
 	}
 
 	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
-			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
+			int rowIncrement, int columnIncrement, int destRow, int destColumn, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
 		
@@ -57,7 +57,7 @@ public abstract class Piece {
 		
 		int[] tempArray = new int[2];
 
-		for (int i = 0; i < 8; i++) {
+		while(currentArray[0] != destRow && currentArray[1] != destColumn) {
 
 			currentArray[0] = currentArray[0] + rowIncrement;
 			currentArray[1] = currentArray[1] + columnIncrement;
@@ -72,8 +72,7 @@ public abstract class Piece {
 					System.out.println("Row: "+currentArray[0]+" Column: "+currentArray[1]);
 					tempArray[0] = currentArray[0];
 					tempArray[1] = currentArray[1];
-					tempList.add(tempArray); //for some reason, it is currently adding currentArray without the increments
-					//the system out above says the right things but, when this statement comes around it doesn't
+					tempList.add(tempArray); 
 				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
 						currentBoard[startRow][startColumn].team) {
 					tempArray[0] = currentArray[0];
@@ -81,6 +80,7 @@ public abstract class Piece {
 					tempList.add(tempArray);
 					break;
 				} else {
+					
 					break;
 				}
 			} else {

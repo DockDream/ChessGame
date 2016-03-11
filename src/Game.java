@@ -103,7 +103,7 @@ public class Game {
 		
 		
 		//First Set possible moves
-		ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves(saved1stClick[0],saved1stClick[1],ChessBoard);
+		ChessBoard[saved1stClick[0]][saved1stClick[1]].ReturnPossibleMoves(saved1stClick[0],saved1stClick[1], saved2ndClick[0], saved2ndClick[1], ChessBoard);
 		
 		
 		if (ChessBoard[saved1stClick[0]][saved1stClick[1]].ValidMove(click[0], click[1])){
