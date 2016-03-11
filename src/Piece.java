@@ -57,7 +57,7 @@ public abstract class Piece {
 		
 		int[] tempArray = new int[2];
 
-		while(currentArray[0] != destRow && currentArray[1] != destColumn) {
+		while(currentArray[0] != destRow || currentArray[1] != destColumn) {
 
 			currentArray[0] = currentArray[0] + rowIncrement;
 			currentArray[1] = currentArray[1] + columnIncrement;
