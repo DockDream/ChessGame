@@ -11,6 +11,7 @@ public class Game {
 	//Starts the Board at Initial Configuration
 	public void InitializeGame(){
 		this.whoseTurn = true;
+		//set up black back row
 		ChessBoard[0][0] = new Rook();
 		ChessBoard[0][1] = new Knight();
 		ChessBoard[0][2] = new Bishop();
@@ -20,15 +21,24 @@ public class Game {
 		ChessBoard[0][6] = new Knight();
 		ChessBoard[0][7] = new Rook();
 		
+		//set up white back row
+		ChessBoard[7][0] = new Rook();
+		ChessBoard[7][1] = new Knight();
+		ChessBoard[7][2] = new Bishop();
+		ChessBoard[7][3] = new Queen();
+		ChessBoard[7][4] = new King();
+		ChessBoard[7][5] = new Bishop();
+		ChessBoard[7][6] = new Knight();
+		ChessBoard[7][7] = new Rook();
+		
 		for (int i = 0; i < 8; i++){
 			//Below three lines are setting up the Black team
 			ChessBoard[1][i] = new Pawn();
 			ChessBoard[0][i].setTeam(false);
 			ChessBoard[1][i].setTeam(false);
 			
-			//Below three lines are setting up the White team
+			//Below three lines are setting up the White team		
 			ChessBoard[6][i] = new Pawn();
-			ChessBoard[7][i] = ChessBoard[0][i];
 			ChessBoard[6][i].setTeam(true);
 			ChessBoard[7][i].setTeam(true);
 		}	
