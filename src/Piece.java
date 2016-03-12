@@ -54,30 +54,20 @@ public abstract class Piece {
 		
 		currentArray[0] = startRow;
 		currentArray[1] = startColumn;
-		
-		int[] tempArray = new int[2];
 
 		while(currentArray[0] != destRow || currentArray[1] != destColumn) {
 
 			currentArray[0] = currentArray[0] + rowIncrement;
 			currentArray[1] = currentArray[1] + columnIncrement;
-
-			
 			
 			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
 					currentArray[0] >= 0 && currentArray[1] >= 0) {
 				
 				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
-					System.out.println("Adding empty spaces");
-					System.out.println("Row: "+currentArray[0]+" Column: "+currentArray[1]);
-					tempArray[0] = currentArray[0];
-					tempArray[1] = currentArray[1];
-					tempList.add(tempArray); 
+					tempList.add(currentArray); 
 				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
 						currentBoard[startRow][startColumn].team) {
-					tempArray[0] = currentArray[0];
-					tempArray[1] = currentArray[1];
-					tempList.add(tempArray);
+					tempList.add(currentArray);
 					break;
 				} else {
 					
@@ -94,7 +84,6 @@ public abstract class Piece {
 	
 	//Method to printPossibleMoves for testing purposes
 	public void PrintPossibleMovesList(ArrayList<int[]> ListofItems){
-		System.out.println("");
 		if (ListofItems == null){
 			System.out.println("There is nothing in possibleMoves");
 			return;
@@ -103,6 +92,5 @@ public abstract class Piece {
 		for (int i =0; i < ListofItems.size();i++){
 			System.out.println("Row: "+ListofItems.get(i)[0]+" Column: "+ListofItems.get(i)[1]);
 		}
-		System.out.println("");
 	}
 }
