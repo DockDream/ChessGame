@@ -31,14 +31,16 @@ public class Pawn extends Piece {
 	
 	//check possible kill cells for opponent pieces
 	private boolean KillCheck (int startRow, int startColumn, int killRow, int killColumn, Piece[][] currentBoard){
-			Piece killer = currentBoard[startRow][startColumn];
-			Piece victim = currentBoard[killRow][killColumn];
-			boolean kill = false;
-			//if cell is occupied
-			if (currentBoard[killRow][killColumn] != null){
-				//if it is the opposite team
-				if (killer.team != victim.team){
-					kill = true;
+		boolean kill = false;	
+		if(killRow <= 7 && killRow >= 0 && killColumn >= 0 && killColumn <= 7){
+				Piece killer = currentBoard[startRow][startColumn];
+				Piece victim = currentBoard[killRow][killColumn];
+				//if cell is occupied
+				if (currentBoard[killRow][killColumn] != null){
+					//if it is the opposite team
+					if (killer.team != victim.team){
+						kill = true;
+					}
 				}
 			}
 			return kill;			
@@ -87,7 +89,8 @@ public class Pawn extends Piece {
 				canKill = true;
 				possibleMoves.addAll(this.PawnReturnMovesAddon(startRow+1, startColumn-1, currentBoard));
 			}
-		}	
+		}
+		canKill = false;
 		
 	}
 }// end Pawn Class
