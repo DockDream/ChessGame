@@ -64,10 +64,10 @@ public abstract class Piece {
 					currentArray[0] >= 0 && currentArray[1] >= 0) {
 				
 				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
-					tempList.add(currentArray); 
+					tempList.add(new int[] {currentArray[0],currentArray[1]});
 				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
 						currentBoard[startRow][startColumn].team) {
-					tempList.add(currentArray);
+					tempList.add(new int[] {currentArray[0],currentArray[1]});
 					break;
 				} else {
 					
