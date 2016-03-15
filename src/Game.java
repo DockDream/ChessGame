@@ -10,6 +10,8 @@ public class Game {
 	boolean whoseTurn; // true = white, false = black
 	int[] saved1stClick;
 	int[] saved2ndClick;
+	int[] blackKing;
+	int[] whiteKing;
 
 	// Starts the Board at Initial Configuration
 	public void InitializeGame() {
@@ -23,6 +25,7 @@ public class Game {
 		ChessBoard[0][5] = new Bishop();
 		ChessBoard[0][6] = new Knight();
 		ChessBoard[0][7] = new Rook();
+		
 
 		// set up white back row
 		ChessBoard[7][0] = new Rook();
@@ -134,6 +137,7 @@ public class Game {
 
 			System.out.println("Valid 2nd Click");
 
+			
 			// Make the piece in the first click place to the second click place
 			// so that our 2d array is up to date
 			ChessBoard[saved2ndClick[0]][saved2ndClick[1]] = ChessBoard[saved1stClick[0]][saved1stClick[1]];
