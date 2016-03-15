@@ -24,6 +24,7 @@ public class ChessWindowClass implements ActionListener{
 	public int [] start = new int [2]; //Used for piece chosen [ROW, COL]
 	public int [] end = new int [2]; //Used for place chosen [ROW, COL]
 	private int count;
+	public boolean pieceColor = true;
    Game fClick = new Game();
    //Piece valid = new Piece(); //Trying to use Validation from Piece.java, ValidMove(int, int) function
 
@@ -76,82 +77,13 @@ public class ChessWindowClass implements ActionListener{
 				else {
 					chessSquares[i][ii] = new JButton();
 					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				}
-				
-				// piece initialization
-				// back row black setup
-				if(i == 0){
-					switch(ii){
-						case 0: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookWBoard.png")));
-						break;
-						case 1: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BKnightBBoard.png")));
-						break;
-						case 2: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBishopWBoard.png")));
-						break;
-						case 3: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BQueenBBoard.png")));
-						break;
-						case 4: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BKingWBoard.png")));
-						break;
-						case 5: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBishopBBoard.png")));
-						break;
-						case 6: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BKnightWBoard.png")));
-						break;
-						case 7: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
-						break;
-						} // end switch
-						} // end back row black setup
-				
-				// front row black setup
-				if(i == 1){
-					if(ii % 2 == 0){
-						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BPawnBBoard.png")));
-					} // end black pawn black square
-					else{
-						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BPawnWBoard.png")));
-					} // end black pawn white square
-				} // end front row black setup
-				
-				// front row white setup
-				if(i == 6){
-					if(ii % 2 == 0){
-						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WPawnWBoard.png")));
-					} // end white pawn white square
-					else{
-						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WPawnBBoard.png")));
-					} // end white pawn black square
-				} // end front row white setup
-				
-				// back row white setup
-				if(i == 7){
-					switch(ii){
-						case 0: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookBBoard.png")));
-						break;
-						case 1: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WKnightWBoard.png")));
-						break;
-						case 2: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBishopBBoard.png")));
-						break;
-						case 3: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WQueenWBoard.png")));
-						break;
-						case 4: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WKingBBoard.png")));
-						break;
-						case 5: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBishopWBoard.png")));
-						break;
-						case 6: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WKnightBBoard.png")));
-						break;
-						case 7: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
-						break;
-						} // end switch
-						} // end back row white setup
-						
-				
+				}	
 				
 				//chessSquares[i][ii].setToolTipText("" + alphabet[i] + ii);		//Creates tooltip of position
 				frmJavaholicsChess.getContentPane().add(chessSquares[i][ii]); 	//Adds each created JButton to grid				
 				chessSquares[i][ii].addActionListener(this);					//Adds ActionListeners to All JButtons on grid
          } // end for ii
 		} // end for i
-		
-		
 		
 		frmJavaholicsChess.setTitle("Javaholics Chess"); //Sets title for window
 		frmJavaholicsChess.setAlwaysOnTop(true);		//Makes window on top of all windows
@@ -163,7 +95,96 @@ public class ChessWindowClass implements ActionListener{
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Options"); //Creates item Options to MenuBar
 		menuBar.add(mntmNewMenuItem);	//Adds item to MenuBar
+		
+		setPieces(pieceColor);	// piece initialization method call
+				
 	} // end initialize method
+	
+	
+	/**
+	 * Set pieces method - will be called from the initialize method
+	 */
+	public void setPieces(boolean pieceColor){
+		char B;	// B for Black pieces or P for Blue pieces
+		char W;	// W for White pieces or R for Red pieces
+		if(pieceColor){
+			B = 'B';
+			W = 'W';
+		} // end if
+		else{
+			B = 'U';
+			W = 'R';
+		}
+		for(int i = 0; i < 8; i++){
+			for(int ii = 0; ii < 8; ii++){
+				// back row black setup
+				if(i == 0){
+					switch(ii){
+						case 0: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"RookWBoard.png")));
+						break;
+						case 1: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"KnightBBoard.png")));
+						break;
+						case 2: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"BishopWBoard.png")));
+						break;
+						case 3: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"QueenBBoard.png")));
+						break;
+						case 4: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"KingWBoard.png")));
+						break;
+						case 5: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"BishopBBoard.png")));
+						break;
+						case 6: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"KnightWBoard.png")));
+						break;
+						case 7: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"RookBBoard.png")));
+						break;
+						} // end switch
+						} // end back row black setup
+				
+				// front row black setup
+				if(i == 1){
+					if(ii % 2 == 0){
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"PawnBBoard.png")));
+					} // end black pawn black square
+					else{
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+B+"PawnWBoard.png")));
+					} // end black pawn white square
+				} // end front row black setup
+				
+				// front row white setup
+				if(i == 6){
+					if(ii % 2 == 0){
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"PawnWBoard.png")));
+					} // end white pawn white square
+					else{
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"PawnBBoard.png")));
+					} // end white pawn black square
+				} // end front row white setup
+				
+				// back row white setup
+				if(i == 7){
+					switch(ii){
+						case 0: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"RookBBoard.png")));
+						break;
+						case 1: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"KnightWBoard.png")));
+						break;
+						case 2: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"BishopBBoard.png")));
+						break;
+						case 3: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"QueenWBoard.png")));
+						break;
+						case 4: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"KingBBoard.png")));
+						break;
+						case 5: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"BishopWBoard.png")));
+						break;
+						case 6: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"KnightBBoard.png")));
+						break;
+						case 7: chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/"+W+"RookWBoard.png")));
+						break;
+						} // end switch
+						} // end back row white setup
+				
+			} // end for ii
+		} // end for i
+	} // end setPieces method
+	
 	
 	/**
 	 * Move piece method - will be called from Action Listener
@@ -202,6 +223,7 @@ public class ChessWindowClass implements ActionListener{
 		chessSquares[end[0]][end[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 	} // end movePiece method
    
+	
    public void actionPerformed(ActionEvent e) { //Used for picking which piece to move
         Object pick = e.getSource();
         
