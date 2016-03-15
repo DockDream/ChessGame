@@ -12,6 +12,9 @@ public class Game {
 	int[] saved2ndClick;
 	int[] blackKing;
 	int[] whiteKing;
+	int whitePiecesLeft;
+	int blackPiecesLeft;
+	int movesToStaleMate;
 
 	// Starts the Board at Initial Configuration
 	public void InitializeGame() {
@@ -48,6 +51,11 @@ public class Game {
 			ChessBoard[6][i].setTeam(true);
 			ChessBoard[7][i].setTeam(true);
 		}
+		
+		//Below values are needed to check for Stale mate
+		whitePiecesLeft = 16;
+		blackPiecesLeft = 16;
+		movesToStaleMate = 0;
 	}
 
 	// Making sure that the team that is clicking the piece is
