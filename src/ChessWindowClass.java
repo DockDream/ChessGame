@@ -236,7 +236,7 @@ public class ChessWindowClass implements ActionListener{
                         start[1] = ii;    //Stores first-clicked place ROW location                     
                         
                         //validates the first click and makes sure second click is only reached when first is valid
-                        if (fClick.FirstClick(start)){
+                        if (fClick.FirstClick(new Click(i,ii))){
                         	count++; //Used for keeping track of first and second click, converts to next action for second click
                         }else{                         
                         	count = 0; //keeps everything within the first click;
@@ -255,7 +255,7 @@ public class ChessWindowClass implements ActionListener{
                         	end[0] = i;		//Stores second-clicked place ROW location
 			    		    end[1] = ii;		//Stores second-clicked place COLUMN location
                             
-			    		    if (fClick.SecondClick(end)){
+			    		    if (fClick.SecondClick(new Click(i,ii))){
                             String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
 			    		         
                             movePiece(start, end, piece);    // call to movePiece method
