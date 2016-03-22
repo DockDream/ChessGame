@@ -1,40 +1,96 @@
 import java.util.ArrayList;
 
-
 public abstract class Piece {
-	
+
 	boolean team;
-	ArrayList<int[]> possibleMoves; //store all possible moves for each piece
+	ArrayList<int[]> possibleMoves = null; // store all possible moves for each
+											// piece
+
+	// team = true means white
+	// team = false means black
 	
 	
-	//team = true means white
-	//team = false means black
-	
-	
-	public boolean ValidMove(int destRow, int destColumn){
-		for (int i = 0; i < possibleMoves.size(); i++){
-			if (possibleMoves.get(i)[0] == destRow && possibleMoves.get(i)[1] == destColumn){
+	//Sets the team of the piece
+	public void setTeam(boolean sentTeam){
+		this.team = sentTeam;
+		
+	}
+
+	//returning a boolean saying whether the move is valid or not.
+	public boolean ValidMove(int destRow, int destColumn) {
+		for (int i = 0; i < possibleMoves.size(); i++) {
+			if (possibleMoves.get(i)[0] == destRow && possibleMoves.get(i)[1] == destColumn) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public ArrayList<int[]> PossibleMoves(){
-		return null;
-		//Array = [row, column]
-	}
-	
-	public boolean KingCheck(Piece[][] currentBoard){
+
+	//Just making a list of all the possible moves that the respective piece can perform
+	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard) {
 		
-		for (int i = 0; i < possibleMoves.size(); i++){
+		// Array = [row, column]
+	}
+
+	//Checking to see if the king of the opposite team is in check
+	public boolean KingCheck(int startRow, int startColumn, int destRow,int destColumn, Piece[][] currentBoard) {
+		this.ReturnPossibleMoves(startRow, startColumn, destRow,destColumn,currentBoard);
+		for (int i = 0; i < possibleMoves.size(); i++) {
 			if (currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]] instanceof King
-					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team){
+					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team) {
 				return true;
 			}
 		}
-		
 		return false;
+	}
+
+	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
+			int rowIncrement, int columnIncrement, int destRow, int destColumn, Piece[][] currentBoard) {
+
+		ArrayList<int[]> tempList = new ArrayList<int[]>();
+		
+		int[] currentArray = new int[2];
+		
+		currentArray[0] = startRow;
+		currentArray[1] = startColumn;
+
+		while(currentArray[0] != destRow || currentArray[1] != destColumn) {
+
+			currentArray[0] = currentArray[0] + rowIncrement;
+			currentArray[1] = currentArray[1] + columnIncrement;
+			
+			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
+					currentArray[0] >= 0 && currentArray[1] >= 0) {
+				
+				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
+					tempList.add(new int[] {currentArray[0],currentArray[1]});
+				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
+						currentBoard[startRow][startColumn].team) {
+					tempList.add(new int[] {currentArray[0],currentArray[1]});
+					break;
+				} else {
+					
+					break;
+				}
+			} else {
+				break;
+			}
+		}
+		this.PrintPossibleMovesList(tempList);
+		return tempList;
+		
+	}
+	
+	//Method to printPossibleMoves for testing purposes
+	public void PrintPossibleMovesList(ArrayList<int[]> ListofItems){
+		if (ListofItems == null){
+			System.out.println("There is nothing in possibleMoves");
+			return;
+		}
+		
+		for (int i =0; i < ListofItems.size();i++){
+			System.out.println("Row: "+ListofItems.get(i)[0]+" Column: "+ListofItems.get(i)[1]);
+		}
 	}
 }

@@ -1,37 +1,67 @@
-import java.util.ArrayList;
 
-public class Bishop extends Piece{
 
-	
-	public ArrayList<int[]> PossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
-		possibleMoves.clear();
-		
-		int[] currentArray = new int[2];
-		
-		currentArray[0] = startRow;
-		currentArray[1] = startColumn;
-		
-		//Incrementing both row and column
-		for (int i = 0; i < 8; i++){
-			currentArray[0]++;
-			currentArray[1]++;
-			
-			if (currentArray[0] >= 8 && currentArray[1] >= 8){
-				break;
-			}
-			
-			
-			
-			
+public class Bishop extends Piece {
+
+	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard) {
+		if (possibleMoves != null){
+			possibleMoves.clear();
 		}
 		
-		//Decrementing both row and column
-		for (int i = 7; i > 0; i++){
-			
-		}
+		//Moving towards the right down corner
+		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, 1, 1, destRow, destColumn, currentBoard);
+		
+		//Moving toward the left down corner
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 1, -1, destRow, destColumn, currentBoard));
+		
+		//Moving toward top 
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 1, destRow, destColumn, currentBoard));
+		
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, -1, destRow, destColumn, currentBoard));
 		
 		
-		return possibleMoves;
+//		// Just bottom right
+//		for (int i = 0; i < 8; i++) {
+//			currentArray[0]++;
+//			currentArray[1]++;
+//
+//			if (currentArray[0] <= 7 && currentArray[1] <= 7) {
+//				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
+//					possibleMoves.add(currentArray);
+//				} else if (currentBoard[currentArray[0]][currentArray[1]].team != currentBoard[startRow][startColumn].team) {
+//					possibleMoves.add(currentArray);
+//					break;
+//				} else {
+//					break;
+//				}
+//			} else{
+//				break;
+//			}
+//		}
+//		
+//		// Just bottom right
+//		for (int i = 0; i < 8; i++) {
+//			currentArray[0]--;
+//			currentArray[1]--;
+//
+//			if (currentArray[0] <= 7 && currentArray[1] <= 7) {
+//				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
+//					possibleMoves.add(currentArray);
+//				} else if (currentBoard[currentArray[0]][currentArray[1]].team != currentBoard[startRow][startColumn].team) {
+//					possibleMoves.add(currentArray);
+//					break;
+//				} else {
+//					break;
+//				}
+//			} else{
+//				break;
+//			}
+//		}
+//
+//		// Decrementing both row and column
+//		for (int i = 7; i > 0; i++) {
+//
+//		}
+//
 	}
-	
+
 }
