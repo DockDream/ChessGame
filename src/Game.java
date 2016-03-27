@@ -89,9 +89,7 @@ public class Game {
 				
 				// First get all possible moves
 				ChessBoard[fstClick.row][fstClick.col].ReturnPossibleMoves(fstClick.row, fstClick.col, ChessBoard);
-				
-				
-//				this.eliminatePossibleMoves();
+//				this.eliminatePossibleMoves(fstClick);
 				
 				if (ChessBoard[fstClick.row][fstClick.col].possibleMoves.size() == 0){
 					this.ShowDialogBox("Piece cannot move", "Invalid Move");
@@ -199,13 +197,13 @@ public class Game {
 	}
 	
 	//This is in case the king is in check, we need to eliminate the row and columns that show
-	public void eliminatePossibleMoves(){
+	public void eliminatePossibleMoves(Click sentC){
 		
 		//First we need to get all possible moves for that piece.
-		ChessBoard[fstClick.row][fstClick.col].ReturnPossibleMoves(fstClick.row, fstClick.col, ChessBoard);
+		ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard);
 		
 		//Is storing the address of the possibleMoves
-		ArrayList<int[]> tempList = ChessBoard[fstClick.row][fstClick.col].possibleMoves;
+		ArrayList<int[]> tempList = ChessBoard[sentC.row][sentC.col].possibleMoves;
 		Piece tempPiece;
 		
 		//select the right king to check against
@@ -232,6 +230,69 @@ public class Game {
 //			}	
 //		}
 		
+	}
+	
+	//Goes through the whole board and checks if there are any moves for the team playing
+	//Checks Stalemate for the team currently playing
+	public boolean isStalemate(){
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				if (ChessBoard[i][j] != null && ChessBoard[i][j].team == whoseTurn){
+					ChessBoard[i][j].ReturnPossibleMoves(i, j, ChessBoard);
+					
+					if (ChessBoard[i][j] != null && ChessBoard[i][j].possibleMoves.size() > 0){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
+	//returns true if it is a checkmate
+	//TODO: get the convention right for isKingInCheck method
+	public boolean isCheckMate(){
+		King selectedKing;
+		Click currentC;
+		
+		//Making sure that the right king and kings location is selected
+		if (whoseTurn){
+			selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+			currentC = whiteKing;
+		}else{
+			selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+			currentC = blackKing;
+			
+		}
+		
+		//If we aren't in check we aren't in checkmate
+//		if (!ChessBoard[currentC.row][currentC.col].isKingInCheck()){
+//			return false;
+//		}
+		
+		ChessBoard[currentC.row][currentC.col].ReturnPossibleMoves(currentC.row,currentC.col,ChessBoard);
+		
+		//If the king can move then it is not a checkmate
+		if (selectedKing.possibleMoves != null && selectedKing.possibleMoves.size() > 0){
+			return false;
+		}
+		
+		//Go through all the pieces of whoseTurn and see if any of them can block the checkMate
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				if (ChessBoard[i][j] != null && ChessBoard[i][j].team == whoseTurn){
+					ChessBoard[i][j].ReturnPossibleMoves(i, j, ChessBoard);
+					this.eliminatePossibleMoves(new Click(i,j));
+					
+					if (ChessBoard[i][j] != null && ChessBoard[i][j].possibleMoves.size() > 0){
+						return false;
+					}
+				}
+			}
+		}
+		
+		//if all else fails it is a checkmate
+		return true;
 	}
 
 }
