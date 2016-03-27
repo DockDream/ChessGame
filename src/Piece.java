@@ -8,13 +8,6 @@ public abstract class Piece {
 
 	// team = true means white
 	// team = false means black
-	
-	
-	//Sets the team of the piece
-	public void setTeam(boolean sentTeam){
-		this.team = sentTeam;
-		
-	}
 
 	//returning a boolean saying whether the move is valid or not.
 	public boolean ValidMove(int destRow, int destColumn) {
@@ -28,56 +21,15 @@ public abstract class Piece {
 	}
 
 	//Just making a list of all the possible moves that the respective piece can perform
-	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard) {
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		
 		// Array = [row, column]
 	}
 
-	//Checking to see if the king of the opposite team is in check
-	public boolean KingCheck(int startRow, int startColumn, int destRow,int destColumn, Piece[][] currentBoard) {
-		this.ReturnPossibleMoves(startRow, startColumn, destRow,destColumn,currentBoard);
-		for (int i = 0; i < possibleMoves.size(); i++) {
-			if (currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]] instanceof King
-					&& currentBoard[possibleMoves.get(i)[0]][possibleMoves.get(i)[1]].team == this.team) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
-			int rowIncrement, int columnIncrement, int destRow, int destColumn, Piece[][] currentBoard) {
+	//Expanded and used by most pieces as a function to add all the moves
+	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
-		
-		int[] currentArray = new int[2];
-		
-		currentArray[0] = startRow;
-		currentArray[1] = startColumn;
-
-		while(currentArray[0] != destRow || currentArray[1] != destColumn) {
-
-			currentArray[0] = currentArray[0] + rowIncrement;
-			currentArray[1] = currentArray[1] + columnIncrement;
-			
-			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
-					currentArray[0] >= 0 && currentArray[1] >= 0) {
-				
-				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
-					tempList.add(new int[] {currentArray[0],currentArray[1]});
-				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
-						currentBoard[startRow][startColumn].team) {
-					tempList.add(new int[] {currentArray[0],currentArray[1]});
-					break;
-				} else {
-					
-					break;
-				}
-			} else {
-				break;
-			}
-		}
-		this.PrintPossibleMovesList(tempList);
 		return tempList;
 		
 	}

@@ -8,7 +8,7 @@ public class Knight extends Piece {
 		
 	}
 	
-	public ArrayList<int[]> KnightReturnMovesAddon(int startRow, int startColumn, 
+	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int newRow, int newColumn, Piece[][] currentBoard) {
 
 			//make sure cell being moved to is in bounds and can be taken
@@ -28,27 +28,27 @@ public class Knight extends Piece {
 			return tempList;
 		}
 	
-	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard) {
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}
 		
 		//move up 2 and 1 to the left
-		possibleMoves = this.KnightReturnMovesAddon(startRow, startColumn, startRow-2, startColumn-1, currentBoard);
+		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, startRow-2, startColumn-1, currentBoard);
 		//move up 2 and 1 to the right
-		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow-2, startColumn+1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow-2, startColumn+1, currentBoard));
 		//move down 2 and 1 to the left
-		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow+2, startColumn-1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow+2, startColumn-1, currentBoard));
 		//move down 2 and 1 to the right
-		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow+2, startColumn+1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow+2, startColumn+1, currentBoard));
 		//move up 1 and 2 to the right
-		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow-1, startColumn+2, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow-1, startColumn+2, currentBoard));
 		//move up 1 and 2 to the left
-		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow-1, startColumn-2, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow-1, startColumn-2, currentBoard));
 		//move down 1 and 2 to the left
-		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow+1, startColumn-2, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow+1, startColumn-2, currentBoard));
 		//move down 1 and 2 to the right
-		possibleMoves.addAll(this.KnightReturnMovesAddon(startRow, startColumn, startRow+1, startColumn+2, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow+1, startColumn+2, currentBoard));
 		
 	}
 		
