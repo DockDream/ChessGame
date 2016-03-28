@@ -15,6 +15,9 @@ public class Game {
 	int whitePiecesLeft;
 	int blackPiecesLeft;
 	int movesToStaleMate;
+	
+	//Variables used temporarily in various methods
+	King selectedKing;
 
 	// Starts the Board at Initial Configuration
 	public void InitializeGame() {
@@ -142,11 +145,28 @@ public class Game {
 
 			System.out.println("Valid 2nd Click");
 			
-			// Move Piece and Change Turns
-			ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
-			ChessBoard[fstClick.row][fstClick.col] = null;
-			whoseTurn = whoseTurn ? false:true;
-
+			//if King isn't castling run the normal move
+			if (!this.isKingCastling()){
+				
+				if (ChessBoard[secClick.row][secClick.col] != null){	//We are killing a piece
+					if (whoseTurn){
+						blackPiecesLeft--;
+					}else{
+						whitePiecesLeft--;
+					}
+				}
+				
+				ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+				ChessBoard[fstClick.row][fstClick.col] = null;
+				whoseTurn = whoseTurn ? false : true;
+			}
+			
+//			if (whoseTurn){
+//				if (ChessBoard[whiteKing.row][whiteKing.col].isKingInCheck()){
+//					this.ShowDialogBox("King is in check", "Check");
+//				}
+//			}
+			
 			return true;
 			
 		} else {		//Not a valid move and tell the user that it is not valid
@@ -155,12 +175,17 @@ public class Game {
 		}
 	}
 
-	
-	public void isKingCastling(){
-		King selectedKing;
+	//Check if king is castling & update king location
+	public boolean isKingCastling(){
 
 		if (ChessBoard[fstClick.row][fstClick.col] instanceof King) {
-
+			// Making sure that the whiteKing & blackKing locations are up to
+			// date
+			if (whoseTurn == true) {
+				whiteKing = new Click(secClick);
+			} else {
+				blackKing = new Click(secClick);
+			}
 			selectedKing = (King) ChessBoard[fstClick.row][fstClick.col];
 			
 			if (selectedKing.castleValid) {
@@ -176,14 +201,9 @@ public class Game {
 					ChessBoard[fstClick.row][0] = ChessBoard[fstClick.row][3];
 					whoseTurn = whoseTurn ? false : true;
 				}
+				return true;
 			}
-			// Making sure that the whiteKing & blackKing locations are up to
-			// date
-			if (whoseTurn == true) {
-				whiteKing = new Click(secClick);
-			} else {
-				blackKing = new Click(secClick);
-			}
+			
 			
 		}
 		
@@ -197,6 +217,8 @@ public class Game {
 				selectedKing.castleValid = false;
 			}
 		}
+		
+		return false;
 	}
 
 	//Call this to show a Dialog box
@@ -220,9 +242,9 @@ public class Game {
 		
 		//select the right king to check against
 		if (whoseTurn){
-			King selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+			selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
 		}else{
-			King selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+			selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
 		}
 
 //		for (int i = 0; i < tempList.size(); i++) {
@@ -264,7 +286,6 @@ public class Game {
 	//returns true if it is a checkmate
 	//TODO: get the convention right for isKingInCheck method
 	public boolean isCheckMate(){
-		King selectedKing;
 		Click currentC;
 		
 		//Making sure that the right king and kings location is selected
