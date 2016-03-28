@@ -24,7 +24,7 @@ public class Game {
 		ChessBoard[0][1] = new Knight();
 		ChessBoard[0][2] = new Bishop();
 		ChessBoard[0][3] = new Queen();
-		ChessBoard[0][4] = new King();
+		ChessBoard[0][4] = new King(true);
 		ChessBoard[0][5] = new Bishop();
 		ChessBoard[0][6] = new Knight();
 		ChessBoard[0][7] = new Rook();
@@ -35,7 +35,7 @@ public class Game {
 		ChessBoard[7][1] = new Knight();
 		ChessBoard[7][2] = new Bishop();
 		ChessBoard[7][3] = new Queen();
-		ChessBoard[7][4] = new King();
+		ChessBoard[7][4] = new King(true);
 		ChessBoard[7][5] = new Bishop();
 		ChessBoard[7][6] = new Knight();
 		ChessBoard[7][7] = new Rook();
@@ -51,6 +51,8 @@ public class Game {
 			ChessBoard[6][i].team = true;
 			ChessBoard[7][i].team = true;
 		}
+		
+		
 		
 		//Below values are needed to check for Stale mate
 		whitePiecesLeft = 16;
@@ -155,21 +157,31 @@ public class Game {
 
 	
 	public void isKingCastling(){
-		
-		if (ChessBoard[fstClick.row][fstClick.col] instanceof King){
-			King selectedKing = (King) ChessBoard[fstClick.row][fstClick.col];
+		King selectedKing;
+
+		if (ChessBoard[fstClick.row][fstClick.col] instanceof King) {
+
+			selectedKing = (King) ChessBoard[fstClick.row][fstClick.col];
 			
-			
-			if (Math.abs(secClick.col - fstClick.col) == 2 && (fstClick.row == secClick.row)){
-				ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
-				ChessBoard[fstClick.row][fstClick.col] = null;
-				whoseTurn = whoseTurn ? false:true;
+			if (selectedKing.castleValid) {
+
+				if (secClick.col - fstClick.col == 2 && (fstClick.row == secClick.row)) {
+					ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+					ChessBoard[fstClick.row][5] = ChessBoard[fstClick.row][7];
+					whoseTurn = whoseTurn ? false : true;
+				}
+
+				if (secClick.col - fstClick.col == -2 && (fstClick.row == secClick.row)) {
+					ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+					ChessBoard[fstClick.row][0] = ChessBoard[fstClick.row][3];
+					whoseTurn = whoseTurn ? false : true;
+				}
 			}
-			
-			//Making sure that the whiteKing & blackKing locations are up to date
-			if (whoseTurn == true){
+			// Making sure that the whiteKing & blackKing locations are up to
+			// date
+			if (whoseTurn == true) {
 				whiteKing = new Click(secClick);
-			}else{
+			} else {
 				blackKing = new Click(secClick);
 			}
 			
@@ -178,10 +190,10 @@ public class Game {
 		//Deactivate respective future castling
 		if (ChessBoard[fstClick.row][fstClick.col] instanceof King || ChessBoard[fstClick.row][fstClick.col] instanceof Rook){
 			if (whoseTurn == true){
-				King selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
 				selectedKing.castleValid = false;
 			}else{
-				King selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+				selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
 				selectedKing.castleValid = false;
 			}
 		}

@@ -5,8 +5,8 @@ public class King extends Piece {
 
 	boolean castleValid;
 
-	public King() {
-
+	public King(boolean castle) {
+		castleValid = castle;
 	}
 
 	/*
