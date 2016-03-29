@@ -327,5 +327,15 @@ public class Game {
 		//if all else fails it is a checkmate
 		return true;
 	}
+	
+	//Return possibleMoves
+	public ArrayList<int[]> returnPossibleMoves(){
+		
+		if (fstClick == null){
+			return null;
+		}
+		
+		return ChessBoard[fstClick.row][fstClick.col].possibleMoves;
+	}
 
 }
