@@ -55,7 +55,9 @@ public class Game {
 			ChessBoard[7][i].team = true;
 		}
 		
-		
+		// Initialized king locations
+		whiteKing = new Click(7, 4);
+		blackKing = new Click(0, 4);
 		
 		//Below values are needed to check for Stale mate
 		whitePiecesLeft = 16;
