@@ -235,7 +235,7 @@ public class ChessWindowClass implements ActionListener{
 	   int row;
 	   int col;
 	   
-	   for(int i = 0; i < moves.size()-1; i++){
+	   for(int i = 0; i < moves.size(); i++){
 		   coordinates = moves.get(i);
 		   row = coordinates[0];
 		   col = coordinates[1];
@@ -266,7 +266,7 @@ public class ChessWindowClass implements ActionListener{
 	   int row;
 	   int col;
 	   
-	   for(int i = 0; i < moves.size()-1; i++){
+	   for(int i = 0; i < moves.size(); i++){
 		   coordinates = moves.get(i);
 		   row = coordinates[0];
 		   col = coordinates[1];
