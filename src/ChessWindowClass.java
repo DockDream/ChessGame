@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
@@ -25,7 +26,8 @@ public class ChessWindowClass implements ActionListener{
 	public int [] end = new int [2]; //Used for place chosen [ROW, COL]
 	private int count;
 	public boolean pieceColor = true;
-   Game fClick = new Game();
+	ArrayList <int[]> possibleMoves = new ArrayList<int[]>();
+    Game fClick = new Game();
    //Piece valid = new Piece(); //Trying to use Validation from Piece.java, ValidMove(int, int) function
 
 	/**
@@ -222,7 +224,68 @@ public class ChessWindowClass implements ActionListener{
 		} // end else if odd square
 		chessSquares[end[0]][end[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 	} // end movePiece method
+	
+	/**
+	 * highlightMoves method - called after first click
+	 */
+   public void highlightMoves(ArrayList<int[]> moves){
+	   possibleMoves = moves;
+	   String highPiece = new String();
+	   int [] coordinates = new int [2];
+	   int row;
+	   int col;
+	   
+	   for(int i = 0; i < moves.size()-1; i++){
+		   coordinates = moves.get(i);
+		   row = coordinates[0];
+		   col = coordinates[1];
+		   highPiece = chessSquares[row][col].getIcon().toString();
+		   highPiece = new StringBuilder(highPiece).reverse().toString();
+		   Scanner s = new Scanner(highPiece).useDelimiter("\\W");
+		   StringBuilder sb = new StringBuilder();
+		   sb.append(s.next());
+		   sb.append(".");
+		   sb.append(s.next());
+		   sb.append("/");
+		   sb.append(s.next());
+		   sb.append("/");
+		   highPiece = sb.reverse().toString();
+		   highPiece = highPiece.substring(0, (highPiece.length()-4));
+		   highPiece = highPiece + "High.png";
+		   chessSquares[row][col].setIcon(new ImageIcon(ChessWindowClass.class.getResource(highPiece)));
+	   } // end for i loop
+   } // end highlightMoves method
    
+   /**
+    * clearHighlight method - called after second click
+    */
+   
+   public void clearHighlight(ArrayList<int[]> moves){
+	   String highPiece = new String();
+	   int [] coordinates = new int [2];
+	   int row;
+	   int col;
+	   
+	   for(int i = 0; i < moves.size()-1; i++){
+		   coordinates = moves.get(i);
+		   row = coordinates[0];
+		   col = coordinates[1];
+		   highPiece = chessSquares[row][col].getIcon().toString();
+		   highPiece = new StringBuilder(highPiece).reverse().toString();
+		   Scanner s = new Scanner(highPiece).useDelimiter("\\W");
+		   StringBuilder sb = new StringBuilder();
+		   sb.append(s.next());
+		   sb.append(".");
+		   sb.append(s.next());
+		   sb.append("/");
+		   sb.append(s.next());
+		   sb.append("/");
+		   highPiece = sb.reverse().toString();
+		   highPiece = highPiece.substring(0, (highPiece.length()-8));
+		   highPiece = highPiece + ".png";
+		   chessSquares[row][col].setIcon(new ImageIcon(ChessWindowClass.class.getResource(highPiece)));
+	   } // end for i loop
+   } // end clearHighlight method
 	
    public void actionPerformed(ActionEvent e) { //Used for picking which piece to move
         Object pick = e.getSource();
@@ -237,6 +300,7 @@ public class ChessWindowClass implements ActionListener{
                         
                         //validates the first click and makes sure second click is only reached when first is valid
                         if (fClick.FirstClick(new Click(i,ii))){
+                        	highlightMoves(fClick.returnPossibleMoves());
                         	count++; //Used for keeping track of first and second click, converts to next action for second click
                         }else{                         
                         	count = 0; //keeps everything within the first click;
@@ -257,9 +321,10 @@ public class ChessWindowClass implements ActionListener{
                             
 			    		    if (fClick.SecondClick(new Click(i,ii))){
                             String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
-			    		         
+			    		    clearHighlight(possibleMoves);   
                             movePiece(start, end, piece);    // call to movePiece method
 			    		    }else{
+			    		    	clearHighlight(possibleMoves);
 			    		    	//not a valid move
 			    		    }
 			    		    
