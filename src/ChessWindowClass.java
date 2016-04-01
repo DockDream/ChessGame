@@ -60,6 +60,7 @@ public class ChessWindowClass implements ActionListener{
 	/**
 	 * Initialize the contents of the frame.
 	 * @throws IOException 
+	 * (Requirement 1.0.0)
 	 */
 	
 	private void initialize() throws IOException {
@@ -109,6 +110,8 @@ public class ChessWindowClass implements ActionListener{
 	
 	/**
 	 * Set pieces method - will be called from the initialize method
+	 * initializes board with pieces of chosen color
+	 * (Requirement 1.0.0)
 	 */
 	public void setPieces(boolean pieceColor){
 		char B;	// B for Black pieces or P for Blue pieces
@@ -194,6 +197,8 @@ public class ChessWindowClass implements ActionListener{
 	
 	/**
 	 * Move piece method - will be called from Action Listener
+	 * sets origin square to proper board color and sets destination square to correct piece/board combo
+	 * (Requirement 1.1.0)
 	 */
 	public void movePiece(int [] start, int [] end, String piece){
 		/**
@@ -247,6 +252,8 @@ public class ChessWindowClass implements ActionListener{
 	
 	/**
 	 * highlightMoves method - called after first click
+	 * will highlight sqaures where selected piece can move
+	 * (Requirement 2.2.0)
 	 */
    public void highlightMoves(ArrayList<int[]> moves){
 	   possibleMoves = moves;
@@ -278,6 +285,8 @@ public class ChessWindowClass implements ActionListener{
    
    /**
     * clearHighlight method - called after second click
+    * clears possible moves highlight from squares
+    * (Requirement 2.2.0)
     */
    
    public void clearHighlight(ArrayList<int[]> moves){
@@ -306,6 +315,12 @@ public class ChessWindowClass implements ActionListener{
 		   chessSquares[row][col].setIcon(new ImageIcon(ChessWindowClass.class.getResource(highPiece)));
 	   } // end for i loop
    } // end clearHighlight method
+   
+   /**
+    * Action Event Listener
+    * records player "clicks" indication piece/square selection
+    * (Requirements 1.1.0 and 2.3.0)
+    */
 	
    public void actionPerformed(ActionEvent e) { //Used for picking which piece to move
         Object pick = e.getSource();
