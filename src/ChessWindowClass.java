@@ -5,6 +5,8 @@ import java.awt.Window.Type;
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.GridLayout;
+import java.awt.Label;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -25,10 +27,11 @@ public class ChessWindowClass implements ActionListener{
 	public int [] start = new int [2]; //Used for piece chosen [ROW, COL]
 	public int [] end = new int [2]; //Used for place chosen [ROW, COL]
 	private int count;
+	private int turn = 0;			//Used for showing player's turn
 	public boolean pieceColor = true;
 	ArrayList <int[]> possibleMoves = new ArrayList<int[]>();
     Game fClick = new Game();
-   //Piece valid = new Piece(); //Trying to use Validation from Piece.java, ValidMove(int, int) function
+    Label label = new Label("Player 1 Turn");
 
 	/**
 	 * Launch the application.
@@ -97,6 +100,7 @@ public class ChessWindowClass implements ActionListener{
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Options"); //Creates item Options to MenuBar
 		menuBar.add(mntmNewMenuItem);	//Adds item to MenuBar
+		menuBar.add(label);				//Adds label for player turn
 		
 		setPieces(pieceColor);	// piece initialization method call
 				
@@ -223,6 +227,22 @@ public class ChessWindowClass implements ActionListener{
 			piece = piece + "BBoard.png";
 		} // end else if odd square
 		chessSquares[end[0]][end[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
+		
+		
+		/*
+		 * Decides and Shows Whose Turn it is
+		*/
+		
+		if (turn == 0)
+		{
+			label.setText("Player 2 Turn");
+			turn++;
+		}
+		else if (turn == 1)
+		{
+			label.setText("Player 1 Turn");
+			turn--;
+		}
 	} // end movePiece method
 	
 	/**
