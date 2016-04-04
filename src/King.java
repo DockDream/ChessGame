@@ -4,65 +4,159 @@ import java.util.ArrayList;
 public class King extends Piece {
 
 	boolean castleValid;
+	
 
 	public King(boolean castle) {
 		castleValid = castle;
 	}
 
-	/*
-	 * public boolean castleValid(){ TODO: by Eric }
-	 */
+	public boolean KingCheck(Piece[][] chessBoard, int currentRow, int currentCol){
 
-	public boolean KingCheckClass(Piece[][] currentBoard, Object q1, Object q2, 
-			int rowIncrement, int columnIncrement, int currentRow, int currentColumn){
-		//Moving down: rowIncrement=1 columnIncrement = 0
+		ArrayList<int[]> kingMoves = null;		
 		
-		int c1 = currentRow;
-		int c2 = currentColumn;
+		boolean check = false;
+		int kingRow = currentRow;
+		int kingCol = currentCol;		
+		int opponentRow;
+		int opponentCol;
+		Piece king = chessBoard[kingRow][kingCol];
+		Piece opponent;
 		
-		for(int i=0; i < 8; i++){
-			currentRow = currentRow+rowIncrement;
-			currentColumn = currentColumn+columnIncrement;
-			
-			if (currentRow <= 7 && currentColumn <= 7 && 
-					currentRow >= 0 && currentColumn >= 0){
-				break;
-			}
-			if (currentBoard[currentRow][currentColumn] == null){
-				continue;
-			}
-			
-			if(currentBoard[currentRow][currentColumn].team == currentBoard[c1][c2].team){
-				return false;
-			}else{
-				if (currentBoard[currentRow][currentColumn].getClass().equals(q1.getClass())||
-						currentBoard[currentRow][currentColumn].getClass().equals(q2.getClass())){
-					return true;
-				}else{
-					return false;
+		//System.out.println("Checking Rook: 1 of 5");
+		Rook kingRook = new Rook();
+		kingRook.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
+		kingMoves = kingRook.possibleMoves;
+		for(int i = 0; i < kingMoves.size(); i++){
+			opponentRow = kingMoves.get(i)[0];
+			opponentCol = kingMoves.get(i)[1];
+			opponent = chessBoard[opponentRow][opponentCol];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Rook){
+						check = true;
+					}
 				}
 			}
 		}
 		
-		return false;
-	}
+		//System.out.println("Checking Bishop: 2 of 5");
+		Bishop kingBishop = new Bishop();
+		kingBishop.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
+		kingMoves = kingBishop.possibleMoves;
+		for(int i = 0; i < kingMoves.size(); i++){
+			opponentRow = kingMoves.get(i)[0];
+			opponentCol = kingMoves.get(i)[1];
+			opponent = chessBoard[opponentRow][opponentCol];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Bishop){
+						check = true;
+					}
+				}
+			}
+		}
+		
+		//System.out.println("Checking Queen: 3 of 5");
+		Queen kingQueen = new Queen();
+		kingQueen.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
+		kingMoves = kingQueen.possibleMoves;
+		for(int i = 0; i < kingMoves.size(); i++){
+			opponentRow = kingMoves.get(i)[0];
+			opponentCol = kingMoves.get(i)[1];
+			opponent = chessBoard[opponentRow][opponentCol];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Queen){
+						check = true;
+					}
+				}
+			}
+		}
+		
+		//System.out.println("Checking Pawns: 4 of 5");
+		Pawn kingPawn = new Pawn();
+		if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol+1, chessBoard)){
+			opponent = chessBoard[kingRow+1][kingCol+1];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Pawn){
+						check = true;
+					}
+				}
+			}
+		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol-1, chessBoard)){
+			opponent = chessBoard[kingRow+1][kingCol-1];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Pawn){
+						check = true;
+					}
+				}
+			}
+		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow-1, kingCol+1, chessBoard)){
+			opponent = chessBoard[kingRow-1][kingCol+1];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Pawn){
+						check = true;
+					}
+				}
+			}	
+		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow-1, kingCol-1, chessBoard)){
+			opponent = chessBoard[kingRow-1][kingCol-1];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Pawn){
+						check = true;
+					}
+				}
+			}
+		}
+		
+		//System.out.println("Checking Knight: 5 of 5");
+		Knight kingKnight = new Knight();
+		kingKnight.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
+		kingMoves = kingKnight.possibleMoves;
+		for(int i = 0; i < kingMoves.size(); i++){
+			opponentRow = kingMoves.get(i)[0];
+			opponentCol = kingMoves.get(i)[1];
+			opponent = chessBoard[opponentRow][opponentCol];
+			if (opponent != null){
+				if(opponent.team != king.team){
+					if(opponent instanceof Knight){
+						check = true;
+					}
+				}
+			}
+		}
 
-	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, int newRow, int newColumn,
-			Piece[][] currentBoard) {
+		kingMoves = null;
+		return check;
+	}	
+	
+	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startCol, int newRow, int newCol,
+			Piece[][] chessBoard) {
 
 		// make sure cell being moved to is in bounds and can be taken
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
-		int[] newLocation = new int[2];
+		int destRow = newRow;
+		int destCol = newCol;
+		int[] cell = new int[2];
+		cell[0] = destRow;
+		cell[1] = destCol;
+		int kingRow = startRow;
+		int kingCol = startCol;
+		Piece king = chessBoard[kingRow][kingCol];
 
-		newLocation[0] = newRow;
-		newLocation[1] = newColumn;
-
-		if (newLocation[0] <= 7 && newLocation[1] <= 7 && newLocation[0] >= 0 && newLocation[1] >= 0) {
-			if (currentBoard[newLocation[0]][newLocation[1]] == null) {
-				tempList.add(newLocation);
-			} else if (currentBoard[newLocation[0]][newLocation[1]].team != currentBoard[startRow][startColumn].team) {
-				tempList.add(newLocation);
+		if(this.inBounds(destRow, destCol)){
+			Piece destCell = chessBoard[destRow][destCol]; 
+			if (destCell == null) {
+				tempList.add(cell);
+			} else if (destCell.team != king.team){
+				if(!(destCell instanceof King)){
+					tempList.add(cell);
+				}
 			}
 		}
 		return tempList;
