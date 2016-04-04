@@ -7,11 +7,14 @@ public class Game {
 
 	Piece[][] ChessBoard = new Piece[8][8];
 	Piece selectedPiece;
+	Piece tempPiece;
 	boolean whoseTurn; // true = white, false = black
+	boolean isKingInCheck = false;
 	Click fstClick;
 	Click secClick;
 	Click blackKing;
 	Click whiteKing;
+	Click tempKing;
 	int whitePiecesLeft;
 	int blackPiecesLeft;
 	int drawWith75Moves;
@@ -59,7 +62,7 @@ public class Game {
 		whiteKing = new Click(7, 4);
 		blackKing = new Click(0, 4);
 		
-		//Below values are needed to check for Draw
+		//Below values are needed to check for Stale mate
 		drawWith75Moves = 0;
 	}
 
@@ -119,12 +122,10 @@ public class Game {
 
 	// Return true if it is a valid secondClick
 	public boolean SecondClick(Click cSent) {
-
 		if (fstClick == null) {
 			System.out.println("Second click function is being called before first click is called");
 			return false;
 		}
-
 		secClick = new Click(cSent.row,cSent.col);
 
 		//Helpful for debugging purposes
@@ -138,47 +139,105 @@ public class Game {
 		if (fstClick.equals(secClick)) {		// The piece did not move;
 			return true;
 		}
-		
 
 		//Checks for validity of the move
 		if (ChessBoard[fstClick.row][fstClick.col].ValidMove(cSent.row, cSent.col)) {
-
-			System.out.println("Valid 2nd Click");
 			
+			System.out.println("Valid 2nd Click");			
 			//if King isn't castling run the normal move
-			if (!this.isKingCastling()){
-				
-				drawWith75Moves++;
-				
-				if (ChessBoard[fstClick.row][fstClick.col] instanceof Pawn){
-					drawWith75Moves = 0;
-				}
-				
+			//if (!this.isKingCastling()){	
+			
+			drawWith75Moves++;
+			
+			if (ChessBoard[fstClick.row][fstClick.col] instanceof Pawn){
+				drawWith75Moves = 0;
+			}
+			
 				if (ChessBoard[secClick.row][secClick.col] != null){	//We are killing a piece
 					drawWith75Moves = 0;
 				}
-				
-				ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+
+				tempPiece = ChessBoard[secClick.row][secClick.col];
+				ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];				
 				ChessBoard[fstClick.row][fstClick.col] = null;
-				whoseTurn = whoseTurn ? false : true;
 				
-			}
-			
-//			if (whoseTurn){
-//				if (ChessBoard[whiteKing.row][whiteKing.col].isKingInCheck()){
-//					this.ShowDialogBox("King is in check", "Check");
-//				}
-//			}
-			
-			
-			
-			
+
+				if(ChessBoard[secClick.row][secClick.col] instanceof King){
+					if (whoseTurn){
+						tempKing = whiteKing;
+						whiteKing = new Click(secClick.row, secClick.col);
+						System.out.println("White king has moved to Row: " + secClick.row + " Col: " + secClick.col);
+					}else{
+						blackKing = tempKing;
+						blackKing = new Click(secClick.row, secClick.col);
+						System.out.println("Black king has moved to Row: " + secClick.row + " Col: " + secClick.col);
+					}
+				}
+			//}			
+			whoseTurn = whoseTurn ? false : true;	
 			return true;
-			
-		} else {		//Not a valid move and tell the user that it is not valid
+		}else{//Not a valid move and tell the user that it is not valid
 			this.ShowDialogBox("That is not a legal move", "Invalid Move");
 			return false;
 		}
+	}
+	
+	public void reverseMove(){
+		ChessBoard[fstClick.row][fstClick.col] = ChessBoard[secClick.row][secClick.col];
+		ChessBoard[secClick.row][secClick.col] = tempPiece;
+		if(ChessBoard[fstClick.row][fstClick.col] instanceof King){
+			if (whoseTurn){
+				whiteKing = tempKing;
+				System.out.println("White king has moved to Row: " + whiteKing.row + " Col: " + whiteKing.col);
+			}else{
+				blackKing = tempKing;
+				System.out.println("Black king has moved to Row: " + blackKing.row + " Col: " + blackKing.col);
+			}
+		}
+		if (ChessBoard[secClick.row][secClick.col] != null){	//We are killing a piece
+			/*if (whoseTurn){
+				blackPiecesLeft++;
+			}else{
+				whitePiecesLeft++;
+			}*/
+		}
+		whoseTurn = whoseTurn ? false : true;
+	}
+	
+	public boolean isKingInCheck(boolean reCheck, boolean leaving){
+		
+		boolean check = false;
+		
+		if(!reCheck){		
+			if(whoseTurn){
+				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+				check = selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col);
+				System.out.println("White's turn, White check is: " + check);
+			}else{
+				selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+				check = selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col);
+				System.out.println("Black's turn, Black check is: " + check);
+			}
+			if(check){
+				this.ShowDialogBox("King is in check", "King in Check");
+			}
+		}else{
+			if(whoseTurn){
+				selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+				check = selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col);
+				System.out.println("White's turn, Black check is: " + check);
+			}else{
+				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+				check = selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col);
+				System.out.println("Black's turn, White check is: " + check);
+			}
+			if(check && !leaving){
+				this.ShowDialogBox("King is still in check", "Invalid Move");
+			}else if(check && leaving){
+				this.ShowDialogBox("Cannot Leave King In Check", "title");
+			}
+		}
+		return check;
 	}
 
 	//Check if king is castling & update king location
@@ -207,9 +266,10 @@ public class Game {
 					ChessBoard[fstClick.row][0] = ChessBoard[fstClick.row][3];
 					whoseTurn = whoseTurn ? false : true;
 				}
-				
 				return true;
 			}
+			
+			
 		}
 		
 		//Deactivate respective future castling
@@ -238,6 +298,9 @@ public class Game {
 	//This is in case the king is in check, we need to eliminate the row and columns that show
 	public void eliminatePossibleMoves(Click sentC){
 		
+		int kingRow;
+		int kingCol;
+		
 		//First we need to get all possible moves for that piece.
 		ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard);
 		
@@ -248,38 +311,40 @@ public class Game {
 		//select the right king to check against
 		if (whoseTurn){
 			selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+			kingRow = whiteKing.row;
+			kingCol = whiteKing.col;
 		}else{
 			selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+			kingRow = blackKing.row;
+			kingCol = blackKing.col;
 		}
 
-//		for (int i = 0; i < tempList.size(); i++) {
-//
-//			tempPiece = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
-//			ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = ChessBoard[fstClick.row][fstClick.col];
-//			ChessBoard[fstClick.row][fstClick.col] = null;
-//
-//			if (selectedKing.isKingInCheck()) {
-//				ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
-//				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
-//				tempList.remove(i);
-//				i = i - 1; // this is so it doesn't skip over a spot.
-//			} else {
-//				ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
-//				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
-//			}	
-//		}
+		for (int i = 0; i < tempList.size(); i++) {
+
+			tempPiece = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
+			ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = ChessBoard[fstClick.row][fstClick.col];
+			ChessBoard[fstClick.row][fstClick.col] = null;
+
+			if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol)) {
+				ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
+				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
+				tempList.remove(i);
+				i = i - 1; // this is so it doesn't skip over a spot.
+		} else {
+				ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
+				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
+			}	
+		}
 		
 	}
 	
 	//Goes through the whole board and checks if there are any moves for the team playing
 	//Checks Stalemate for the team currently playing
 	public boolean isDraw(){
-		
 		if (drawWith75Moves >= 75){
-			this.ShowDialogBox("No piece has been killed or Pawn has been moves since 75 moves", "Draw");
+				this.ShowDialogBox("No piece has been killed or Pawn has been moves since 75 moves", "Draw");
 			return true;
 		}
-		
 		//Below is checking for Stalemate
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
@@ -292,7 +357,6 @@ public class Game {
 				}
 			}
 		}
-		
 		this.ShowDialogBox("", "Stalemate");
 		return true;
 	}
@@ -313,9 +377,9 @@ public class Game {
 		}
 		
 		//If we aren't in check we aren't in checkmate
-//		if (!ChessBoard[currentC.row][currentC.col].isKingInCheck()){
-//			return false;
-//		}
+		if (!selectedKing.KingCheck(ChessBoard, currentC.row, currentC.col)){
+			return false;
+		}
 		
 		ChessBoard[currentC.row][currentC.col].ReturnPossibleMoves(currentC.row,currentC.col,ChessBoard);
 		
@@ -336,16 +400,15 @@ public class Game {
 					}
 				}
 			}
-		}
-		
+		}		
 		//if all else fails it is a checkmate
 		this.ShowDialogBox("", "Checkmate");
 		//return true;
-		
 		//TODO: temporary need to remove
 		return false;
 	}
 	
+
 	//Return possibleMoves
 	public ArrayList<int[]> returnPossibleMoves(){
 		
@@ -355,7 +418,7 @@ public class Game {
 		
 		return ChessBoard[fstClick.row][fstClick.col].possibleMoves;
 	}
-	
+
 	//Check if pawnPromotion is eligible
 	public boolean pawnPromotion(){
 		if ((ChessBoard[secClick.row][secClick.col] instanceof Pawn) && ((secClick.row == 0) || secClick.col == 7)){
@@ -366,6 +429,7 @@ public class Game {
 	}
 
 	//Replace the pawn promotion
+
 	public void pawnPromoted(Object sent){
 		ChessBoard[secClick.row][secClick.col] = (Piece) sent;
 	}
