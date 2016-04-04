@@ -80,7 +80,9 @@ public class King extends Piece {
 			if (opponent != null){
 				if(opponent.team != king.team){
 					if(opponent instanceof Pawn){
-						check = true;
+						if(!king.team){
+							check = true;
+						}
 					}
 				}
 			}
@@ -89,7 +91,9 @@ public class King extends Piece {
 			if (opponent != null){
 				if(opponent.team != king.team){
 					if(opponent instanceof Pawn){
-						check = true;
+						if(!king.team){
+							check = true;
+						}
 					}
 				}
 			}
@@ -98,7 +102,9 @@ public class King extends Piece {
 			if (opponent != null){
 				if(opponent.team != king.team){
 					if(opponent instanceof Pawn){
-						check = true;
+						if(king.team){
+							check = true;
+						}
 					}
 				}
 			}	
@@ -107,7 +113,9 @@ public class King extends Piece {
 			if (opponent != null){
 				if(opponent.team != king.team){
 					if(opponent instanceof Pawn){
-						check = true;
+						if(king.team){
+							check = true;
+						}
 					}
 				}
 			}
