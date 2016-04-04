@@ -30,7 +30,7 @@ public class Pawn extends Piece {
 	}
 	
 	//check possible kill cells for opponent pieces
-	private boolean KillCheck (int startRow, int startColumn, int killRow, int killColumn, Piece[][] currentBoard){
+	public boolean KillCheck (int startRow, int startColumn, int killRow, int killColumn, Piece[][] currentBoard){
 		boolean kill = false;	
 		if(killRow <= 7 && killRow >= 0 && killColumn >= 0 && killColumn <= 7){
 				Piece killer = currentBoard[startRow][startColumn];
