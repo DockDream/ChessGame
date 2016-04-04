@@ -29,6 +29,8 @@ public class ChessWindowClass implements ActionListener{
 	private int count;
 	private int turn = 0;			//Used for showing player's turn
 	public boolean pieceColor = true;
+	private boolean check = false; 
+	private boolean leavingInCheck = false;
 	ArrayList <int[]> possibleMoves = new ArrayList<int[]>();
     Game fClick = new Game();
     Label label = new Label("Player 1 Turn");
