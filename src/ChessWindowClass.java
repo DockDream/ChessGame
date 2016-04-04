@@ -360,24 +360,14 @@ public class ChessWindowClass implements ActionListener{
 			    		    	String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
 			    		    	clearHighlight(possibleMoves);   
 			    		    	movePiece(start, end, piece);    // call to movePiece method
-			    		    	if(!check){
-			    		    		check = fClick.isKingInCheck(false, false);
-			    		    		leavingInCheck = fClick.isKingInCheck(true, true);
-			    		    		if(leavingInCheck){
-			    		    			fClick.reverseMove();
-			    		    			movePiece(end, start, piece);
-			    		    		}		   
-			    		    	}else{
-			    		    		System.out.println("made it to else. check is: " + check);
-			    		    		check = fClick.isKingInCheck(true, false);
-			    		    		System.out.println("check is now: " + check);
-			    		    		if(check){
-			    		    			fClick.reverseMove();
-			    		    			movePiece(end, start, piece);
-			    		    		}		    		    		
-			    		    	}
-			    		    }else{
-			    		    	clearHighlight(possibleMoves);
+			    		    	check = fClick.isKingInCheck(false, false);
+			    		    	leavingInCheck = fClick.isKingInCheck(true, true);
+			    		    	if(leavingInCheck){
+			    		    		fClick.reverseMove();
+			    		    		movePiece(end, start, piece);
+			    		    	}		   
+			    		   	}else{
+			    		   		clearHighlight(possibleMoves);
 			    		    	//not a valid move
 			    		    }
 			    		    

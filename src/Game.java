@@ -186,7 +186,7 @@ public class Game {
 		ChessBoard[fstClick.row][fstClick.col] = ChessBoard[secClick.row][secClick.col];
 		ChessBoard[secClick.row][secClick.col] = tempPiece;
 		if(ChessBoard[fstClick.row][fstClick.col] instanceof King){
-			if (whoseTurn){
+			if (!whoseTurn){
 				whiteKing = tempKing;
 				System.out.println("White king has moved to Row: " + whiteKing.row + " Col: " + whiteKing.col);
 			}else{
@@ -234,7 +234,7 @@ public class Game {
 			if(check && !leaving){
 				this.ShowDialogBox("King is still in check", "Invalid Move");
 			}else if(check && leaving){
-				this.ShowDialogBox("Cannot Leave King In Check", "title");
+				this.ShowDialogBox("Cannot Leave King In Check", "Invalid Move");
 			}
 		}
 		return check;
