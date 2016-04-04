@@ -14,7 +14,7 @@ public class Game {
 	Click whiteKing;
 	int whitePiecesLeft;
 	int blackPiecesLeft;
-	int movesToStaleMate;
+	int drawWith75Moves;
 	
 	//Variables used temporarily in various methods
 	King selectedKing;
@@ -59,10 +59,8 @@ public class Game {
 		whiteKing = new Click(7, 4);
 		blackKing = new Click(0, 4);
 		
-		//Below values are needed to check for Stale mate
-		whitePiecesLeft = 16;
-		blackPiecesLeft = 16;
-		movesToStaleMate = 0;
+		//Below values are needed to check for Draw
+		drawWith75Moves = 0;
 	}
 
 	/*
@@ -150,17 +148,20 @@ public class Game {
 			//if King isn't castling run the normal move
 			if (!this.isKingCastling()){
 				
+				drawWith75Moves++;
+				
+				if (ChessBoard[fstClick.row][fstClick.col] instanceof Pawn){
+					drawWith75Moves = 0;
+				}
+				
 				if (ChessBoard[secClick.row][secClick.col] != null){	//We are killing a piece
-					if (whoseTurn){
-						blackPiecesLeft--;
-					}else{
-						whitePiecesLeft--;
-					}
+					drawWith75Moves = 0;
 				}
 				
 				ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
 				ChessBoard[fstClick.row][fstClick.col] = null;
 				whoseTurn = whoseTurn ? false : true;
+				
 			}
 			
 //			if (whoseTurn){
@@ -168,6 +169,9 @@ public class Game {
 //					this.ShowDialogBox("King is in check", "Check");
 //				}
 //			}
+			
+			
+			
 			
 			return true;
 			
@@ -203,10 +207,9 @@ public class Game {
 					ChessBoard[fstClick.row][0] = ChessBoard[fstClick.row][3];
 					whoseTurn = whoseTurn ? false : true;
 				}
+				
 				return true;
 			}
-			
-			
 		}
 		
 		//Deactivate respective future castling
@@ -270,7 +273,14 @@ public class Game {
 	
 	//Goes through the whole board and checks if there are any moves for the team playing
 	//Checks Stalemate for the team currently playing
-	public boolean isStalemate(){
+	public boolean isDraw(){
+		
+		if (drawWith75Moves >= 75){
+			this.ShowDialogBox("No piece has been killed or Pawn has been moves since 75 moves", "Draw");
+			return true;
+		}
+		
+		//Below is checking for Stalemate
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				if (ChessBoard[i][j] != null && ChessBoard[i][j].team == whoseTurn){
@@ -282,6 +292,8 @@ public class Game {
 				}
 			}
 		}
+		
+		this.ShowDialogBox("", "Stalemate");
 		return true;
 	}
 	
@@ -327,7 +339,11 @@ public class Game {
 		}
 		
 		//if all else fails it is a checkmate
-		return true;
+		this.ShowDialogBox("", "Checkmate");
+		//return true;
+		
+		//TODO: temporary need to remove
+		return false;
 	}
 	
 	//Return possibleMoves
@@ -339,5 +355,18 @@ public class Game {
 		
 		return ChessBoard[fstClick.row][fstClick.col].possibleMoves;
 	}
+	
+	//Check if pawnPromotion is eligible
+	public boolean pawnPromotion(){
+		if ((ChessBoard[secClick.row][secClick.col] instanceof Pawn) && ((secClick.row == 0) || secClick.col == 7)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
+	//Replace the pawn promotion
+	public void pawnPromoted(Object sent){
+		ChessBoard[secClick.row][secClick.col] = (Piece) sent;
+	}
 }
