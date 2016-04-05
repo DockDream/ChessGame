@@ -2,6 +2,10 @@ import java.util.ArrayList;
 
 public class Bishop extends Piece {
 
+	Bishop(boolean sentTeam) {
+		super(sentTeam);
+	}
+
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		if (possibleMoves != null){
 			possibleMoves.clear();

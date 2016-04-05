@@ -365,7 +365,7 @@ public class ChessWindowClass implements ActionListener{
 			    		    	if(leavingInCheck){
 			    		    		fClick.reverseMove();
 			    		    		movePiece(end, start, piece);
-			    		    	}		   
+			    		    	}
 			    		   	}else{
 			    		   		clearHighlight(possibleMoves);
 			    		    	//not a valid move

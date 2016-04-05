@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public abstract class Piece {
 	
-	public Piece(){
-		
+	Piece (boolean sentTeam){
+		this.team = sentTeam;
 	}
 
 	boolean team;

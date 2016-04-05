@@ -3,10 +3,11 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece {
 	
-	public Pawn(){
-		
+	Pawn(boolean sentTeam) {
+		super(sentTeam);
 	}
-	
+
+
 	public boolean canKill = false;
 	
 	public ArrayList<int[]> ReturnMovesAddon(int newRow, int newColumn, Piece[][] currentBoard) {

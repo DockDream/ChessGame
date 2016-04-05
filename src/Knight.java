@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Knight extends Piece {
 	
-	public Knight(){
-		
+	Knight(boolean sentTeam) {
+		super(sentTeam);
 	}
-	
+
 	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int newRow, int newColumn, Piece[][] currentBoard) {
 

@@ -2,14 +2,15 @@ import java.util.ArrayList;
 
 public class Rook extends Piece{
 	
+	
+	Rook(boolean sentTeam) {
+		super(sentTeam);
+	}
+
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}
-		
-		//The four lines below might throw an error
-		
-		System.out.println("startRow: "+startRow+" startColumn: "+startColumn);
 		
 		//Moving to the up
 		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, -1, 0, currentBoard);
@@ -50,6 +51,11 @@ public class Rook extends Piece{
 			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
 					currentArray[0] >= 0 && currentArray[1] >= 0) {
 				
+//				if (currentBoard[startRow][startColumn] != null){
+//				System.out.println("Class: "+currentBoard[startRow][startColumn].getClass().toString());
+//				}else{
+//					System.out.println("startRow: "+startRow+" startColumn: "+startColumn);
+//				}
 				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
 					tempList.add(new int[] {currentArray[0],currentArray[1]});
 				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 

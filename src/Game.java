@@ -8,16 +8,18 @@ public class Game {
 	Piece[][] ChessBoard = new Piece[8][8];
 	Piece selectedPiece;
 	Piece tempPiece;
+	
 	boolean whoseTurn; // true = white, false = black
-	boolean isKingInCheck = false;
+	boolean justCastled = false;
+	
 	Click fstClick;
 	Click secClick;
 	Click blackKing;
 	Click whiteKing;
 	Click tempKing;
-	int whitePiecesLeft;
-	int blackPiecesLeft;
+	
 	int drawWith75Moves;
+	
 	
 	//Variables used temporarily in various methods
 	King selectedKing;
@@ -26,36 +28,32 @@ public class Game {
 	public void InitializeGame() {
 		this.whoseTurn = true;
 		// set up black back row
-		ChessBoard[0][0] = new Rook();
-		ChessBoard[0][1] = new Knight();
-		ChessBoard[0][2] = new Bishop();
-		ChessBoard[0][3] = new Queen();
-		ChessBoard[0][4] = new King(true);
-		ChessBoard[0][5] = new Bishop();
-		ChessBoard[0][6] = new Knight();
-		ChessBoard[0][7] = new Rook();
+		ChessBoard[0][0] = new Rook(false);
+		ChessBoard[0][1] = new Knight(false);
+		ChessBoard[0][2] = new Bishop(false);
+		ChessBoard[0][3] = new Queen(false);
+		ChessBoard[0][4] = new King(false);
+		ChessBoard[0][5] = new Bishop(false);
+		ChessBoard[0][6] = new Knight(false);
+		ChessBoard[0][7] = new Rook(false);
 		
 
 		// set up white back row
-		ChessBoard[7][0] = new Rook();
-		ChessBoard[7][1] = new Knight();
-		ChessBoard[7][2] = new Bishop();
-		ChessBoard[7][3] = new Queen();
+		ChessBoard[7][0] = new Rook(true);
+		ChessBoard[7][1] = new Knight(true);
+		ChessBoard[7][2] = new Bishop(true);
+		ChessBoard[7][3] = new Queen(true);
 		ChessBoard[7][4] = new King(true);
-		ChessBoard[7][5] = new Bishop();
-		ChessBoard[7][6] = new Knight();
-		ChessBoard[7][7] = new Rook();
+		ChessBoard[7][5] = new Bishop(true);
+		ChessBoard[7][6] = new Knight(true);
+		ChessBoard[7][7] = new Rook(true);
 
 		for (int i = 0; i < 8; i++) {
 			// Below three lines are setting up the Black team
-			ChessBoard[1][i] = new Pawn();
-			ChessBoard[0][i].team = false;
-			ChessBoard[1][i].team = false;
+			ChessBoard[1][i] = new Pawn(false);
 
 			// Below three lines are setting up the White team
-			ChessBoard[6][i] = new Pawn();
-			ChessBoard[6][i].team = true;
-			ChessBoard[7][i].team = true;
+			ChessBoard[6][i] = new Pawn(true);
 		}
 		
 		// Initialized king locations
@@ -143,37 +141,36 @@ public class Game {
 		//Checks for validity of the move
 		if (ChessBoard[fstClick.row][fstClick.col].ValidMove(cSent.row, cSent.col)) {
 			
-			System.out.println("Valid 2nd Click");			
-			//if King isn't castling run the normal move
-			//if (!this.isKingCastling()){	
-			
-			drawWith75Moves++;
-			
-			if (ChessBoard[fstClick.row][fstClick.col] instanceof Pawn){
-				drawWith75Moves = 0;
+			if (ChessBoard[fstClick.row][fstClick.col] instanceof King) {
+				if (whoseTurn) {
+					whiteKing = new Click(secClick.row, secClick.col);
+				} else {
+					blackKing = new Click(secClick.row, secClick.col);
+				}
 			}
 			
-				if (ChessBoard[secClick.row][secClick.col] != null){	//We are killing a piece
+			System.out.println("Valid 2nd Click");			
+			
+			//if King isn't castling run the normal move
+			if (!this.isKingCastling()) {
+
+				drawWith75Moves++;
+
+				if (ChessBoard[fstClick.row][fstClick.col] instanceof Pawn) {
+					drawWith75Moves = 0;
+				}
+
+				if (ChessBoard[secClick.row][secClick.col] != null) {
+					//we are killing a piece
 					drawWith75Moves = 0;
 				}
 
 				tempPiece = ChessBoard[secClick.row][secClick.col];
-				ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];				
+				ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
 				ChessBoard[fstClick.row][fstClick.col] = null;
-				
 
-				if(ChessBoard[secClick.row][secClick.col] instanceof King){
-					if (whoseTurn){
-						tempKing = whiteKing;
-						whiteKing = new Click(secClick.row, secClick.col);
-						System.out.println("White king has moved to Row: " + secClick.row + " Col: " + secClick.col);
-					}else{
-						blackKing = tempKing;
-						blackKing = new Click(secClick.row, secClick.col);
-						System.out.println("Black king has moved to Row: " + secClick.row + " Col: " + secClick.col);
-					}
-				}
-			//}			
+				
+			}		
 			whoseTurn = whoseTurn ? false : true;	
 			return true;
 		}else{//Not a valid move and tell the user that it is not valid
@@ -211,11 +208,11 @@ public class Game {
 		if(!reCheck){		
 			if(whoseTurn){
 				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
-				check = selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col);
+				check = selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col,true);
 				System.out.println("White's turn, White check is: " + check);
 			}else{
 				selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
-				check = selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col);
+				check = selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col,false);
 				System.out.println("Black's turn, Black check is: " + check);
 			}
 			if(check){
@@ -224,11 +221,12 @@ public class Game {
 		}else{
 			if(whoseTurn){
 				selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
-				check = selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col);
+				check = selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col,false);
 				System.out.println("White's turn, Black check is: " + check);
 			}else{
 				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
-				check = selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col);
+				System.out.println("whiteKing.row: "+whiteKing.row+" whiteKing.col: "+whiteKing.col);
+				check = selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col,true);
 				System.out.println("Black's turn, White check is: " + check);
 			}
 			if(check && !leaving){
@@ -243,14 +241,21 @@ public class Game {
 	//Check if king is castling & update king location
 	public boolean isKingCastling(){
 
-		if (ChessBoard[fstClick.row][fstClick.col] instanceof King) {
-			// Making sure that the whiteKing & blackKing locations are up to
-			// date
+		justCastled = false;
+		
+		// Deactivate respective future castling
+		if (ChessBoard[fstClick.row][fstClick.col] instanceof Rook) {
 			if (whoseTurn == true) {
-				whiteKing = new Click(secClick);
+				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+				selectedKing.castleValid = false;
 			} else {
-				blackKing = new Click(secClick);
+				selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+				selectedKing.castleValid = false;
 			}
+		}
+		
+		if (ChessBoard[fstClick.row][fstClick.col] instanceof King) {
+			
 			selectedKing = (King) ChessBoard[fstClick.row][fstClick.col];
 			
 			if (selectedKing.castleValid) {
@@ -258,31 +263,29 @@ public class Game {
 				if (secClick.col - fstClick.col == 2 && (fstClick.row == secClick.row)) {
 					ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
 					ChessBoard[fstClick.row][5] = ChessBoard[fstClick.row][7];
-					whoseTurn = whoseTurn ? false : true;
+					ChessBoard[fstClick.row][7] = null;
+					ChessBoard[fstClick.row][fstClick.col] = null;
+
+					selectedKing.castleValid = false;
+
+					justCastled = true;
+					return true;
 				}
 
 				if (secClick.col - fstClick.col == -2 && (fstClick.row == secClick.row)) {
 					ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
-					ChessBoard[fstClick.row][0] = ChessBoard[fstClick.row][3];
-					whoseTurn = whoseTurn ? false : true;
+					ChessBoard[fstClick.row][3] = ChessBoard[fstClick.row][0];
+					ChessBoard[fstClick.row][0] = null;
+					ChessBoard[fstClick.row][fstClick.col] = null;
+
+					selectedKing.castleValid = false;
+
+					justCastled = true;
+					return true;
 				}
-				return true;
-			}
-			
-			
-		}
-		
-		//Deactivate respective future castling
-		if (ChessBoard[fstClick.row][fstClick.col] instanceof King || ChessBoard[fstClick.row][fstClick.col] instanceof Rook){
-			if (whoseTurn == true){
-				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
-				selectedKing.castleValid = false;
-			}else{
-				selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
-				selectedKing.castleValid = false;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -301,39 +304,45 @@ public class Game {
 		int kingRow;
 		int kingCol;
 		
-		//First we need to get all possible moves for that piece.
-		ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard);
-		
-		//Is storing the address of the possibleMoves
-		ArrayList<int[]> tempList = ChessBoard[sentC.row][sentC.col].possibleMoves;
-		Piece tempPiece;
-		
 		//select the right king to check against
-		if (whoseTurn){
-			selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
-			kingRow = whiteKing.row;
-			kingCol = whiteKing.col;
-		}else{
-			selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
-			kingRow = blackKing.row;
-			kingCol = blackKing.col;
-		}
+				if (whoseTurn){
+					selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+					kingRow = whiteKing.row;
+					kingCol = whiteKing.col;
+				}else{
+					selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+					kingRow = blackKing.row;
+					kingCol = blackKing.col;
+				}
 
-		for (int i = 0; i < tempList.size(); i++) {
+		if (ChessBoard[sentC.row][sentC.col] instanceof King || 
+				selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
 
-			tempPiece = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
-			ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = ChessBoard[fstClick.row][fstClick.col];
-			ChessBoard[fstClick.row][fstClick.col] = null;
+			// First we need to get all possible moves for that piece.
+			ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard);
 
-			if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol)) {
-				ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
-				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
-				tempList.remove(i);
-				i = i - 1; // this is so it doesn't skip over a spot.
-		} else {
-				ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
-				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
-			}	
+			// Is storing the address of the possibleMoves
+			ArrayList<int[]> tempList = ChessBoard[sentC.row][sentC.col].possibleMoves;
+			Piece tempPiece;
+
+			for (int i = 0; i < tempList.size(); i++) {
+
+				tempPiece = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
+				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = ChessBoard[fstClick.row][fstClick.col];
+				ChessBoard[fstClick.row][fstClick.col] = null;
+
+				System.out.println("Kingrow: "+kingRow+" KingColumn: "+kingCol+" selectedKing.team: "+selectedKing.team);
+				
+				if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
+					ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
+					ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
+					tempList.remove(i);
+					i = i - 1; // this is so it doesn't skip over a spot.
+				} else {
+					ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
+					ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
+				}
+			}
 		}
 		
 	}
@@ -350,6 +359,10 @@ public class Game {
 			for (int j = 0; j < 8; j++){
 				if (ChessBoard[i][j] != null && ChessBoard[i][j].team == whoseTurn){
 					ChessBoard[i][j].ReturnPossibleMoves(i, j, ChessBoard);
+					
+					if (ChessBoard[i][j] != null && ChessBoard[i][j] instanceof King){
+						this.eliminatePossibleMoves(new Click(i,j));
+					}
 					
 					if (ChessBoard[i][j] != null && ChessBoard[i][j].possibleMoves.size() > 0){
 						return false;
@@ -377,7 +390,7 @@ public class Game {
 		}
 		
 		//If we aren't in check we aren't in checkmate
-		if (!selectedKing.KingCheck(ChessBoard, currentC.row, currentC.col)){
+		if (!selectedKing.KingCheck(ChessBoard, currentC.row, currentC.col,selectedKing.team)){
 			return false;
 		}
 		
@@ -403,9 +416,9 @@ public class Game {
 		}		
 		//if all else fails it is a checkmate
 		this.ShowDialogBox("", "Checkmate");
-		//return true;
+		return true;
 		//TODO: temporary need to remove
-		return false;
+//		return false;
 	}
 	
 
