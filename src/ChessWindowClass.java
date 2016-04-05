@@ -358,8 +358,19 @@ public class ChessWindowClass implements ActionListener{
                             
 			    		    if (fClick.SecondClick(new Click(i,ii))){
 			    		    	String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
-			    		    	clearHighlight(possibleMoves);   
+			    		    	clearHighlight(possibleMoves);
+			    		    	// check for castling move
+			    		    	if(fClick.isKingCastling()){
+			    		    		// insert castling move method here
+			    		    	} // end if isKingCastling
+			    		    	// check for pawn promotion
+			    		    	else if(fClick.pawnPromotion()){
+			    		    		// insert pawn promotion method
+			    		    	} // end else if pawnPromotion
+			    		    	// else standard piece movement
+			    		    	else{
 			    		    	movePiece(start, end, piece);    // call to movePiece method
+			    		    	} // end else movePiece
 			    		    	check = fClick.isKingInCheck(false, false);
 			    		    	leavingInCheck = fClick.isKingInCheck(true, true);
 			    		    	if(leavingInCheck){
