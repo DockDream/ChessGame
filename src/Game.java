@@ -95,10 +95,10 @@ public class Game {
 				
 				// First get all possible moves
 				ChessBoard[fstClick.row][fstClick.col].ReturnPossibleMoves(fstClick.row, fstClick.col, ChessBoard);
-//				this.eliminatePossibleMoves(fstClick);
+				this.eliminatePossibleMoves(fstClick);
 				
 				if (ChessBoard[fstClick.row][fstClick.col].possibleMoves.size() == 0){
-					this.ShowDialogBox("Piece cannot move", "Invalid Move");
+					this.ShowDialogBox("Can't move, if moved king will be placed in check", "Invalid Move");
 					return false;
 				}else{
 				
@@ -149,7 +149,8 @@ public class Game {
 				}
 			}
 			
-			System.out.println("Valid 2nd Click");			
+			System.out.println("Valid 2nd Click");
+			System.out.println("");
 			
 			//if King isn't castling run the normal move
 			if (!this.isKingCastling()) {
@@ -225,7 +226,6 @@ public class Game {
 				System.out.println("White's turn, Black check is: " + check);
 			}else{
 				selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
-				System.out.println("whiteKing.row: "+whiteKing.row+" whiteKing.col: "+whiteKing.col);
 				check = selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col,true);
 				System.out.println("Black's turn, White check is: " + check);
 			}
@@ -315,24 +315,29 @@ public class Game {
 					kingCol = blackKing.col;
 				}
 
-		if (ChessBoard[sentC.row][sentC.col] instanceof King || 
-				selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
+//		if (ChessBoard[sentC.row][sentC.col] instanceof King || 
+//				selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
 
+
+			System.out.println("Reached inside the eliminate moves method");
+			
 			// First we need to get all possible moves for that piece.
 			ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard);
 
 			// Is storing the address of the possibleMoves
 			ArrayList<int[]> tempList = ChessBoard[sentC.row][sentC.col].possibleMoves;
 			Piece tempPiece;
-
+			
+			
 			for (int i = 0; i < tempList.size(); i++) {
-
+				
+				//Move piece to possibleplace
 				tempPiece = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
 				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = ChessBoard[fstClick.row][fstClick.col];
 				ChessBoard[fstClick.row][fstClick.col] = null;
 
-				System.out.println("Kingrow: "+kingRow+" KingColumn: "+kingCol+" selectedKing.team: "+selectedKing.team);
 				
+				//if king is still in check then remove the int[] as a possibility
 				if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
 					ChessBoard[fstClick.row][fstClick.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
 					ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
@@ -343,7 +348,8 @@ public class Game {
 					ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
 				}
 			}
-		}
+			ChessBoard[sentC.row][sentC.col].possibleMoves = tempList;
+//		}
 		
 	}
 	
@@ -445,5 +451,21 @@ public class Game {
 
 	public void pawnPromoted(Object sent){
 		ChessBoard[secClick.row][secClick.col] = (Piece) sent;
+	}
+	
+	public void printBoard(){
+		
+		System.out.println("");
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				if (ChessBoard[i][j] != null){
+				System.out.print(ChessBoard[i][j].getClass().toString()+".");
+				}else{
+					System.out.print("null.");
+				}
+			}
+			System.out.println("");
+		}
+		System.out.println("");
 	}
 }

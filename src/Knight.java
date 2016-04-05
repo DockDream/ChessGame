@@ -21,7 +21,7 @@ public class Knight extends Piece {
 				if (newLocation[0] <= 7 && newLocation[1] <= 7 && newLocation[0] >= 0 && newLocation[1] >= 0) {
 					if (currentBoard[newLocation[0]][newLocation[1]] == null) {
 						tempList.add(newLocation);					
-					} else if (currentBoard[newLocation[0]][newLocation[1]].team !=currentBoard[startRow][startColumn].team) {
+					} else if (currentBoard[newLocation[0]][newLocation[1]].team != this.team) {
 						tempList.add(newLocation);					
 					}			
 				}		

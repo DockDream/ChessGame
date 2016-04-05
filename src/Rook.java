@@ -59,7 +59,7 @@ public class Rook extends Piece{
 				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
 					tempList.add(new int[] {currentArray[0],currentArray[1]});
 				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
-						currentBoard[startRow][startColumn].team) {
+						this.team) {
 					tempList.add(new int[] {currentArray[0],currentArray[1]});
 					break;
 				} else {

@@ -39,7 +39,7 @@ public class Pawn extends Piece {
 				//if cell is occupied
 				if (currentBoard[killRow][killColumn] != null){
 					//if it is the opposite team
-					if (killer.team != victim.team){
+					if (this.team != victim.team){
 						kill = true;
 					}
 				}

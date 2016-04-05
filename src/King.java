@@ -19,12 +19,10 @@ public class King extends Piece {
 		int kingCol = currentCol;		
 		int opponentRow;
 		int opponentCol;
-		Piece king = chessBoard[kingRow][kingCol];
 		Piece opponent;
 		
 		//System.out.println("Checking Rook: 1 of 5");
-		Rook kingRook = new Rook(kingTeam? false:true);
-//		System.out.println("Kingrow: "+kingRow+" KingColumn: "+kingCol+" selectedKing.team: "+kingTeam);
+		Rook kingRook = new Rook(kingTeam);
 		kingRook.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
 		kingMoves = kingRook.possibleMoves;
 		for(int i = 0; i < kingMoves.size(); i++){
@@ -32,7 +30,7 @@ public class King extends Piece {
 			opponentCol = kingMoves.get(i)[1];
 			opponent = chessBoard[opponentRow][opponentCol];
 			if (opponent != null){
-				if(opponent.team != king.team){
+				if(opponent.team != kingTeam){
 					if(opponent instanceof Rook || opponent instanceof Queen){
 						check = true;
 					}
@@ -40,8 +38,9 @@ public class King extends Piece {
 			}
 		}
 		
+		
 		//System.out.println("Checking Bishop: 2 of 5");
-		Bishop kingBishop = new Bishop(kingTeam? false:true);
+		Bishop kingBishop = new Bishop(kingTeam);
 		kingBishop.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
 		kingMoves = kingBishop.possibleMoves;
 		for(int i = 0; i < kingMoves.size(); i++){
@@ -49,7 +48,7 @@ public class King extends Piece {
 			opponentCol = kingMoves.get(i)[1];
 			opponent = chessBoard[opponentRow][opponentCol];
 			if (opponent != null){
-				if(opponent.team != king.team){
+				if(opponent.team != kingTeam){
 					if(opponent instanceof Bishop || opponent instanceof Queen){
 						check = true;
 					}
@@ -66,7 +65,7 @@ public class King extends Piece {
 //			opponentCol = kingMoves.get(i)[1];
 //			opponent = chessBoard[opponentRow][opponentCol];
 //			if (opponent != null){
-//				if(opponent.team != king.team){
+//				if(opponent.team != kingTeam){
 //					if(opponent instanceof Queen){
 //						check = true;
 //					}
@@ -75,13 +74,13 @@ public class King extends Piece {
 //		}
 		
 		//System.out.println("Checking Pawns: 4 of 5");
-		Pawn kingPawn = new Pawn(kingTeam? false:true);
+		Pawn kingPawn = new Pawn(kingTeam);
 		if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol+1, chessBoard)){
 			opponent = chessBoard[kingRow+1][kingCol+1];
 			if (opponent != null){
-				if(opponent.team != king.team){
+				if(opponent.team != kingTeam){
 					if(opponent instanceof Pawn){
-						if(!king.team){
+						if(!kingTeam){
 							check = true;
 						}
 					}
@@ -90,9 +89,9 @@ public class King extends Piece {
 		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol-1, chessBoard)){
 			opponent = chessBoard[kingRow+1][kingCol-1];
 			if (opponent != null){
-				if(opponent.team != king.team){
+				if(opponent.team != kingTeam){
 					if(opponent instanceof Pawn){
-						if(!king.team){
+						if(!kingTeam){
 							check = true;
 						}
 					}
@@ -101,9 +100,9 @@ public class King extends Piece {
 		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow-1, kingCol+1, chessBoard)){
 			opponent = chessBoard[kingRow-1][kingCol+1];
 			if (opponent != null){
-				if(opponent.team != king.team){
+				if(opponent.team != kingTeam){
 					if(opponent instanceof Pawn){
-						if(king.team){
+						if(kingTeam){
 							check = true;
 						}
 					}
@@ -112,9 +111,9 @@ public class King extends Piece {
 		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow-1, kingCol-1, chessBoard)){
 			opponent = chessBoard[kingRow-1][kingCol-1];
 			if (opponent != null){
-				if(opponent.team != king.team){
+				if(opponent.team != kingTeam){
 					if(opponent instanceof Pawn){
-						if(king.team){
+						if(kingTeam){
 							check = true;
 						}
 					}
@@ -123,7 +122,7 @@ public class King extends Piece {
 		}
 		
 		//System.out.println("Checking Knight: 5 of 5");
-		Knight kingKnight = new Knight(kingTeam? false:true);
+		Knight kingKnight = new Knight(kingTeam);
 		kingKnight.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
 		kingMoves = kingKnight.possibleMoves;
 		for(int i = 0; i < kingMoves.size(); i++){
@@ -131,7 +130,7 @@ public class King extends Piece {
 			opponentCol = kingMoves.get(i)[1];
 			opponent = chessBoard[opponentRow][opponentCol];
 			if (opponent != null){
-				if(opponent.team != king.team){
+				if(opponent.team != kingTeam){
 					if(opponent instanceof Knight){
 						check = true;
 					}
