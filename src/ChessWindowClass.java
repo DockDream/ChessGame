@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class ChessWindowClass implements ActionListener{
 	
@@ -86,7 +87,7 @@ public class ChessWindowClass implements ActionListener{
 		} // end for i
 		
 		frmJavaholicsChess.setTitle("Javaholics Chess"); //Sets title for window
-		frmJavaholicsChess.setAlwaysOnTop(true);		//Makes window on top of all windows
+		frmJavaholicsChess.setAlwaysOnTop(false);		//Makes window on top of all windows
 		frmJavaholicsChess.setBounds(100, 100, 800, 798);	//Sets size of window
 		frmJavaholicsChess.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Ends program on close of window
       
@@ -587,6 +588,56 @@ public class ChessWindowClass implements ActionListener{
    } // end clearHighlight method
    
    /**
+    * pawnPromotionMove method - called from Action Listener
+    * prompts user to select a piece to replace a pawn which has advanced to opponent's back row
+    * (Requirement 2.4.0)
+    */
+   
+public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
+	   StringBuilder newIcon = new StringBuilder("/Images/");
+
+		// This block pops up player piece choice
+		String[] pieces = {"Queen", "Bishop", "Rook", "Knight"};
+
+		Object choice = JOptionPane.showInputDialog(null, "Choose your new piece:", "Selection", JOptionPane.DEFAULT_OPTION, null, pieces, "0");
+		String selection = choice.toString();
+
+		//adds piece color to image file path
+		if(turn == 0){
+			if(pieceColor){
+				newIcon.append("W");
+			}
+			else{
+				newIcon.append("R");
+			}
+		}
+		else if (turn == 1){
+			if(pieceColor){
+				newIcon.append("B");
+			}
+			else{
+				newIcon.append("U");
+			}
+
+		}
+		//adds piece type to image file path
+		newIcon.append(selection);
+
+		//adds board color to image file path
+		if((row + col)%2 == 0){
+			newIcon.append("WBoard.png");
+		}
+		else{
+			newIcon.append("BBoard.png");
+		}
+
+		chessSquares[row][col].setIcon(new ImageIcon(ChessWindowClass.class.getResource(newIcon.toString())));
+		
+		} // end pawnPromotionMethod
+   
+   
+   
+   /**
     * Action Event Listener
     * records player "clicks" indication piece/square selection
     * (Requirements 1.1.0 and 2.3.0)
@@ -627,18 +678,17 @@ public class ChessWindowClass implements ActionListener{
 			    		    if (fClick.SecondClick(new Click(i,ii))){
 			    		    	String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
 			    		    	clearHighlight(possibleMoves);
+			    		    	movePiece(start, end, piece);    // call to movePiece method
 			    		    	// check for castling move
 			    		    	if(fClick.isKingCastling()){
 			    		    		// insert castling move method here
 			    		    	} // end if isKingCastling
 			    		    	// check for pawn promotion
 			    		    	else if(fClick.pawnPromotion()){
-			    		    		// insert pawn promotion method
+			    		    		pawnPromotionMove(i, ii, turn, pieceColor);
 			    		    	} // end else if pawnPromotion
 			    		    	// else standard piece movement
-			    		    	else{
-			    		    	movePiece(start, end, piece);    // call to movePiece method
-			    		    	} // end else movePiece
+			    		   
 			    		    	check = fClick.isKingInCheck(false, false);
 			    		    	leavingInCheck = fClick.isKingInCheck(true, true);
 			    		    	if(leavingInCheck){
