@@ -156,13 +156,16 @@ public class King extends Piece {
 		int kingRow = startRow;
 		int kingCol = startCol;
 		Piece king = chessBoard[kingRow][kingCol];
-
+		
 		if(this.inBounds(destRow, destCol)){
 			Piece destCell = chessBoard[destRow][destCol]; 
 			if (destCell == null) {
-				tempList.add(cell);
-			} else if (destCell.team != king.team){
-				if(!(destCell instanceof King)){
+				//makes sure that the moves doesn't show up if there is another king in its radius
+				if (!this.isKinginRadius(new Click(cell[0],cell[1]), chessBoard, !this.team)){
+					tempList.add(cell);
+				}
+			} else if (destCell.team != king.team) {
+				if (!(destCell instanceof King)) {
 					tempList.add(cell);
 				}
 			}
@@ -225,4 +228,44 @@ public class King extends Piece {
 			}
 		}
 	}
+	
+	//Checks if there is a king of the sentTeam boolean in radius
+	public boolean isKinginRadius(Click sentC,  Piece[][] currentBoard, boolean sentTeam){
+		if (this.inBounds(sentC.row+1, sentC.col) &&
+				currentBoard[sentC.row+1][sentC.col] instanceof King && 
+				currentBoard[sentC.row+1][sentC.col].team  == sentTeam){
+			return true;
+		}else if (this.inBounds(sentC.row+1, sentC.col+1) &&
+				currentBoard[sentC.row+1][sentC.col+1] instanceof King && 
+				currentBoard[sentC.row+1][sentC.col+1].team  == sentTeam){
+			return true;
+		}else if (this.inBounds(sentC.row, sentC.col+1) &&
+				currentBoard[sentC.row][sentC.col+1] instanceof King && 
+				currentBoard[sentC.row][sentC.col+1].team  == sentTeam){
+			return true;
+		}else if (this.inBounds(sentC.row, sentC.col-1) &&
+				currentBoard[sentC.row][sentC.col-1] instanceof King && 
+				currentBoard[sentC.row][sentC.col-1].team  == sentTeam){
+			return true;
+		}else if (this.inBounds(sentC.row-1, sentC.col) &&
+				currentBoard[sentC.row-1][sentC.col] instanceof King && 
+				currentBoard[sentC.row-1][sentC.col].team  == sentTeam){
+			return true;
+		}else if (this.inBounds(sentC.row-1, sentC.col-1) &&
+				currentBoard[sentC.row-1][sentC.col-1] instanceof King && 
+				currentBoard[sentC.row-1][sentC.col-1].team  == sentTeam){
+			return true;
+		}else if (this.inBounds(sentC.row-1, sentC.col+1) &&
+				currentBoard[sentC.row-1][sentC.col+1] instanceof King && 
+				currentBoard[sentC.row-1][sentC.col+1].team  == sentTeam){
+			return true;
+		}else if (this.inBounds(sentC.row+1, sentC.col-1) &&
+				currentBoard[sentC.row+1][sentC.col-1] instanceof King && 
+				currentBoard[sentC.row+1][sentC.col-1].team  == sentTeam){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 }

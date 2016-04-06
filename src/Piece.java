@@ -25,11 +25,10 @@ public abstract class Piece {
 	}
 	
 	public boolean inBounds(int destRow, int destCol){
-		boolean inBounds = false;
 		if (destRow <= 7 && destCol <= 7 && destRow >= 0 && destRow >= 0){
-			inBounds = true;
+			return true;
 		}
-		return inBounds;
+		return false;
 	}
 
 	//Just making a list of all the possible moves that the respective piece can perform
