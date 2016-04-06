@@ -443,7 +443,7 @@ public class Game {
 
 	//Check if pawnPromotion is eligible
 	public boolean pawnPromotion(){
-		if ((ChessBoard[secClick.row][secClick.col] instanceof Pawn) && ((secClick.row == 0) || secClick.col == 7)){
+		if ((ChessBoard[secClick.row][secClick.col] instanceof Pawn) && ((secClick.row == 0) || secClick.row == 7)){
 			return true;
 		}else{
 			return false;
@@ -471,5 +471,16 @@ public class Game {
 			System.out.println("");
 		}
 		System.out.println("");
+	}
+	
+	public boolean isKingInCheck(){
+		if (whoseTurn){
+			selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
+			return (selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col , true));
+		}else{
+			selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
+			return (selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col , true));
+		
+		}
 	}
 }
