@@ -708,12 +708,17 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		    	} // end else if pawnPromotion
 			    		    	// else standard piece movement
 			    		   
-			    		    	check = fClick.isKingInCheck(false, false);
-			    		    	leavingInCheck = fClick.isKingInCheck(true, true);
-			    		    	if(leavingInCheck){
-			    		    		fClick.reverseMove();
-			    		    		movePiece(end, start, piece);
-			    		    	}		   
+			    		    	//displays a message if the king is in check
+			    		    	if (fClick.isKingInCheck()){
+			    		    		fClick.ShowDialogBox("King is in Check", "Check");
+			    		    	}
+			    		    	
+//			    		    	check = fClick.isKingInCheck(false, false);
+//			    		    	leavingInCheck = fClick.isKingInCheck(true, true);
+//			    		    	if(leavingInCheck){
+//			    		    		fClick.reverseMove();
+//			    		    		movePiece(end, start, piece);
+//			    		    	}		   
 			    		   	}
 			    		    else {
 			    		   		clearHighlight(possibleMoves);

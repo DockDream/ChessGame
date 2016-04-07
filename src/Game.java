@@ -64,18 +64,6 @@ public class Game {
 		drawWith75Moves = 0;
 	}
 
-	/*
-	 * Checking to see if there are any pieces at the clicked location
-	 * 
-	 */
-	public boolean IsPieceAtLocation(Click cSent) {
-		if (ChessBoard[cSent.row][cSent.col] == null) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
 	// and returning true if it is valid first click
 	public boolean FirstClick(Click cSent) {
 		fstClick = null;
@@ -88,7 +76,7 @@ public class Game {
 			System.out.println("2nd Click: " + whoseTurn + "'s Turn" + ", Empty Spot Clicked");
 		}
 		
-		if (this.IsPieceAtLocation(cSent)) {
+		if (ChessBoard[cSent.row][cSent.col] != null) {
 			if (ChessBoard[cSent.row][cSent.col].team == whoseTurn) {
 				
 				fstClick = new Click(cSent.row,cSent.col);
@@ -98,7 +86,7 @@ public class Game {
 				this.eliminatePossibleMoves(fstClick);
 				
 				if (ChessBoard[fstClick.row][fstClick.col].possibleMoves.size() == 0){
-					this.ShowDialogBox("Can't move, if moved king will be placed in check", "Invalid Move");
+					this.ShowDialogBox("No moves left", "Invalid Move");
 					return false;
 				}else{
 				
@@ -172,7 +160,8 @@ public class Game {
 
 				
 			}		
-			whoseTurn = whoseTurn ? false : true;	
+			whoseTurn = whoseTurn ? false : true;
+			
 			return true;
 		}else{//Not a valid move and tell the user that it is not valid
 			this.ShowDialogBox("That is not a legal move", "Invalid Move");
@@ -289,7 +278,7 @@ public class Game {
 	}
 
 	//Call this to show a Dialog box
-	private void ShowDialogBox(String message, String title) {
+	public void ShowDialogBox(String message, String title) {
 		JOptionPane optionPane = new JOptionPane(message);
 
 		JDialog dialog = optionPane.createDialog(title);
@@ -479,7 +468,7 @@ public class Game {
 			return (selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col , true));
 		}else{
 			selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
-			return (selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col , true));
+			return (selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col , false));
 		
 		}
 	}

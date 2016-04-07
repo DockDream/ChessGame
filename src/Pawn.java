@@ -73,7 +73,7 @@ public class Pawn extends Piece {
 				possibleMoves.addAll(this.ReturnMovesAddon(startRow-1, startColumn-1, currentBoard));
 			}
 		}else{ //if black pieces
-			if(startRow<6) possibleMoves = this.ReturnMovesAddon(startRow+1, startColumn, currentBoard); //move down by 1
+			if(startRow<7) possibleMoves = this.ReturnMovesAddon(startRow+1, startColumn, currentBoard); //move down by 1
 			if(startRow==1){//if hasn't moved yet, piece has option to move down by 2 if not blocked
 				if(currentBoard[startRow+1][startColumn] == null)
 				{
