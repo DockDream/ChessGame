@@ -595,7 +595,7 @@ public class ChessWindowClass implements ActionListener{
    
 public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 	   StringBuilder newIcon = new StringBuilder("/Images/");
-
+	   boolean team;
 		// This block pops up player piece choice
 		String[] pieces = {"Queen", "Bishop", "Rook", "Knight"};
 
@@ -603,7 +603,7 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 		String selection = choice.toString();
 
 		//adds piece color to image file path
-		if(turn == 0){
+		if(turn == 1){
 			if(pieceColor){
 				newIcon.append("W");
 			}
@@ -611,7 +611,7 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 				newIcon.append("R");
 			}
 		}
-		else if (turn == 1){
+		else if (turn == 0){
 			if(pieceColor){
 				newIcon.append("B");
 			}
@@ -630,12 +630,31 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 		else{
 			newIcon.append("BBoard.png");
 		}
-
+		
 		chessSquares[row][col].setIcon(new ImageIcon(ChessWindowClass.class.getResource(newIcon.toString())));
+		if(turn == 0){
+			team = true;
+		}
+		else{
+			team = false;
+		}
+		
+		if(selection == "Queen"){
+			fClick.pawnPromoted(new Queen(team));
+		} // end if Queen
+		else if(selection == "Bishop"){
+			fClick.pawnPromoted(new Bishop(team));
+		}
+		else if(selection == "Rook"){
+			fClick.pawnPromoted(new Rook(team));
+		}
+		else if(selection == "Knight"){
+			fClick.pawnPromoted(new Knight(team));
+		}
 		
 		} // end pawnPromotionMethod
    
-   
+ 
    
    /**
     * Action Event Listener
