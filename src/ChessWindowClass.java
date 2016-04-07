@@ -710,7 +710,13 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		   
 			    		    	//displays a message if the king is in check
 			    		    	if (fClick.isKingInCheck()){
-			    		    		fClick.ShowDialogBox("King is in Check", "Check");
+			    		    		if (fClick.isCheckMate()){
+			    		    			fClick.ShowDialogBox("Checkmate", "Game Over");
+			    		    		}else{
+			    		    			fClick.ShowDialogBox("King is in Check", "Check");
+			    		    		}
+			    		    	}else if (fClick.isDraw()){
+			    		    		fClick.ShowDialogBox("Draw", "Game Over");
 			    		    	}
 			    		    	
 //			    		    	check = fClick.isKingInCheck(false, false);
