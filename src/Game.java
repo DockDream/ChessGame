@@ -451,9 +451,9 @@ public class Game {
 	}
 
 	//Replace the pawn promotion
-
-	public void pawnPromoted(Object sent){
-		ChessBoard[secClick.row][secClick.col] = (Piece) sent;
+	public void pawnPromoted(Piece sent){
+		sent.team = whoseTurn? false:true;
+		ChessBoard[secClick.row][secClick.col] = sent;
 	}
 	
 	//Prints what the board contains
