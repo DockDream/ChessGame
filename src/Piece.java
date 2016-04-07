@@ -5,6 +5,10 @@ public abstract class Piece {
 	Piece (boolean sentTeam){
 		this.team = sentTeam;
 	}
+	
+	Piece(){
+		
+	}
 
 	boolean team;
 	ArrayList<int[]> possibleMoves = null; // store all possible moves for each

@@ -7,6 +7,10 @@ public class Rook extends Piece{
 		super(sentTeam);
 	}
 
+	public Rook() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
 		if (possibleMoves != null){
 			possibleMoves.clear();

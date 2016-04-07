@@ -8,6 +8,10 @@ public class Knight extends Piece {
 		super(sentTeam);
 	}
 
+	public Knight() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int newRow, int newColumn, Piece[][] currentBoard) {
 

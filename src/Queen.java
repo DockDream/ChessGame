@@ -6,6 +6,10 @@ public class Queen extends Piece{
 		super(sentTeam);
 	}
 
+	public Queen() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
 		if (possibleMoves != null){
 			possibleMoves.clear();

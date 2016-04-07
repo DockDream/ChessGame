@@ -640,16 +640,16 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 		}
 		
 		if(selection == "Queen"){
-			fClick.pawnPromoted(new Queen(team));
+			fClick.pawnPromoted(new Queen());
 		} // end if Queen
 		else if(selection == "Bishop"){
-			fClick.pawnPromoted(new Bishop(team));
+			fClick.pawnPromoted(new Bishop());
 		}
 		else if(selection == "Rook"){
-			fClick.pawnPromoted(new Rook(team));
+			fClick.pawnPromoted(new Rook());
 		}
 		else if(selection == "Knight"){
-			fClick.pawnPromoted(new Knight(team));
+			fClick.pawnPromoted(new Knight());
 		}
 		
 		} // end pawnPromotionMethod
