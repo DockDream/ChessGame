@@ -655,6 +655,63 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 		
 		} // end pawnPromotionMethod
    
+	/**
+	 * kingCastle method - called from Action Listener
+	 * will reset appropriate rook relative to castling King
+	 * (Requirement 1.1.0)
+	 */
+
+	public void kingCastle(int row, int col){
+		
+		// Black King castling
+		if(row == 0 && pieceColor){
+			if(col == 6){
+				chessSquares[0][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[0][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+			} // end if col == 6
+			else{
+				chessSquares[0][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[0][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+			} // end else
+		} // end if row == 0 && pieceColor == true
+		
+		// Blue King castling
+		if(row == 0 && !pieceColor){
+			if(col == 6){
+				chessSquares[0][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[0][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+			} // end if col == 6
+			else{
+				chessSquares[0][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[0][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+			} // end else
+		} // end if row == 0 && pieceColor == false
+		
+		// White King castling
+		else if(row == 7 && pieceColor){
+			if(col == 6){
+				chessSquares[7][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[7][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+			} // end if col == 6
+			else{
+				chessSquares[7][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[7][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+			} // end else
+		} // end else if row == 7 && pieceColor == true
+		
+		// Red King castling
+		else if(row == 7 && !pieceColor){
+			if(col == 6){
+				chessSquares[7][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[7][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+			} // end if col == 6
+			else{
+				chessSquares[7][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[7][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+			} // end else
+		} // end else if row == 7 && pieceColor == false
+		
+	} // end kingCastle method
  
    
    /**
@@ -701,8 +758,14 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		    	movePiece(start, end, piece);    // call to movePiece method
 			    		    	// check for castling move
 			    		    	if(fClick.isKingCastling()){
-			    		    		// insert castling move method here
+			    		    		System.out.println("isKingCastling returned true");
+			    		    		kingCastle(i,ii);
 			    		    	} // end if isKingCastling
+			    		    	// FOR TESTING PURPOSES ONLY
+			    		    	if(!fClick.isKingCastling()){
+			    		    		System.out.println("isKingCastling returned false");
+			    		    	}
+			    		    	// END BLOCK FOR TESTING
 			    		    	// check for pawn promotion
 			    		    	else if(fClick.pawnPromotion()){
 			    		    		pawnPromotionMove(i, ii, turn, pieceColor);
