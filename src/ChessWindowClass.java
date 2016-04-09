@@ -757,15 +757,10 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		    	clearHighlight(possibleMoves);
 			    		    	movePiece(start, end, piece);    // call to movePiece method
 			    		    	// check for castling move
-			    		    	if(fClick.isKingCastling()){
-			    		    		System.out.println("isKingCastling returned true");
+			    		    	if(fClick.justCastled){
+			    		    		System.out.println("justCastled true");
 			    		    		kingCastle(i,ii);
 			    		    	} // end if isKingCastling
-			    		    	// FOR TESTING PURPOSES ONLY
-			    		    	if(!fClick.isKingCastling()){
-			    		    		System.out.println("isKingCastling returned false");
-			    		    	}
-			    		    	// END BLOCK FOR TESTING
 			    		    	// check for pawn promotion
 			    		    	else if(fClick.pawnPromotion()){
 			    		    		pawnPromotionMove(i, ii, turn, pieceColor);
