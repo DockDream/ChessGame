@@ -133,6 +133,12 @@ public class ChessWindowClass implements ActionListener{
 				
 	} // end initialize method
 	
+	/**
+	 * changeColor method 
+	 * Will allow for mid-game piece color change
+	 * @param pieceColor
+	 */
+	
 	public void changeColor(boolean pieceColor)
 	{
 		String shade = "";
@@ -747,7 +753,6 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
             for (int i = 0; i < 8; i ++) {
                 for (int ii = 0; ii < 8; ii++) {
                         if (pick == chessSquares[i][ii]) {
-                            //chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png"))); //FOR TESTING
                             
                         	end[0] = i;		//Stores second-clicked place ROW location
 			    		    end[1] = ii;		//Stores second-clicked place COLUMN location
@@ -777,13 +782,7 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		    	}else if (fClick.isDraw()){
 			    		    		fClick.ShowDialogBox("Draw", "Game Over");
 			    		    	}
-			    		    	
-//			    		    	check = fClick.isKingInCheck(false, false);
-//			    		    	leavingInCheck = fClick.isKingInCheck(true, true);
-//			    		    	if(leavingInCheck){
-//			    		    		fClick.reverseMove();
-//			    		    		movePiece(end, start, piece);
-//			    		    	}		   
+			    		    	 
 			    		   	}
 			    		    else {
 			    		   		clearHighlight(possibleMoves);
