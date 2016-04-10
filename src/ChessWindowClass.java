@@ -101,7 +101,7 @@ public class ChessWindowClass implements ActionListener{
 		mnOptions.add(mntmBlackWhite);	//Adds B&W Choice
 		mntmBlackWhite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				changeColor(false);
+				changeColor();
 				
 				if (label.getText() == "Blue Team") {
 					 label.setText("Black Team");
@@ -116,7 +116,7 @@ public class ChessWindowClass implements ActionListener{
 		mnOptions.add(mntmRedBlue);		//Adds R&B Choice
 		mntmRedBlue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				changeColor(true);
+				changeColor();
 				
 				 if (label.getText() == "Black Team") {
 						 label.setText("Blue Team");
@@ -136,15 +136,15 @@ public class ChessWindowClass implements ActionListener{
 	/**
 	 * changeColor method 
 	 * Will allow for mid-game piece color change
-	 * @param pieceColor
 	 */
 	
-	public void changeColor(boolean pieceColor)
+	public void changeColor()
 	{
 		String shade = "";
 		String[] splitSh;
 		
 		if (pieceColor == true) {
+			pieceColor = false; // toggle to reflect new piece colors
 			for(int i = 0; i < 8; i++) { 	//Searches all squares
 				for(int ii = 0; ii < 8; ii++) {
 					shade = chessSquares[i][ii].getIcon().toString();	//Finds location of icon
@@ -263,6 +263,7 @@ public class ChessWindowClass implements ActionListener{
 		}
 		
 		else {		//Resets colors to B&W
+			pieceColor = true; // toggle to reflect new piece colors
 			for(int i = 0; i < 8; i++) { 	//Searches all squares
 				for(int ii = 0; ii < 8; ii++) {
 					shade = chessSquares[i][ii].getIcon().toString();	//Finds location of icon
@@ -513,17 +514,17 @@ public class ChessWindowClass implements ActionListener{
 		if (turn == 0)
 		{
 			if (pieceColor == false)
-				label.setText("Black Team");
-			else if (pieceColor == true)
 				label.setText("Blue Team");
+			else if (pieceColor == true)
+				label.setText("Black Team");
 			turn++;
 		}
 		else if (turn == 1)
 		{
 			if (pieceColor == false)
-				label.setText("White Team");
-			else if (pieceColor == true)
 				label.setText("Red Team");
+			else if (pieceColor == true)
+				label.setText("White Team");
 			turn--;
 		}
 	} // end movePiece method
@@ -668,7 +669,7 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 	 */
 
 	public void kingCastle(int row, int col){
-		
+		System.out.println(pieceColor);
 		// Black King castling
 		if(row == 0 && pieceColor){
 			if(col == 6){
