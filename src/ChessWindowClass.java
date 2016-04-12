@@ -734,7 +734,6 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
             for (int i = 0; i < 8; i ++) {
                 for (int ii = 0; ii < 8; ii++) {
                     if (pick == chessSquares[i][ii]) {
-                        //chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BQueenBBoard.png"))); //FOR TESTING
                         start[0] = i;     //Stores first-clicked place ROW location
                         start[1] = ii;    //Stores first-clicked place ROW location                     
                         
