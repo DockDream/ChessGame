@@ -770,7 +770,7 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		    	clearHighlight(possibleMoves);
 			    		    	movePiece(start, end, piece);    // call to movePiece method
 			    		    	// check for castling move, only call it if the start != end
-			    		    	if(fClick.justCastled && end[1] != start[1]){
+			    		    	if(fClick.getjustCastled() && end[1] != start[1]){
 			    		    		System.out.println("justCastled true");
 			    		    		kingCastle(i,ii);
 			    		    	} // end if isKingCastling

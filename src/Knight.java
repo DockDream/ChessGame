@@ -9,10 +9,10 @@ public class Knight extends Piece {
 	}
 
 	public Knight() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
+	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int newRow, int newColumn, Piece[][] currentBoard) {
 
 			//make sure cell being moved to is in bounds and can be taken

@@ -56,23 +56,6 @@ public class King extends Piece {
 			}
 		}
 		
-//		//System.out.println("Checking Queen: 3 of 5");
-//		Queen kingQueen = new Queen();
-//		kingQueen.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
-//		kingMoves = kingQueen.possibleMoves;
-//		for(int i = 0; i < kingMoves.size(); i++){
-//			opponentRow = kingMoves.get(i)[0];
-//			opponentCol = kingMoves.get(i)[1];
-//			opponent = chessBoard[opponentRow][opponentCol];
-//			if (opponent != null){
-//				if(opponent.team != kingTeam){
-//					if(opponent instanceof Queen){
-//						check = true;
-//					}
-//				}
-//			}
-//		}
-		
 		//System.out.println("Checking Pawns: 4 of 5");
 		Pawn kingPawn = new Pawn(kingTeam);
 		if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol+1, chessBoard)){
@@ -142,7 +125,7 @@ public class King extends Piece {
 		return check;
 	}	
 	
-	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startCol, int newRow, int newCol,
+	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startCol, int newRow, int newCol,
 			Piece[][] chessBoard) {
 
 		// make sure cell being moved to is in bounds and can be taken
@@ -234,7 +217,7 @@ public class King extends Piece {
 	}
 	
 	//Checks if there is a king of the sentTeam boolean in radius
-	public boolean isKinginRadius(Click sentC,  Piece[][] currentBoard, boolean sentTeam){
+	private boolean isKinginRadius(Click sentC,  Piece[][] currentBoard, boolean sentTeam){
 		if (this.inBounds(sentC.row+1, sentC.col) &&
 				currentBoard[sentC.row+1][sentC.col] instanceof King && 
 				currentBoard[sentC.row+1][sentC.col].team  == sentTeam){

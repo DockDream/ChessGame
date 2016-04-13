@@ -29,29 +29,28 @@ public class Bishop extends Piece {
 		
 	}
 	
-	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
+	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
 		
-		int[] currentArray = new int[2];
+		int[] cArray = new int[2];
 		
-		currentArray[0] = startRow;
-		currentArray[1] = startColumn;
+		cArray[0] = startRow;
+		cArray[1] = startColumn;
 
 		for (int i = 0; i < 8; i++){
 
-			currentArray[0] = currentArray[0] + rowIncrement;
-			currentArray[1] = currentArray[1] + columnIncrement;
+			cArray[0] = cArray[0] + rowIncrement;
+			cArray[1] = cArray[1] + columnIncrement;
 			
-			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
-					currentArray[0] >= 0 && currentArray[1] >= 0) {
+			if (this.inBounds(cArray[0], cArray[1])) {
 				
-				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
-					tempList.add(new int[] {currentArray[0],currentArray[1]});
-				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
+				if (currentBoard[cArray[0]][cArray[1]] == null) {
+					tempList.add(new int[] {cArray[0],cArray[1]});
+				} else if (currentBoard[cArray[0]][cArray[1]].team != 
 						this.team) {
-					tempList.add(new int[] {currentArray[0],currentArray[1]});
+					tempList.add(new int[] {cArray[0],cArray[1]});
 					break;
 				} else {
 					

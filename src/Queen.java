@@ -7,7 +7,7 @@ public class Queen extends Piece{
 	}
 
 	public Queen() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){

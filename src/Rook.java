@@ -8,7 +8,7 @@ public class Rook extends Piece{
 	}
 
 	public Rook() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
@@ -19,52 +19,38 @@ public class Rook extends Piece{
 		//Moving to the up
 		possibleMoves = this.ReturnMovesAddon(startRow, startColumn, -1, 0, currentBoard);
 		
-		
 		//Move Down
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 1, 0, currentBoard));
-		
 		
 		//Moving to the right
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 0, 1, currentBoard));
 		
-		
 		//Moving to the left
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 0, -1, currentBoard));
-
 	}
 	
 	
-	
-	
-	
-	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
+	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
 		
-		int[] currentArray = new int[2];
+		int[] cArray = new int[2];
 		
-		currentArray[0] = startRow;
-		currentArray[1] = startColumn;
+		cArray[0] = startRow;
+		cArray[1] = startColumn;
 
 		for (int i = 0; i < 8; i++){
 
-			currentArray[0] = currentArray[0] + rowIncrement;
-			currentArray[1] = currentArray[1] + columnIncrement;
+			cArray[0] = cArray[0] + rowIncrement;
+			cArray[1] = cArray[1] + columnIncrement;
 			
-			if (currentArray[0] <= 7 && currentArray[1] <= 7 && 
-					currentArray[0] >= 0 && currentArray[1] >= 0) {
-				
-//				if (currentBoard[startRow][startColumn] != null){
-//				System.out.println("Class: "+currentBoard[startRow][startColumn].getClass().toString());
-//				}else{
-//					System.out.println("startRow: "+startRow+" startColumn: "+startColumn);
-//				}
-				if (currentBoard[currentArray[0]][currentArray[1]] == null) {
-					tempList.add(new int[] {currentArray[0],currentArray[1]});
-				} else if (currentBoard[currentArray[0]][currentArray[1]].team != 
-						this.team) {
-					tempList.add(new int[] {currentArray[0],currentArray[1]});
+			if (this.inBounds(cArray[0], cArray[1])) {
+				if (currentBoard[cArray[0]][cArray[1]] == null) {
+					tempList.add(new int[] {cArray[0],cArray[1]});
+				} else if (currentBoard[cArray[0]][cArray[1]].getTeam() != 
+						this.getTeam()) {
+					tempList.add(new int[] {cArray[0],cArray[1]});
 					break;
 				} else {
 					

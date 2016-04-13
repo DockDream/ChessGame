@@ -8,7 +8,7 @@ public class Pawn extends Piece {
 	}
 
 
-	public boolean canKill = false;
+	private boolean canKill = false;
 	
 	public ArrayList<int[]> ReturnMovesAddon(int newRow, int newColumn, Piece[][] currentBoard) {
 		//make sure cell being moved to is in bounds and clear 

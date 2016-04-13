@@ -10,8 +10,8 @@ public abstract class Piece {
 		
 	}
 
-	boolean team;
-	ArrayList<int[]> possibleMoves = null; // store all possible moves for each
+	protected boolean team;
+	protected ArrayList<int[]> possibleMoves = null; // store all possible moves for each
 											// piece
 
 	// team = true means white
@@ -28,8 +28,8 @@ public abstract class Piece {
 		return false;
 	}
 	
-	public boolean inBounds(int destRow, int destCol){
-		if (destRow <= 7 && destCol <= 7 && destRow >= 0 && destRow >= 0){
+	protected boolean inBounds(int destRow, int destCol){
+		if (destRow <= 7 && destCol <= 7 && destRow >= 0 && destCol >= 0){
 			return true;
 		}
 		return false;
@@ -42,7 +42,7 @@ public abstract class Piece {
 	}
 
 	//Expanded and used by most pieces as a function to add all the moves
-	public ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, Piece[][] currentBoard) {
+	protected ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
 		return tempList;
@@ -50,7 +50,7 @@ public abstract class Piece {
 	}
 	
 	//Method to printPossibleMoves for testing purposes
-	public void PrintPossibleMovesList(ArrayList<int[]> ListofItems){
+	protected void PrintPossibleMovesList(ArrayList<int[]> ListofItems){
 		if (ListofItems == null){
 			System.out.println("There is nothing in possibleMoves");
 			return;
@@ -59,5 +59,9 @@ public abstract class Piece {
 		for (int i =0; i < ListofItems.size();i++){
 			System.out.println("Row: "+ListofItems.get(i)[0]+" Column: "+ListofItems.get(i)[1]);
 		}
+	}
+	
+	public boolean getTeam(){
+		return this.team;
 	}
 }
