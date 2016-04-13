@@ -127,6 +127,14 @@ public class ChessWindowClass implements ActionListener{
 			}
 		});
 		
+		JMenuItem mnReset = new JMenuItem("Reset Game");
+		mnOptions.add(mnReset);			//Adds Reset Game
+		mnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Resets Game
+			}
+		});
+		
 		menuBar.add(label);				//Adds label for player turn
 		
 		setPieces(pieceColor);	// piece initialization method call
