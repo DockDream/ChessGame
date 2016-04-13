@@ -761,8 +761,8 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		    	String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
 			    		    	clearHighlight(possibleMoves);
 			    		    	movePiece(start, end, piece);    // call to movePiece method
-			    		    	// check for castling move
-			    		    	if(fClick.justCastled){
+			    		    	// check for castling move, only call it if the start != end
+			    		    	if(fClick.justCastled && end[1] != start[1]){
 			    		    		System.out.println("justCastled true");
 			    		    		kingCastle(i,ii);
 			    		    	} // end if isKingCastling

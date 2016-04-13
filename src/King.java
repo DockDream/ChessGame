@@ -175,6 +175,9 @@ public class King extends Piece {
 
 	public void ReturnPossibleMoves(int startRow, int startColumn,
 			Piece[][] currentBoard) {
+		
+		possibleMoves = null;
+		
 		if (possibleMoves != null) {
 			possibleMoves.clear();
 		}
@@ -209,9 +212,9 @@ public class King extends Piece {
 					if (!this.KingCheck(currentBoard,startRow,startColumn+2,this.team)){
 						possibleMoves.add(new int[] { startRow, startColumn + 2 });
 					}
-					currentBoard[startRow][startColumn] = currentBoard[startRow][startColumn+2];
+					currentBoard[startRow][startColumn+2] = null;
 				}
-				currentBoard[startRow][startColumn] = currentBoard[startRow][startColumn+1];
+				currentBoard[startRow][startColumn+1] = null;
 			}
 
 			if (currentBoard[startRow][startColumn - 1] == null && currentBoard[startRow][startColumn - 2] == null
@@ -222,9 +225,10 @@ public class King extends Piece {
 					 if (!this.KingCheck(currentBoard, startRow, startColumn - 2, this.team)){
 						 possibleMoves.add(new int[] { startRow, startColumn - 2 });
 					 }
-					currentBoard[startRow][startColumn] = currentBoard[startRow][startColumn-2];
+					currentBoard[startRow][startColumn-2] = null;
 				}
-				currentBoard[startRow][startColumn] = currentBoard[startRow][startColumn-1];
+				currentBoard[startRow][startColumn-3] = null;
+				currentBoard[startRow][startColumn-1] = null;
 			}
 		}
 	}

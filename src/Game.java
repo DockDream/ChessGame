@@ -256,7 +256,7 @@ public class Game {
 					ChessBoard[fstClick.row][fstClick.col] = null;
 
 					
-
+					selectedKing.castleValid = false;
 					justCastled = true;
 					return true;
 				}
@@ -267,6 +267,7 @@ public class Game {
 					ChessBoard[fstClick.row][0] = null;
 					ChessBoard[fstClick.row][fstClick.col] = null;
 
+					selectedKing.castleValid = false;
 					justCastled = true;
 					return true;
 				}
@@ -302,16 +303,20 @@ public class Game {
 			kingRow = blackKing.row;
 			kingCol = blackKing.col;
 		}
-
+		
 		// First we need to get all possible moves for that piece.
 		ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard);
+		
+		if (ChessBoard[sentC.row][sentC.col].possibleMoves.size() == 0){
+			return;
+		}
 		
 		// Is storing the address of the possibleMoves
 		ArrayList<int[]> tempList = ChessBoard[sentC.row][sentC.col].possibleMoves;
 		Piece tempPiece;
 
 		for (int i = 0; i < tempList.size(); i++) {
-
+			
 			// Move piece to possibleplace && firstclick is wrong for stalemate
 			tempPiece = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
 			ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = ChessBoard[sentC.row][sentC.col];
@@ -325,7 +330,6 @@ public class Game {
 				} else {
 					
 					selectedKing = (King) ChessBoard[kingRow][kingCol];
-					
 				}
 			}
 
@@ -333,7 +337,7 @@ public class Game {
 			if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
 				ChessBoard[sentC.row][sentC.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
 				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
-//				System.out.println("Remrow: " + tempList.get(i)[0] + " Remcol: " + tempList.get(i)[1]);
+				System.out.println("Remrow: " + tempList.get(i)[0] + " Remcol: " + tempList.get(i)[1]);
 				tempList.remove(i);
 				i = i - 1; // this is so it doesn't skip over a spot.
 			} else {
@@ -348,6 +352,7 @@ public class Game {
 	//Goes through the whole board and checks if there are any moves for the team playing
 	//Checks Stalemate for the team currently playing
 	public boolean isDraw(){
+		
 		if (drawWith75Moves >= 75){
 				this.ShowDialogBox("No piece has been killed or Pawn has been moves since 75 moves", "Draw");
 			return true;
@@ -365,6 +370,8 @@ public class Game {
 				}
 			}
 		}
+		
+		System.out.println("Done with draw");
 		
 		return true;
 	}
