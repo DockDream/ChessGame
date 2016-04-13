@@ -54,6 +54,12 @@ public class Game {
 
 			// Below three lines are setting up the White team
 			ChessBoard[6][i] = new Pawn(true);
+			
+			//Making all the empty spaces null
+			ChessBoard[2][i] = null;
+			ChessBoard[3][i] = null;
+			ChessBoard[4][i] = null;
+			ChessBoard[5][i] = null;
 		}
 		
 		// Initialized king locations
