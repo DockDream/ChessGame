@@ -131,7 +131,17 @@ public class ChessWindowClass implements ActionListener{
 		mnOptions.add(mnReset);			//Adds Reset Game
 		mnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Resets Game
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							ChessWindowClass window = new ChessWindowClass();
+							window.frmJavaholicsChess.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				frmJavaholicsChess.dispose();
 			}
 		});
 		

@@ -272,7 +272,7 @@ public class Game {
 			if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
 				ChessBoard[sentC.row][sentC.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
 				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
-				System.out.println("Remrow: " + tempList.get(i)[0] + " Remcol: " + tempList.get(i)[1]);
+//				System.out.println("Remrow: " + tempList.get(i)[0] + " Remcol: " + tempList.get(i)[1]);
 				tempList.remove(i);
 				i = i - 1; // this is so it doesn't skip over a spot.
 			} else {
@@ -389,15 +389,6 @@ public class Game {
 		this.selectCurrentKing();
 		
 		return selectedKing.KingCheck(ChessBoard, kingLoc.row, kingLoc.col , selectedKing.team);
-		
-//		if (whoseTurn){
-//			selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
-//			return (selectedKing.KingCheck(ChessBoard, whiteKing.row, whiteKing.col , true));
-//		}else{
-//			selectedKing = (King) ChessBoard[blackKing.row][blackKing.col];
-//			return (selectedKing.KingCheck(ChessBoard, blackKing.row, blackKing.col , false));
-//		
-//		}
 	}
 	
 	private void selectCurrentKing(){
