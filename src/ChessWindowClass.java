@@ -637,7 +637,7 @@ public class ChessWindowClass implements ActionListener{
     * (Requirement 2.4.0)
     */
    
-public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
+public void pawnPromotionMove(int row, int col){
 	   StringBuilder newIcon = new StringBuilder("/Images/");
 	   boolean team;
 		// This block pops up player piece choice
@@ -804,7 +804,7 @@ public void pawnPromotionMove(int row, int col, int turn, boolean pieceColor){
 			    		    	} // end if isKingCastling
 			    		    	// check for pawn promotion
 			    		    	else if(fClick.pawnPromotion()){
-			    		    		pawnPromotionMove(i, ii, turn, pieceColor);
+			    		    		pawnPromotionMove(i, ii);
 			    		    	} // end else if pawnPromotion
 			    		    	// else standard piece movement
 			    		   
