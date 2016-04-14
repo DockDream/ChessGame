@@ -1,28 +1,17 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import java.awt.GridLayout;
-import java.awt.Label;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
 
 public class ChessWindowClass implements ActionListener{
 	
 	private JFrame frmJavaholicsChess;
 	private JButton[][] chessSquares = new JButton[8][8];
-	public int [] start = new int [2]; //Used for piece chosen [ROW, COL]
-	public int [] end = new int [2]; //Used for place chosen [ROW, COL]
+	public int [] start = new int [2]; 																								//Used for piece chosen [ROW, COL]
+	public int [] end = new int [2]; 																								//Used for place chosen [ROW, COL]
 	private int count;
-	private int turn = 0;			//Used for showing player's turn
+	private int turn = 0;																											//Used for showing player's turn
 	public boolean pieceColor = true;
 	private boolean check = false; 
 	private boolean leavingInCheck = false;
@@ -64,7 +53,7 @@ public class ChessWindowClass implements ActionListener{
 		frmJavaholicsChess = new JFrame();
 		frmJavaholicsChess.getContentPane().setLayout(new GridLayout(8, 8, 0, 0));
 		
-		//Initialize Backend Code
+																																	//Initialize Backend Code
 		fClick.InitializeGame();
 		
 		for (int i = 0; i < 8; i++) {
@@ -72,7 +61,7 @@ public class ChessWindowClass implements ActionListener{
 				
 				if ((((ii % 2) == 0) && ((i % 2) == 0)) || ((ii % 2) == 1) && ((i % 2) == 1)) {
 				
-					chessSquares[i][ii] = new JButton(); 			//Creates JButtons representing squares on board
+					chessSquares[i][ii] = new JButton(); 																			//Creates JButtons representing squares on board
 					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
 				}
 				else {
@@ -80,25 +69,29 @@ public class ChessWindowClass implements ActionListener{
 					chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
 				}	
 				
-				//chessSquares[i][ii].setToolTipText("" + alphabet[i] + ii);		//Creates tooltip of position
-				frmJavaholicsChess.getContentPane().add(chessSquares[i][ii]); 	//Adds each created JButton to grid				
-				chessSquares[i][ii].addActionListener(this);					//Adds ActionListeners to All JButtons on grid
-         } // end for ii
-		} // end for i
+				frmJavaholicsChess.getContentPane().add(chessSquares[i][ii]); 														//Adds each created JButton to grid				
+				chessSquares[i][ii].addActionListener(this);																		//Adds ActionListeners to All JButtons on grid
+         } 																															//End for ii
+		} 																															//End for i
 		
-		frmJavaholicsChess.setTitle("Javaholics Chess"); //Sets title for window
-		frmJavaholicsChess.setAlwaysOnTop(false);		//Makes window on top of all windows
-		frmJavaholicsChess.setBounds(100, 100, 800, 798);	//Sets size of window
-		frmJavaholicsChess.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Ends program on close of window
+		frmJavaholicsChess.setTitle("Javaholics Chess"); 																			//Sets title for window
+		frmJavaholicsChess.setAlwaysOnTop(false);																					//Makes window on top of all windows
+		frmJavaholicsChess.setBounds(100, 100, 800, 798);																			//Sets size of window
+		frmJavaholicsChess.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 															//Ends program on close of window
       
-		JMenuBar menuBar = new JMenuBar(); //Creates Menu Bar to top of window
-		frmJavaholicsChess.setJMenuBar(menuBar); //Adds MenuBar
+		/**
+		 * Adds Menu bar at top that creates an Options menu 
+		 * that allows color changing and resetting the game
+		 */
+		
+		JMenuBar menuBar = new JMenuBar(); 
+		frmJavaholicsChess.setJMenuBar(menuBar); 
 		
 		JMenu mnOptions = new JMenu("Options");
-		menuBar.add(mnOptions);			//Adds Options Menu
+		menuBar.add(mnOptions);			
 		
 		JMenuItem mntmBlackWhite = new JMenuItem("Black & White Pieces");
-		mnOptions.add(mntmBlackWhite);	//Adds B&W Choice
+		mnOptions.add(mntmBlackWhite);	
 		mntmBlackWhite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changeColor();
@@ -113,7 +106,7 @@ public class ChessWindowClass implements ActionListener{
 		});
 		
 		JMenuItem mntmRedBlue = new JMenuItem("Red & Blue Pieces");
-		mnOptions.add(mntmRedBlue);		//Adds R&B Choice
+		mnOptions.add(mntmRedBlue);		
 		mntmRedBlue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				changeColor();
@@ -126,9 +119,15 @@ public class ChessWindowClass implements ActionListener{
 				 }
 			}
 		});
+		/** End Menu bar & Options */
+		
+		/**
+		 * Resets Game by destroying original window 
+		 * and recreating the initial state again
+		 */
 		
 		JMenuItem mnReset = new JMenuItem("Reset Game");
-		mnOptions.add(mnReset);			//Adds Reset Game
+		mnOptions.add(mnReset);	
 		mnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
@@ -143,13 +142,15 @@ public class ChessWindowClass implements ActionListener{
 				});
 				frmJavaholicsChess.dispose();
 			}
-		});
+		});		
+		/** End Reset */
 		
-		menuBar.add(label);				//Adds label for player turn
+		menuBar.add(label);																											//Adds label for player turn
 		
-		setPieces(pieceColor);	// piece initialization method call
+		setPieces(pieceColor);																										//Piece initialization method call
 				
-	} // end initialize method
+	} 
+	/** End Initialize() method*/
 	
 	/**
 	 * changeColor method 
@@ -162,242 +163,259 @@ public class ChessWindowClass implements ActionListener{
 		String[] splitSh;
 		
 		if (pieceColor == true) {
-			pieceColor = false; // toggle to reflect new piece colors
-			for(int i = 0; i < 8; i++) { 	//Searches all squares
+			pieceColor = false; 																									//Toggle to reflect new piece colors
+			for(int i = 0; i < 8; i++) { 																							//Searches all squares
 				for(int ii = 0; ii < 8; ii++) {
-					shade = chessSquares[i][ii].getIcon().toString();	//Finds location of icon
-					splitSh = shade.split("/");		//Gets simpler end of icon name
-					
-					System.out.println(splitSh.length+"");
-					/*
+					shade = chessSquares[i][ii].getIcon().toString();																//Finds location of icon
+					splitSh = shade.split("/");																						//Gets simpler end of icon name
+				
+					/**
 					 * ROOK
 					 */
 				
-					if (splitSh[splitSh.length-1].compareTo("BRookWBoard.png") == 0) {  //If Black ROOK on White Square
+					if (splitSh[splitSh.length-1].compareTo("BRookWBoard.png") == 0) {  											//If Black ROOK on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("BRookBBoard.png") == 0) {	//If Black ROOK on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("BRookBBoard.png") == 0) {											//If Black ROOK on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("WRookWBoard.png") == 0) {  //If White ROOK on White Square
+					if (splitSh[splitSh.length-1].compareTo("WRookWBoard.png") == 0) {  											//If White ROOK on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("WRookBBoard.png") == 0) {	//If White ROOK on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("WRookBBoard.png") == 0) {											//If White ROOK on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookBBoard.png")));
 					}
+					/** End ROOK */
 					
-					/*
+					/**
 					 * BISHOP
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("BBishopWBoard.png") == 0) {  //If Black BISHOP on White Square
+					if (splitSh[splitSh.length-1].compareTo("BBishopWBoard.png") == 0) {  											//If Black BISHOP on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UBishopWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("BBishopBBoard.png") == 0) {	//If Black BISHOP on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("BBishopBBoard.png") == 0) {										//If Black BISHOP on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UBishopBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("WBishopWBoard.png") == 0) {  //If White BISHOP on White Square
+					if (splitSh[splitSh.length-1].compareTo("WBishopWBoard.png") == 0) {  											//If White BISHOP on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RBishopWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("WBishopBBoard.png") == 0) {	//If White BISHOP on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("WBishopBBoard.png") == 0) {										//If White BISHOP on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RBishopBBoard.png")));
 					}
+					/** End BISHOP */
 					
-					/*
+					/**
 					 * KNIGHT
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("BKnightWBoard.png") == 0) {  //If Black KNIGHT on White Square
+					if (splitSh[splitSh.length-1].compareTo("BKnightWBoard.png") == 0) {  											//If Black KNIGHT on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UKnightWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("BKnightBBoard.png") == 0) {	//If Black KNIGHT on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("BKnightBBoard.png") == 0) {										//If Black KNIGHT on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UKnightBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("WKnightWBoard.png") == 0) {  //If White KNIGHT on White Square
+					if (splitSh[splitSh.length-1].compareTo("WKnightWBoard.png") == 0) {  											//If White KNIGHT on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RKnightWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("WKnightBBoard.png") == 0) {	//If White KNIGHT on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("WKnightBBoard.png") == 0) {										//If White KNIGHT on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RKnightBBoard.png")));
 					}
+					/** End KNGIHT */
 					
-					/*
+					/**
 					 * QUEEN
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("BQueenWBoard.png") == 0) {  //If Black QUEEN on White Square
+					if (splitSh[splitSh.length-1].compareTo("BQueenWBoard.png") == 0) {  											//If Black QUEEN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UQueenWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("BQueenBBoard.png") == 0) {	//If Black QUEEN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("BQueenBBoard.png") == 0) {										//If Black QUEEN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UQueenBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("WQueenWBoard.png") == 0) {  //If White QUEEN on White Square
+					if (splitSh[splitSh.length-1].compareTo("WQueenWBoard.png") == 0) {  											//If White QUEEN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RQueenWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("WQueenBBoard.png") == 0) {	//If White QUEEN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("WQueenBBoard.png") == 0) {										//If White QUEEN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RQueenBBoard.png")));
 					}
+					/** End QUEEN */
 					
-					/*
+					/**
 					 * KING
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("BKingWBoard.png") == 0) {  //If Black KING on White Square
+					if (splitSh[splitSh.length-1].compareTo("BKingWBoard.png") == 0) {  											//If Black KING on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UKingWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("BKingBBoard.png") == 0) {	//If Black KING on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("BKingBBoard.png") == 0) {											//If Black KING on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UKingBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("WKingWBoard.png") == 0) {  //If White KING on White Square
+					if (splitSh[splitSh.length-1].compareTo("WKingWBoard.png") == 0) {  											//If White KING on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RKingWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("WKingBBoard.png") == 0) {	//If White KING on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("WKingBBoard.png") == 0) {											//If White KING on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RKingBBoard.png")));
 					}
+					/** End KING */
 					
-					/*
+					/**
 					 * PAWN
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("BPawnWBoard.png") == 0) {  //If Black PAWN on White Square
+					if (splitSh[splitSh.length-1].compareTo("BPawnWBoard.png") == 0) {  											//If Black PAWN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UPawnWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("BPawnBBoard.png") == 0) {	//If Black PAWN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("BPawnBBoard.png") == 0) {											//If Black PAWN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/UPawnBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("WPawnWBoard.png") == 0) {  //If White PAWN on White Square
+					if (splitSh[splitSh.length-1].compareTo("WPawnWBoard.png") == 0) {  											//If White PAWN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RPawnWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("WPawnBBoard.png") == 0) {	//If White PAWN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("WPawnBBoard.png") == 0) {											//If White PAWN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RPawnBBoard.png")));
 					}
+					/** End PAWN */
 				}
 			}
 		}
 		
-		else {		//Resets colors to B&W
-			pieceColor = true; // toggle to reflect new piece colors
-			for(int i = 0; i < 8; i++) { 	//Searches all squares
+		/**
+		 * Resets piece colors back to B&W
+		 */
+		
+		else {		
+			pieceColor = true; 																										//Toggle to reflect new piece colors
+			for(int i = 0; i < 8; i++) { 																							//Searches all squares
 				for(int ii = 0; ii < 8; ii++) {
-					shade = chessSquares[i][ii].getIcon().toString();	//Finds location of icon
-					splitSh = shade.split("/");		//Gets simpler end of icon name
+					shade = chessSquares[i][ii].getIcon().toString();																//Finds location of icon
+					splitSh = shade.split("/");																						//Gets simpler end of icon name
 					
-					/*
+					/**
 					 * ROOK
 					 */
 				
-					if (splitSh[splitSh.length-1].compareTo("URookWBoard.png") == 0) {  //If Black ROOK on White Square
+					if (splitSh[splitSh.length-1].compareTo("URookWBoard.png") == 0) {  											//If Black ROOK on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("URookBBoard.png") == 0) {	//If Black ROOK on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("URookBBoard.png") == 0) {											//If Black ROOK on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookWBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("RRookWBoard.png") == 0) {  //If White ROOK on White Square
+					if (splitSh[splitSh.length-1].compareTo("RRookWBoard.png") == 0) {  											//If White ROOK on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("RRookBBoard.png") == 0) {	//If White ROOK on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("RRookBBoard.png") == 0) {											//If White ROOK on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 					}
+					/** End ROOK */
 					
-					/*
+					/**
 					 * BISHOP
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("UBishopWBoard.png") == 0) {  //If Black BISHOP on White Square
+					if (splitSh[splitSh.length-1].compareTo("UBishopWBoard.png") == 0) {  											//If Black BISHOP on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBishopWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("UBishopBBoard.png") == 0) {	//If Black BISHOP on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("UBishopBBoard.png") == 0) {										//If Black BISHOP on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBishopBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("RBishopWBoard.png") == 0) {  //If White BISHOP on White Square
+					if (splitSh[splitSh.length-1].compareTo("RBishopWBoard.png") == 0) {  											//If White BISHOP on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBishopWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("RBishopBBoard.png") == 0) {	//If White BISHOP on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("RBishopBBoard.png") == 0) {										//If White BISHOP on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBishopBBoard.png")));
 					}
+					/** End BISHOP */
 					
-					/*
+					/**
 					 * KNIGHT
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("UKnightWBoard.png") == 0) {  //If Black KNIGHT on White Square
+					if (splitSh[splitSh.length-1].compareTo("UKnightWBoard.png") == 0) {  											//If Black KNIGHT on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BKnightWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("UKnightBBoard.png") == 0) {	//If Black KNIGHT on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("UKnightBBoard.png") == 0) {										//If Black KNIGHT on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BKnightBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("RKnightWBoard.png") == 0) {  //If White KNIGHT on White Square
+					if (splitSh[splitSh.length-1].compareTo("RKnightWBoard.png") == 0) {  											//If White KNIGHT on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WKnightWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("RKnightBBoard.png") == 0) {	//If White KNIGHT on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("RKnightBBoard.png") == 0) {										//If White KNIGHT on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WKnightBBoard.png")));
 					}
+					/** End KNIGHT */
 					
-					/*
+					/**
 					 * QUEEN
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("UQueenWBoard.png") == 0) {  //If Black QUEEN on White Square
+					if (splitSh[splitSh.length-1].compareTo("UQueenWBoard.png") == 0) {  											//If Black QUEEN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BQueenWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("UQueenBBoard.png") == 0) {	//If Black QUEEN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("UQueenBBoard.png") == 0) {										//If Black QUEEN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BQueenBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("RQueenWBoard.png") == 0) {  //If White QUEEN on White Square
+					if (splitSh[splitSh.length-1].compareTo("RQueenWBoard.png") == 0) {  											//If White QUEEN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WQueenWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("RQueenBBoard.png") == 0) {	//If White QUEEN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("RQueenBBoard.png") == 0) {										//If White QUEEN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WQueenBBoard.png")));
 					}
+					/** End QUEEN */
 					
-					/*
+					/**
 					 * KING
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("UKingWBoard.png") == 0) {  //If Black KING on White Square
+					if (splitSh[splitSh.length-1].compareTo("UKingWBoard.png") == 0) {  											//If Black KING on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BKingWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("UKingBBoard.png") == 0) {	//If Black KING on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("UKingBBoard.png") == 0) {											//If Black KING on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BKingBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("RKingWBoard.png") == 0) {  //If White KING on White Square
+					if (splitSh[splitSh.length-1].compareTo("RKingWBoard.png") == 0) {  											//If White KING on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WKingWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("RKingBBoard.png") == 0) {	//If White KING on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("RKingBBoard.png") == 0) {											//If White KING on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WKingBBoard.png")));
 					}
+					/** End KING */
 					
-					/*
+					/**
 					 * PAWN
 					 */
 					
-					if (splitSh[splitSh.length-1].compareTo("UPawnWBoard.png") == 0) {  //If Black PAWN on White Square
+					if (splitSh[splitSh.length-1].compareTo("UPawnWBoard.png") == 0) { 												//If Black PAWN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BPawnWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("UPawnBBoard.png") == 0) {	//If Black PAWN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("UPawnBBoard.png") == 0) {											//If Black PAWN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BPawnBBoard.png")));
 					}
 				
-					if (splitSh[splitSh.length-1].compareTo("RPawnWBoard.png") == 0) {  //If White PAWN on White Square
+					if (splitSh[splitSh.length-1].compareTo("RPawnWBoard.png") == 0) {  											//If White PAWN on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WPawnWBoard.png")));
 					}
-					else if (splitSh[splitSh.length-1].compareTo("RPawnBBoard.png") == 0) {	//If White PAWN on Black Square
+					else if (splitSh[splitSh.length-1].compareTo("RPawnBBoard.png") == 0) {											//If White PAWN on Black Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WPawnBBoard.png")));
 					}
+					/** End PAWN */
 				}
 			}
 		}
+		/** End B&W color reset */
 	}
+	/** End changeColor() */
 	
 	/**
 	 * Set pieces method - will be called from the initialize method
