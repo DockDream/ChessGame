@@ -1,31 +1,30 @@
-
+import java.util.ArrayList;
 
 public class Queen extends Piece{
 	
-	public void ReturnPossibleMoves(int startRow, int startColumn, int destRow, int destColumn, Piece[][] currentBoard){
+	Queen(boolean sentTeam) {
+		super(sentTeam);
+	}
+
+	public Queen() {
+		
+	}
+
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}
 		
-//		ArrayList<int[]> bishopMoves;
-//		
-		Rook queenRook = new Rook();
-		Bishop queenBishop = new Bishop();
+		Rook queenRook = new Rook(currentBoard[startRow][startColumn].team);
+		Bishop queenBishop = new Bishop(currentBoard[startRow][startColumn].team);
 		
-		queenRook.ReturnPossibleMoves(startRow, startColumn, destRow, destColumn, currentBoard);
+		queenRook.ReturnPossibleMoves(startRow, startColumn, currentBoard);
 		
-		queenBishop.ReturnPossibleMoves(startRow,startColumn,destRow, destColumn, currentBoard);
+		queenBishop.ReturnPossibleMoves(startRow,startColumn, currentBoard);
 		
 		possibleMoves = queenRook.possibleMoves;
 		possibleMoves.addAll(queenBishop.possibleMoves);
 		
-		
-//		bishopMoves = queenBishop.ReturnPossibleMoves(startRow,startColumn,currentBoard);
-//		
-//		for (int i = 0; i < bishopMoves.size(); i++){
-//			possibleMoves.add(bishopMoves.get(i));
-//		}
-//		
 	}
 	
 	
