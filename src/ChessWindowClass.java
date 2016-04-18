@@ -148,6 +148,37 @@ public class ChessWindowClass implements ActionListener{
 		menuBar.add(label);																											//Adds label for player turn
 		
 		setPieces(pieceColor);																										//Piece initialization method call
+		
+		JButton mnRestart = new JButton();
+		mnRestart.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/Restart.png")));
+		mnRestart.setBorder(BorderFactory.createEmptyBorder());
+		menuBar.add(mnRestart);
+		mnRestart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						frmJavaholicsChess.dispose();
+						try {
+							ChessWindowClass window = new ChessWindowClass();
+							window.frmJavaholicsChess.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		
+		JButton mnFlip = new JButton();
+		mnFlip.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/Flip.png")));
+		mnFlip.setBorder(BorderFactory.createEmptyBorder());
+		menuBar.add(mnFlip);
+		mnFlip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				flipBoard();
+			}
+		});
+		
 				
 	} 
 	/** End Initialize() method*/
@@ -547,7 +578,7 @@ public class ChessWindowClass implements ActionListener{
 		 * Decides and Shows Whose Turn it is
 		*/
 		
-		if (turn == 0)
+		if (!fClick.getTurn())
 		{
 			if (pieceColor == false)
 				label.setText("Blue Team");
@@ -555,7 +586,7 @@ public class ChessWindowClass implements ActionListener{
 				label.setText("Black Team");
 			turn++;
 		}
-		else if (turn == 1)
+		else
 		{
 			if (pieceColor == false)
 				label.setText("Red Team");
@@ -831,5 +862,47 @@ public void pawnPromotionMove(int row, int col){
             }
         }
      }
+   
+   public void flipBoard(){
+	   String[][] chessS = new String[8][8];
+	   
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				chessS[i][j] = chessSquares[7-i][j].getIcon().toString();
+			}
+		}
+		
+		ImageIcon tempIcon;
+		String piece;
+		Scanner s;
+		
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				
+				piece = new StringBuilder(chessS[i][j]).reverse().toString();
+				s = new Scanner(piece).useDelimiter("\\W");
+				StringBuilder sb = new StringBuilder();
+				sb.append(s.next());
+				sb.append(".");
+				sb.append(s.next());
+				sb.append("/");
+				sb.append(s.next());
+				sb.append("/");
+				piece = sb.reverse().toString();
+				piece = piece.substring(0, piece.length()-10);
+				if((i + j) % 2 == 0 ){
+					piece = piece + "WBoard.png";
+				} // end if even square
+				else if((i + j) % 2 == 1 ){
+					piece = piece + "BBoard.png";
+				} // end else if odd square
+				
+				chessSquares[i][j].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
+			}
+		}
+		
+		fClick.Flip();
+		
+   }
     
 } // end ChessWindowClass

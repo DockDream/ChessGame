@@ -49,10 +49,10 @@ public class Game {
 
 		for (int i = 0; i < 8; i++) {
 			// Below three lines are setting up the Black team
-			ChessBoard[1][i] = new Pawn(false);
+			ChessBoard[1][i] = new Pawn(false,false);
 
 			// Below three lines are setting up the White team
-			ChessBoard[6][i] = new Pawn(true);
+			ChessBoard[6][i] = new Pawn(true,true);
 			
 			//Making all the empty spaces null
 			ChessBoard[2][i] = null;
@@ -409,5 +409,32 @@ public class Game {
 	
 	public boolean getTurn(){
 		return this.whoseTurn;
+	}
+	
+	public void Flip(){
+		Piece[][] tempBoard = new Piece[8][8];
+		Pawn tempPawn;
+		
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				tempBoard[i][j] = ChessBoard[7-i][7-j];
+				
+				if (tempBoard[i][j] instanceof Pawn){
+					tempPawn = (Pawn)tempBoard[i][j];
+					tempPawn.reverseDirection();
+				}
+				
+				if (tempBoard[i][j] instanceof King){
+					if (tempBoard[i][j].team){
+						whiteKing = new Click(i,j);
+					}else{
+						blackKing = new Click(i,j);
+					}
+				}
+				
+			}
+		}
+		
+		ChessBoard = tempBoard;
 	}
 }

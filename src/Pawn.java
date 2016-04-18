@@ -3,8 +3,11 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece {
 	
-	Pawn(boolean sentTeam) {
+	boolean direction; // true is up and false is down
+	
+	Pawn(boolean sentTeam, boolean sentDirection) {
 		super(sentTeam);
+		this.direction = sentDirection;
 	}
 
 
@@ -54,7 +57,7 @@ public class Pawn extends Piece {
 			possibleMoves.clear();
 		}
 		
-		if(team){ //if white pieces
+		if(this.direction){ //if white pieces
 			if(startRow>0) possibleMoves = this.ReturnMovesAddon(startRow-1, startColumn, currentBoard); //move 1 up
 			if(startRow==6) { //if hasn't moved yet, piece has option to move up by 2 if not blocked
 				if(currentBoard[startRow-1][startColumn] == null)
@@ -93,6 +96,14 @@ public class Pawn extends Piece {
 		}
 		canKill = false;
 		
+	}
+	
+	public void reverseDirection(){
+		if (this.direction){
+			this.direction = false;
+		}else{
+			this.direction = true;
+		}
 	}
 }// end Pawn Class
 

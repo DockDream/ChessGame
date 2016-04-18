@@ -57,7 +57,8 @@ public class King extends Piece {
 		}
 		
 		//System.out.println("Checking Pawns: 4 of 5");
-		Pawn kingPawn = new Pawn(kingTeam);
+		//Direction does not matter since we are only using it for the killCheck command
+		Pawn kingPawn = new Pawn(kingTeam,false);
 		if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol+1, chessBoard)){
 			opponent = chessBoard[kingRow+1][kingCol+1];
 			if (opponent != null){
