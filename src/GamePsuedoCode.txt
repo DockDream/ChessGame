@@ -1,4 +1,9 @@
 
+InitializeGame(){
+	Place all the pieces in the right places
+}
+
+
 firstClick()
 
 If there is a piece at location
@@ -37,7 +42,96 @@ for (list of possiblemoves of first Click)
 }	
 
 secondClick(){
+	if (first Click == second Click){
+		return
+	}
 	
+	if (Move is Valid){
+		if (Piece moved is King){
+			Update King Location
+		}
+		
+		if (King isn't castling){
+			Add to drawWith75Moves
+			
+			if (Piece moving is Pawn OR We are killing a piece){
+				reset drawWith75Moves
+			}
+			
+			Move both pieces to respective places.
+			
+			Change Turns
+			
+		}
+}
+
+isKingCastling(){
+	make justCastled false
+	
+	if (Rook moved){
+		Deactivate Castling
+	}
+	
+	if (King is moving){
+		if (castle is valid){
+			if (current move is castling){
+				move both king and rook to the right places
+			}
+		}
+		Deactivate Castling
+	}
+}
+
+isDraw(){
+	if (Haven't killed a piece OR Moved a pawn within 75 moves){
+		it is a draw
+	}
+	
+	Run through all pieces of current team if none of them have any moves
+	it is a draw
+}
+
+isCheckMate(){
+	if (king can't move){
+		if other pieces can stop check not a checkmate
+	}else (king can move){
+		not a checkmate
+	}
+	
+	if it passed through the code above and didn't return checkmate
+}
+
+returnPossibleMoves(){
+	return possibleMoves
+}
+
+pawnPromotion(){
+	if (secClick is a Pawn AND it reached row 0 or row 7){
+		Pawn needs to be promoted
+	}else{
+		Pawn does not need to be promoted
+	}
+}
+
+pawnPromoted(sentPiece){
+	pawn is updated
+}
+
+isKingInCheck(){
+	Pass the currentPostion to the king and check to see if he is in check
+}
+
+selectCurrentKing(){
+	Update the positions of the whiteKing and blackKing as needed
+}
+
+public boolean getjustCastled(){
+	return true if justCastled
+}
+
+getTurn(){
+	return whoseTurn
+}
 
 
 }
