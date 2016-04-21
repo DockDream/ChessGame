@@ -75,4 +75,29 @@ ChessWindowClass()
 						call clearHighlight()
 						call movePiece()
 					else
-						call clearHighlight()				
+						call clearHighlight()	
+						
+						
+	changeColor()
+	
+		if(pieceColor)
+			toggle pieceColor
+			if-else statements
+				check piece type and square color - replace with same piece of alternate color and proper square color.
+				
+	pawnPromotionMove()
+	
+		display JOptionPane with drop down for new piece choice {Queen, Bishop, Rook, Knight}
+		String selection = player's choice
+		if-else
+			check piece color and square color for appropriate new piece and square attributes.
+			
+		initialize new instance of proper piece class and set piece.
+		
+	kingCastle()
+	
+		if-else
+			determine piece color and castling direction.
+			set King and Rook in appropriate positions.		
+			
+		
