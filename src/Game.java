@@ -419,7 +419,7 @@ public class Game {
 		
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
-				tempBoard[i][j] = ChessBoard[7-i][7-j];
+				tempBoard[i][j] = ChessBoard[7-i][j];
 				
 				if (tempBoard[i][j] instanceof Pawn){
 					tempPawn = (Pawn)tempBoard[i][j];
@@ -437,8 +437,9 @@ public class Game {
 			}
 		}
 		
-		this.printBoard();
+		
 		
 		ChessBoard = tempBoard;
+		this.printBoard();
 	}
 }

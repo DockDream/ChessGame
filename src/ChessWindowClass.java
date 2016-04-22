@@ -128,23 +128,23 @@ public class ChessWindowClass implements ActionListener{
 		 * and recreating the initial state again
 		 */
 		
-		JMenuItem mnReset = new JMenuItem("Reset Game");
-		mnOptions.add(mnReset);	
-		mnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							ChessWindowClass window = new ChessWindowClass();
-							window.frmJavaholicsChess.setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-				frmJavaholicsChess.dispose();
-			}
-		});		
+//		JMenuItem mnReset = new JMenuItem("Reset Game");
+//		mnOptions.add(mnReset);	
+//		mnReset.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				EventQueue.invokeLater(new Runnable() {
+//					public void run() {
+//						try {
+//							ChessWindowClass window = new ChessWindowClass();
+//							window.frmJavaholicsChess.setVisible(true);
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				});
+//				frmJavaholicsChess.dispose();
+//			}
+//		});		
 		/** End Reset */
 		
 		menuBar.add(label);																											//Adds label for player turn
@@ -823,6 +823,7 @@ public void pawnPromotionMove(int row, int col){
                         start[1] = ii;    //Stores first-clicked place ROW location                     
                         
                         //validates the first click and makes sure second click is only reached when first is valid
+                        System.out.println("First Click method being called");
                         if (fClick.FirstClick(new Click(i,ii))){
                         	highlightMoves(fClick.returnPossibleMoves());
                         	count++; //Used for keeping track of first and second click, converts to next action for second click
@@ -843,6 +844,7 @@ public void pawnPromotionMove(int row, int col){
                         	end[0] = i;		//Stores second-clicked place ROW location
 			    		    end[1] = ii;		//Stores second-clicked place COLUMN location
                             
+			    		    System.out.println("Second Click method called");
 			    		    if (fClick.SecondClick(new Click(i,ii))){
 			    		    	String piece = chessSquares[start[0]][start[1]].getIcon().toString();   // String 'piece' needed for movePiece method
 			    		    	clearHighlight(possibleMoves);
@@ -874,7 +876,7 @@ public void pawnPromotionMove(int row, int col){
 			    		   		clearHighlight(possibleMoves);
 			    		    	//not a valid move
 			    		    }
-                            
+                            System.out.println("Count reset to firstclick");
                             count = 0; //Used for keeping track of first and second click, converts to next action for first click
                         }
                 }
