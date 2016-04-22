@@ -763,57 +763,132 @@ public void pawnPromotionMove(int row, int col){
 
 	public void kingCastle(int row, int col){
 		System.out.println(pieceColor);
-		String king;
+		
 		String rook;
 		
 		
-		
 		// Black King castling
-		if(row == 0 && pieceColor && !boardFlipped){
-			if(col == 6){
-				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
-			} // end if col == 6
-			else{
-				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
-			} // end else
+		if (row == 0 && pieceColor) {
+			if (!boardFlipped) {
+				if (col == 6) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				} // end else
+			} else {
+				if (col == 6) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				} // end else
+			}
 		} // end if row == 0 && pieceColor == true
-		
+
 		// Blue King castling
-		if(row == 0 && !pieceColor && !boardFlipped){
-			if(col == 6){
-				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
-			} // end if col == 6
-			else{
-				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
-			} // end else
+		if (row == 0 && !pieceColor) {
+			if (!boardFlipped) {
+				if (col == 6) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+				} // end else
+			} else {
+				if (col == 6 && !boardFlipped) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				} // end else
+			}
 		} // end if row == 0 && pieceColor == false
-		
+
 		// White King castling
-		else if(row == 7 && pieceColor && !boardFlipped){
-			if(col == 6){
-				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
-			} // end if col == 6
-			else{
-				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
-			} // end else
+		else if (row == 7 && pieceColor) {
+			if (!boardFlipped) {
+				if (col == 6) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				} // end else
+			} else {
+				if (col == 6) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				} // end else
+			}
 		} // end else if row == 7 && pieceColor == true
-		
+
 		// Red King castling
-		else if(row == 7 && !pieceColor && !boardFlipped){
-			if(col == 6){
-				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
-			} // end if col == 6
-			else{
-				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
-			} // end else
+		else if (row == 7 && !pieceColor) {
+			if (!boardFlipped) {
+				if (col == 6) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				} // end else
+			} else {
+				if (col == 6) {
+					chessSquares[row][7]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][5]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+				} // end if col == 6
+				else {
+					chessSquares[row][0]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][3]
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+				} // end else
+			}
 		} // end else if row == 7 && pieceColor == false
 		
 	} // end kingCastle method
