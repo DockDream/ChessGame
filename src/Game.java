@@ -78,7 +78,7 @@ public class Game {
 			System.out.println("1st Click: "+whoseTurn+"'s Turn"+", "
 					+ChessBoard[cSent.row][cSent.col].getClass().toString()+", Class's Team: "+ChessBoard[cSent.row][cSent.col].team);
 		}else{
-			System.out.println("2nd Click: " + whoseTurn + "'s Turn" + ", Empty Spot Clicked");
+			System.out.println("1st Click: " + whoseTurn + "'s Turn" + ", Empty Spot Clicked");
 		}
 		
 		if (ChessBoard[cSent.row][cSent.col] != null) {
@@ -415,8 +415,6 @@ public class Game {
 		Piece[][] tempBoard = new Piece[8][8];
 		Pawn tempPawn;
 		
-		this.printBoard();
-		
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
 				tempBoard[i][j] = ChessBoard[7-i][j];
@@ -437,9 +435,6 @@ public class Game {
 			}
 		}
 		
-		
-		
 		ChessBoard = tempBoard;
-		this.printBoard();
 	}
 }

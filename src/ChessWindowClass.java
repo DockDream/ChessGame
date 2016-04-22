@@ -718,10 +718,18 @@ public void pawnPromotionMove(int row, int col){
 
 		//adds board color to image file path
 		if((row + col)%2 == 0){
-			newIcon.append("WBoard.png");
+			if (boardFlipped){
+				newIcon.append("BBoard.png");
+			}else{
+				newIcon.append("WBoard.png");
+			}
 		}
 		else{
-			newIcon.append("BBoard.png");
+			if (boardFlipped){
+				newIcon.append("WBoard.png");
+			}else{
+				newIcon.append("BBoard.png");
+			}
 		}
 		
 		chessSquares[row][col].setIcon(new ImageIcon(ChessWindowClass.class.getResource(newIcon.toString())));
@@ -823,11 +831,9 @@ public void pawnPromotionMove(int row, int col){
                         start[1] = ii;    //Stores first-clicked place ROW location                     
                         
                         //validates the first click and makes sure second click is only reached when first is valid
-                        System.out.println("First Click method being called");
                         if (fClick.FirstClick(new Click(i,ii))){
                         	highlightMoves(fClick.returnPossibleMoves());
                         	count++; //Used for keeping track of first and second click, converts to next action for second click
-                        	System.out.println("Changed to second click");
                         }else{                         
                         	count = 0; //keeps everything within the first click;
                         }
@@ -911,20 +917,6 @@ public void pawnPromotionMove(int row, int col){
 				sb.append(s.next());
 				sb.append("/");
 				piece = sb.reverse().toString();
-//				piece = piece.substring(0, piece.length()-10);
-//				if((i + j) % 2 == 0 ){
-//					piece = piece + "WBoard.png";
-//				} // end if even square
-//				else if((i + j) % 2 == 1 ){
-//					piece = piece + "BBoard.png";
-//				} // end else if odd square
-				
-//				if ((((j % 2) == 0) && ((i % 2) == 0)) || ((j % 2) == 1) && ((i % 2) == 1)) {
-//					piece = piece + "BBoard.png";
-//				}
-//				else {
-//					piece = piece + "WBoard.png";
-//				}	
 				
 				chessSquares[i][j].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 			}
