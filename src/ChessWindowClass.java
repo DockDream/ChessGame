@@ -94,6 +94,7 @@ public class ChessWindowClass implements ActionListener{
 		mnOptions.add(mntmBlackWhite);	
 		mntmBlackWhite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(!pieceColor){
 				changeColor();
 				
 				if (label.getText() == "Blue Team") {
@@ -102,6 +103,7 @@ public class ChessWindowClass implements ActionListener{
 				else if (label.getText() == "Red Team") {
 					label.setText("White Team");
 				}
+				}
 			}
 		});
 		
@@ -109,6 +111,7 @@ public class ChessWindowClass implements ActionListener{
 		mnOptions.add(mntmRedBlue);		
 		mntmRedBlue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(pieceColor){
 				changeColor();
 				
 				 if (label.getText() == "Black Team") {
@@ -117,6 +120,7 @@ public class ChessWindowClass implements ActionListener{
 				 else if (label.getText() == "White Team"){
 					 label.setText("Red Team");
 				 }
+				}
 			}
 		});
 		/** End Menu bar & Options */
