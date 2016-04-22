@@ -338,14 +338,14 @@ public class ChessWindowClass implements ActionListener{
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookWBoard.png")));
 					}
 					else if (splitSh[splitSh.length-1].compareTo("URookBBoard.png") == 0) {											//If Black ROOK on Black Square
-						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookWBoard.png")));
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
 					}
 				
 					if (splitSh[splitSh.length-1].compareTo("RRookWBoard.png") == 0) {  											//If White ROOK on White Square
 						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 					}
 					else if (splitSh[splitSh.length-1].compareTo("RRookBBoard.png") == 0) {											//If White ROOK on Black Square
-						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+						chessSquares[i][ii].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookBBoard.png")));
 					}
 					/** End ROOK */
 					
