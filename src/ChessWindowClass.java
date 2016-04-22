@@ -763,51 +763,56 @@ public void pawnPromotionMove(int row, int col){
 
 	public void kingCastle(int row, int col){
 		System.out.println(pieceColor);
+		String king;
+		String rook;
+		
+		
+		
 		// Black King castling
-		if(row == 0 && pieceColor){
+		if(row == 0 && pieceColor && !boardFlipped){
 			if(col == 6){
-				chessSquares[0][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[0][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
 			} // end if col == 6
 			else{
-				chessSquares[0][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[0][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
 			} // end else
 		} // end if row == 0 && pieceColor == true
 		
 		// Blue King castling
-		if(row == 0 && !pieceColor){
+		if(row == 0 && !pieceColor && !boardFlipped){
 			if(col == 6){
-				chessSquares[0][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[0][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
 			} // end if col == 6
 			else{
-				chessSquares[0][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[0][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
 			} // end else
 		} // end if row == 0 && pieceColor == false
 		
 		// White King castling
-		else if(row == 7 && pieceColor){
+		else if(row == 7 && pieceColor && !boardFlipped){
 			if(col == 6){
-				chessSquares[7][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[7][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 			} // end if col == 6
 			else{
-				chessSquares[7][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[7][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 			} // end else
 		} // end else if row == 7 && pieceColor == true
 		
 		// Red King castling
-		else if(row == 7 && !pieceColor){
+		else if(row == 7 && !pieceColor && !boardFlipped){
 			if(col == 6){
-				chessSquares[7][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-				chessSquares[7][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+				chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
 			} // end if col == 6
 			else{
-				chessSquares[7][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-				chessSquares[7][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+				chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
 			} // end else
 		} // end else if row == 7 && pieceColor == false
 		
