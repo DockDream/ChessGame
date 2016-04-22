@@ -18,6 +18,8 @@ public class ChessWindowClass implements ActionListener{
 	ArrayList <int[]> possibleMoves = new ArrayList<int[]>();
     Game fClick = new Game();
     Label label = new Label("White Team");
+    
+    boolean boardFlipped = false;
 
 	/**
 	 * Launch the application.
@@ -545,10 +547,18 @@ public class ChessWindowClass implements ActionListener{
 		 * This block will set starting square to unoccupied and correct color
 		 */
 		if((start[0] + start[1]) % 2 == 0){
-			chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+			if (boardFlipped){
+				chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+			}else{
+				chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+			}
 		}
 		else{
-			chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+			if (boardFlipped){
+				chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+			}else{
+				chessSquares[start[0]][start[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+			}
 		}
 		
 		/**
@@ -566,10 +576,18 @@ public class ChessWindowClass implements ActionListener{
 		piece = sb.reverse().toString();
 		piece = piece.substring(0, piece.length()-10);
 		if((end[0] + end[1]) % 2 == 0 ){
-			piece = piece + "WBoard.png";
+			if (boardFlipped){
+				piece = piece + "BBoard.png";
+			}else{
+				piece = piece + "WBoard.png";
+			}
 		} // end if even square
 		else if((end[0] + end[1]) % 2 == 1 ){
-			piece = piece + "BBoard.png";
+			if (boardFlipped){
+				piece = piece + "WBoard.png";
+			}else{
+				piece = piece + "BBoard.png";
+			}
 		} // end else if odd square
 		chessSquares[end[0]][end[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 		
@@ -808,6 +826,7 @@ public void pawnPromotionMove(int row, int col){
                         if (fClick.FirstClick(new Click(i,ii))){
                         	highlightMoves(fClick.returnPossibleMoves());
                         	count++; //Used for keeping track of first and second click, converts to next action for second click
+                        	System.out.println("Changed to second click");
                         }else{                         
                         	count = 0; //keeps everything within the first click;
                         }
@@ -865,6 +884,7 @@ public void pawnPromotionMove(int row, int col){
    
    public void flipBoard(){
 	   String[][] chessS = new String[8][8];
+	   boardFlipped = boardFlipped? false:true;
 	   
 		for (int i = 0; i < 8; i++){
 			for (int j = 0; j < 8; j++){
@@ -889,13 +909,20 @@ public void pawnPromotionMove(int row, int col){
 				sb.append(s.next());
 				sb.append("/");
 				piece = sb.reverse().toString();
-				piece = piece.substring(0, piece.length()-10);
-				if((i + j) % 2 == 0 ){
-					piece = piece + "WBoard.png";
-				} // end if even square
-				else if((i + j) % 2 == 1 ){
-					piece = piece + "BBoard.png";
-				} // end else if odd square
+//				piece = piece.substring(0, piece.length()-10);
+//				if((i + j) % 2 == 0 ){
+//					piece = piece + "WBoard.png";
+//				} // end if even square
+//				else if((i + j) % 2 == 1 ){
+//					piece = piece + "BBoard.png";
+//				} // end else if odd square
+				
+//				if ((((j % 2) == 0) && ((i % 2) == 0)) || ((j % 2) == 1) && ((i % 2) == 1)) {
+//					piece = piece + "BBoard.png";
+//				}
+//				else {
+//					piece = piece + "WBoard.png";
+//				}	
 				
 				chessSquares[i][j].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 			}
