@@ -4,118 +4,161 @@ import java.util.ArrayList;
 public class King extends Piece {
 
 	boolean castleValid;
-	
+
 	King(boolean sentTeam) {
 		super(sentTeam);
 		this.castleValid = true;
 	}
 
-	public boolean KingCheck(Piece[][] chessBoard, int currentRow, int currentCol, boolean kingTeam){
+	public boolean KingCheck(Piece[][] chessBoard, int currentRow, int currentCol, boolean kingTeam,
+			boolean boardFlipped) {
 
-		ArrayList<int[]> kingMoves = null;		
-		
+		ArrayList<int[]> kingMoves = null;
+
 		boolean check = false;
 		int kingRow = currentRow;
-		int kingCol = currentCol;		
+		int kingCol = currentCol;
 		int opponentRow;
 		int opponentCol;
 		Piece opponent;
-		
-		//System.out.println("Checking Rook: 1 of 5");
+
+		// System.out.println("Checking Rook: 1 of 5");
 		Rook kingRook = new Rook(kingTeam);
-		kingRook.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
+		kingRook.ReturnPossibleMoves(kingRow, kingCol, chessBoard, boardFlipped);
 		kingMoves = kingRook.possibleMoves;
-		for(int i = 0; i < kingMoves.size(); i++){
+		for (int i = 0; i < kingMoves.size(); i++) {
 			opponentRow = kingMoves.get(i)[0];
 			opponentCol = kingMoves.get(i)[1];
 			opponent = chessBoard[opponentRow][opponentCol];
-			if (opponent != null){
-				if(opponent.team != kingTeam){
-					if(opponent instanceof Rook || opponent instanceof Queen){
+			if (opponent != null) {
+				if (opponent.team != kingTeam) {
+					if (opponent instanceof Rook || opponent instanceof Queen) {
 						check = true;
 					}
 				}
 			}
 		}
-		
-		
-		//System.out.println("Checking Bishop: 2 of 5");
+
+		// System.out.println("Checking Bishop: 2 of 5");
 		Bishop kingBishop = new Bishop(kingTeam);
-		kingBishop.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
+		kingBishop.ReturnPossibleMoves(kingRow, kingCol, chessBoard, boardFlipped);
 		kingMoves = kingBishop.possibleMoves;
-		for(int i = 0; i < kingMoves.size(); i++){
+		for (int i = 0; i < kingMoves.size(); i++) {
 			opponentRow = kingMoves.get(i)[0];
 			opponentCol = kingMoves.get(i)[1];
 			opponent = chessBoard[opponentRow][opponentCol];
-			if (opponent != null){
-				if(opponent.team != kingTeam){
-					if(opponent instanceof Bishop || opponent instanceof Queen){
+			if (opponent != null) {
+				if (opponent.team != kingTeam) {
+					if (opponent instanceof Bishop || opponent instanceof Queen) {
 						check = true;
 					}
 				}
 			}
 		}
-		
-		//System.out.println("Checking Pawns: 4 of 5");
-		//Direction does not matter since we are only using it for the killCheck command
-		Pawn kingPawn = new Pawn(kingTeam,false);
-		if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol+1, chessBoard)){
-			opponent = chessBoard[kingRow+1][kingCol+1];
-			if (opponent != null){
-				if(opponent.team != kingTeam){
-					if(opponent instanceof Pawn){
-						if(!kingTeam){
+
+		// System.out.println("Checking Pawns: 4 of 5");
+		// Direction does not matter since we are only using it for the
+		// killCheck command
+		Pawn kingPawn = new Pawn(kingTeam, boardFlipped);
+		if ((kingTeam && boardFlipped == false) || (!kingTeam && boardFlipped == true)) {
+			if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol + 1, chessBoard)) {
+				opponent = chessBoard[kingRow - 1][kingCol + 1];
+				if (opponent != null) {
+					if (opponent.team != kingTeam) {
+						if (opponent instanceof Pawn) {
+							check = true;
+						}
+					}
+				}
+			} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol - 1, chessBoard)) {
+				opponent = chessBoard[kingRow - 1][kingCol - 1];
+				if (opponent != null) {
+					if (opponent.team != kingTeam) {
+						if (opponent instanceof Pawn) {
 							check = true;
 						}
 					}
 				}
 			}
-		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow+1, kingCol-1, chessBoard)){
-			opponent = chessBoard[kingRow+1][kingCol-1];
-			if (opponent != null){
-				if(opponent.team != kingTeam){
-					if(opponent instanceof Pawn){
-						if(!kingTeam){
+		} else {
+			if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol + 1, chessBoard)) {
+				opponent = chessBoard[kingRow + 1][kingCol + 1];
+				if (opponent != null) {
+					if (opponent.team != kingTeam) {
+						if (opponent instanceof Pawn) {
 							check = true;
 						}
 					}
 				}
-			}
-		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow-1, kingCol+1, chessBoard)){
-			opponent = chessBoard[kingRow-1][kingCol+1];
-			if (opponent != null){
-				if(opponent.team != kingTeam){
-					if(opponent instanceof Pawn){
-						if(kingTeam){
-							check = true;
-						}
-					}
-				}
-			}	
-		}else if(kingPawn.KillCheck(kingRow, kingCol, kingRow-1, kingCol-1, chessBoard)){
-			opponent = chessBoard[kingRow-1][kingCol-1];
-			if (opponent != null){
-				if(opponent.team != kingTeam){
-					if(opponent instanceof Pawn){
-						if(kingTeam){
+			} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol - 1, chessBoard)) {
+				opponent = chessBoard[kingRow + 1][kingCol - 1];
+				if (opponent != null) {
+					if (opponent.team != kingTeam) {
+						if (opponent instanceof Pawn) {
 							check = true;
 						}
 					}
 				}
 			}
 		}
-		
-		//System.out.println("Checking Knight: 5 of 5");
+
+//		if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol + 1, chessBoard)) {
+//			opponent = chessBoard[kingRow + 1][kingCol + 1];
+//			if (opponent != null) {
+//				if (opponent.team != kingTeam) {
+//					if (opponent instanceof Pawn) {
+//						if (!kingTeam) {
+//							check = true;
+//						}
+//					}
+//				}
+//			}
+//		} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol - 1, chessBoard)) {
+//			opponent = chessBoard[kingRow + 1][kingCol - 1];
+//			if (opponent != null) {
+//				if (opponent.team != kingTeam) {
+//					if (opponent instanceof Pawn) {
+//						if (!kingTeam) {
+//							check = true;
+//						}
+//					}
+//				}
+//			}
+//		} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol + 1, chessBoard)) {
+//			opponent = chessBoard[kingRow - 1][kingCol + 1];
+//			if (opponent != null) {
+//				if (opponent.team != kingTeam) {
+//					if (opponent instanceof Pawn) {
+//						if (kingTeam) {
+//							check = true;
+//						}
+//					}
+//				}
+//			}
+//		} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol - 1, chessBoard)) {
+//			opponent = chessBoard[kingRow - 1][kingCol - 1];
+//			if (opponent != null) {
+//				if (opponent.team != kingTeam) {
+//					if (opponent instanceof Pawn) {
+//						if (kingTeam) {
+//							check = true;
+//						}
+//					}
+//				}
+//			}
+//		}
+
+		// System.out.println("Checking Knight: 5 of 5");
 		Knight kingKnight = new Knight(kingTeam);
-		kingKnight.ReturnPossibleMoves(kingRow, kingCol, chessBoard);
+		kingKnight.ReturnPossibleMoves(kingRow, kingCol, chessBoard, boardFlipped);
 		kingMoves = kingKnight.possibleMoves;
-		for(int i = 0; i < kingMoves.size(); i++){
+		for (int i = 0; i < kingMoves.size(); i++) {
 			opponentRow = kingMoves.get(i)[0];
 			opponentCol = kingMoves.get(i)[1];
 			opponent = chessBoard[opponentRow][opponentCol];
-			if (opponent != null){
-				if(opponent.team != kingTeam){
-					if(opponent instanceof Knight){
+			if (opponent != null) {
+				if (opponent.team != kingTeam) {
+					if (opponent instanceof Knight) {
 						check = true;
 					}
 				}
@@ -124,8 +167,8 @@ public class King extends Piece {
 
 		kingMoves = null;
 		return check;
-	}	
-	
+	}
+
 	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startCol, int newRow, int newCol,
 			Piece[][] chessBoard) {
 
@@ -140,12 +183,13 @@ public class King extends Piece {
 		int kingRow = startRow;
 		int kingCol = startCol;
 		Piece king = chessBoard[kingRow][kingCol];
-		
-		if(this.inBounds(destRow, destCol)){
-			Piece destCell = chessBoard[destRow][destCol]; 
+
+		if (this.inBounds(destRow, destCol)) {
+			Piece destCell = chessBoard[destRow][destCol];
 			if (destCell == null) {
-				//makes sure that the moves doesn't show up if there is another king in its radius
-				if (!this.isKinginRadius(new Click(cell[0],cell[1]), chessBoard, !this.team)){
+				// makes sure that the moves doesn't show up if there is another
+				// king in its radius
+				if (!this.isKinginRadius(new Click(cell[0], cell[1]), chessBoard, !this.team)) {
 					tempList.add(cell);
 				}
 			} else if (destCell.team != king.team) {
@@ -157,11 +201,10 @@ public class King extends Piece {
 		return tempList;
 	}
 
-	public void ReturnPossibleMoves(int startRow, int startColumn,
-			Piece[][] currentBoard) {
-		
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard, boolean boardFlipped) {
+
 		possibleMoves = null;
-		
+
 		if (possibleMoves != null) {
 			possibleMoves.clear();
 		}
@@ -175,85 +218,78 @@ public class King extends Piece {
 		// move left by 1
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow, startColumn - 1, currentBoard));
 		// move down and right by 1
-		possibleMoves
-				.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow + 1, startColumn + 1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow + 1, startColumn + 1, currentBoard));
 		// move down and left by 1
-		possibleMoves
-				.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow + 1, startColumn - 1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow + 1, startColumn - 1, currentBoard));
 		// move up and right by 1
-		possibleMoves
-				.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow - 1, startColumn + 1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow - 1, startColumn + 1, currentBoard));
 		// move up and left by 1
-		possibleMoves
-				.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow - 1, startColumn - 1, currentBoard));
+		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, startRow - 1, startColumn - 1, currentBoard));
 
-		//Only add 2 moves to the left or 2 moves to the right is castle is valid
-		if (castleValid && !this.KingCheck(currentBoard,startRow,startColumn,this.team)){
-			if (currentBoard[startRow][startColumn+1] == null && currentBoard[startRow][startColumn+2] == null){
-				currentBoard[startRow][startColumn+1] = currentBoard[startRow][startColumn];
-				if (!this.KingCheck(currentBoard,startRow,startColumn+1,this.team)){
-					currentBoard[startRow][startColumn+2] = currentBoard[startRow][startColumn+1];
-					if (!this.KingCheck(currentBoard,startRow,startColumn+2,this.team)){
+		// Only add 2 moves to the left or 2 moves to the right is castle is
+		// valid
+		if (castleValid && !this.KingCheck(currentBoard, startRow, startColumn, this.team, boardFlipped)) {
+			if (currentBoard[startRow][startColumn + 1] == null && currentBoard[startRow][startColumn + 2] == null) {
+				currentBoard[startRow][startColumn + 1] = currentBoard[startRow][startColumn];
+				if (!this.KingCheck(currentBoard, startRow, startColumn + 1, this.team, boardFlipped)) {
+					currentBoard[startRow][startColumn + 2] = currentBoard[startRow][startColumn + 1];
+					if (!this.KingCheck(currentBoard, startRow, startColumn + 2, this.team, boardFlipped)) {
 						possibleMoves.add(new int[] { startRow, startColumn + 2 });
 					}
-					currentBoard[startRow][startColumn+2] = null;
+					currentBoard[startRow][startColumn + 2] = null;
 				}
-				currentBoard[startRow][startColumn+1] = null;
+				currentBoard[startRow][startColumn + 1] = null;
 			}
 
 			if (currentBoard[startRow][startColumn - 1] == null && currentBoard[startRow][startColumn - 2] == null
 					&& currentBoard[startRow][startColumn - 3] == null) {
-				 currentBoard[startRow][startColumn-1] = currentBoard[startRow][startColumn];
-				if (!this.KingCheck(currentBoard, startRow, startColumn - 1, this.team)) {
-					 currentBoard[startRow][startColumn-2] = currentBoard[startRow][startColumn-1];
-					 if (!this.KingCheck(currentBoard, startRow, startColumn - 2, this.team)){
-						 possibleMoves.add(new int[] { startRow, startColumn - 2 });
-					 }
-					currentBoard[startRow][startColumn-2] = null;
+				currentBoard[startRow][startColumn - 1] = currentBoard[startRow][startColumn];
+				if (!this.KingCheck(currentBoard, startRow, startColumn - 1, this.team, boardFlipped)) {
+					currentBoard[startRow][startColumn - 2] = currentBoard[startRow][startColumn - 1];
+					if (!this.KingCheck(currentBoard, startRow, startColumn - 2, this.team, boardFlipped)) {
+						possibleMoves.add(new int[] { startRow, startColumn - 2 });
+					}
+					currentBoard[startRow][startColumn - 2] = null;
 				}
-				currentBoard[startRow][startColumn-3] = null;
-				currentBoard[startRow][startColumn-1] = null;
+				currentBoard[startRow][startColumn - 3] = null;
+				currentBoard[startRow][startColumn - 1] = null;
 			}
 		}
 	}
-	
-	//Checks if there is a king of the sentTeam boolean in radius
-	private boolean isKinginRadius(Click sentC,  Piece[][] currentBoard, boolean sentTeam){
-		if (this.inBounds(sentC.row+1, sentC.col) &&
-				currentBoard[sentC.row+1][sentC.col] instanceof King && 
-				currentBoard[sentC.row+1][sentC.col].team  == sentTeam){
+
+	// Checks if there is a king of the sentTeam boolean in radius
+	private boolean isKinginRadius(Click sentC, Piece[][] currentBoard, boolean sentTeam) {
+		if (this.inBounds(sentC.row + 1, sentC.col) && currentBoard[sentC.row + 1][sentC.col] instanceof King
+				&& currentBoard[sentC.row + 1][sentC.col].team == sentTeam) {
 			return true;
-		}else if (this.inBounds(sentC.row+1, sentC.col+1) &&
-				currentBoard[sentC.row+1][sentC.col+1] instanceof King && 
-				currentBoard[sentC.row+1][sentC.col+1].team  == sentTeam){
+		} else if (this.inBounds(sentC.row + 1, sentC.col + 1)
+				&& currentBoard[sentC.row + 1][sentC.col + 1] instanceof King
+				&& currentBoard[sentC.row + 1][sentC.col + 1].team == sentTeam) {
 			return true;
-		}else if (this.inBounds(sentC.row, sentC.col+1) &&
-				currentBoard[sentC.row][sentC.col+1] instanceof King && 
-				currentBoard[sentC.row][sentC.col+1].team  == sentTeam){
+		} else if (this.inBounds(sentC.row, sentC.col + 1) && currentBoard[sentC.row][sentC.col + 1] instanceof King
+				&& currentBoard[sentC.row][sentC.col + 1].team == sentTeam) {
 			return true;
-		}else if (this.inBounds(sentC.row, sentC.col-1) &&
-				currentBoard[sentC.row][sentC.col-1] instanceof King && 
-				currentBoard[sentC.row][sentC.col-1].team  == sentTeam){
+		} else if (this.inBounds(sentC.row, sentC.col - 1) && currentBoard[sentC.row][sentC.col - 1] instanceof King
+				&& currentBoard[sentC.row][sentC.col - 1].team == sentTeam) {
 			return true;
-		}else if (this.inBounds(sentC.row-1, sentC.col) &&
-				currentBoard[sentC.row-1][sentC.col] instanceof King && 
-				currentBoard[sentC.row-1][sentC.col].team  == sentTeam){
+		} else if (this.inBounds(sentC.row - 1, sentC.col) && currentBoard[sentC.row - 1][sentC.col] instanceof King
+				&& currentBoard[sentC.row - 1][sentC.col].team == sentTeam) {
 			return true;
-		}else if (this.inBounds(sentC.row-1, sentC.col-1) &&
-				currentBoard[sentC.row-1][sentC.col-1] instanceof King && 
-				currentBoard[sentC.row-1][sentC.col-1].team  == sentTeam){
+		} else if (this.inBounds(sentC.row - 1, sentC.col - 1)
+				&& currentBoard[sentC.row - 1][sentC.col - 1] instanceof King
+				&& currentBoard[sentC.row - 1][sentC.col - 1].team == sentTeam) {
 			return true;
-		}else if (this.inBounds(sentC.row-1, sentC.col+1) &&
-				currentBoard[sentC.row-1][sentC.col+1] instanceof King && 
-				currentBoard[sentC.row-1][sentC.col+1].team  == sentTeam){
+		} else if (this.inBounds(sentC.row - 1, sentC.col + 1)
+				&& currentBoard[sentC.row - 1][sentC.col + 1] instanceof King
+				&& currentBoard[sentC.row - 1][sentC.col + 1].team == sentTeam) {
 			return true;
-		}else if (this.inBounds(sentC.row+1, sentC.col-1) &&
-				currentBoard[sentC.row+1][sentC.col-1] instanceof King && 
-				currentBoard[sentC.row+1][sentC.col-1].team  == sentTeam){
+		} else if (this.inBounds(sentC.row + 1, sentC.col - 1)
+				&& currentBoard[sentC.row + 1][sentC.col - 1] instanceof King
+				&& currentBoard[sentC.row + 1][sentC.col - 1].team == sentTeam) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
+
 }

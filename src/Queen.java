@@ -10,7 +10,7 @@ public class Queen extends Piece{
 		
 	}
 
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard, boolean boardFlipped){
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}
@@ -18,9 +18,9 @@ public class Queen extends Piece{
 		Rook queenRook = new Rook(currentBoard[startRow][startColumn].team);
 		Bishop queenBishop = new Bishop(currentBoard[startRow][startColumn].team);
 		
-		queenRook.ReturnPossibleMoves(startRow, startColumn, currentBoard);
+		queenRook.ReturnPossibleMoves(startRow, startColumn, currentBoard, boardFlipped);
 		
-		queenBishop.ReturnPossibleMoves(startRow,startColumn, currentBoard);
+		queenBishop.ReturnPossibleMoves(startRow,startColumn, currentBoard, boardFlipped);
 		
 		possibleMoves = queenRook.possibleMoves;
 		possibleMoves.addAll(queenBishop.possibleMoves);

@@ -11,18 +11,20 @@ public class Game {
 	private boolean whoseTurn; // true = white, false = black //being called for
 								// checking whose turn
 	private boolean justCastled = false; // being called to check if we castled
-
+	private boolean boardFlipped = false;
+	
 	private Click fstClick;
 	private Click secClick;
 	private Click blackKing;
 	private Click whiteKing;
-
+	
 	private int drawWith75Moves;
 
 	// Variables used temporarily in various methods
 	private King selectedKing;
 	private Click kingLoc;
 	private Piece tempPiece;
+	
 
 	// Starts the Board at Initial Configuration
 	public void InitializeGame() {
@@ -243,7 +245,7 @@ public class Game {
 		kingCol = kingLoc.col;
 
 		// First we need to get all possible moves for that piece.
-		ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard);
+		ChessBoard[sentC.row][sentC.col].ReturnPossibleMoves(sentC.row, sentC.col, ChessBoard, this.boardFlipped);
 
 		if (ChessBoard[sentC.row][sentC.col].possibleMoves.size() == 0) {
 			return;
@@ -269,12 +271,12 @@ public class Game {
 				}
 			}
 
+//			System.out.println("row: " + tempList.get(i)[0] + "col: " + tempList.get(i)[1]);
 			// if king is still in check then remove the int[] as a possibility
-			if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team)) {
+			if (selectedKing.KingCheck(ChessBoard, kingRow, kingCol, selectedKing.team, this.boardFlipped)) {
 				ChessBoard[sentC.row][sentC.col] = ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]];
 				ChessBoard[tempList.get(i)[0]][tempList.get(i)[1]] = tempPiece;
-				// System.out.println("Remrow: " + tempList.get(i)[0] + "
-				// Remcol: " + tempList.get(i)[1]);
+//				 System.out.println("Remrow: " + tempList.get(i)[0] + "Remcol: " + tempList.get(i)[1]);
 				tempList.remove(i);
 				i = i - 1; // this is so it doesn't skip over a spot.
 			} else {
@@ -389,7 +391,7 @@ public class Game {
 
 		this.selectCurrentKing();
 
-		return selectedKing.KingCheck(ChessBoard, kingLoc.row, kingLoc.col, selectedKing.team);
+		return selectedKing.KingCheck(ChessBoard, kingLoc.row, kingLoc.col, selectedKing.team, this.boardFlipped);
 	}
 
 	private void selectCurrentKing() {
@@ -415,6 +417,8 @@ public class Game {
 	public void Flip() {
 		Piece[][] tempBoard = new Piece[8][8];
 		Pawn tempPawn;
+		
+		boardFlipped = boardFlipped? false:true;
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {

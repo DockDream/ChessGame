@@ -10,7 +10,7 @@ public class Bishop extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard, boolean boardFlipped) {
 		if (possibleMoves != null){
 			possibleMoves.clear();
 		}

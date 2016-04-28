@@ -51,7 +51,7 @@ public class Pawn extends Piece {
 		}
 	
 	
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard, boolean boardFlipped) {
 		
 		if (possibleMoves != null){
 			possibleMoves.clear();

@@ -36,8 +36,8 @@ public abstract class Piece {
 	}
 
 	//Just making a list of all the possible moves that the respective piece can perform
-	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
-		
+	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard, boolean boardFlipped) {
+		System.out.println("Should never call this method: in the returnpossiblemoves of the piece class");
 		// Array = [row, column]
 	}
 
