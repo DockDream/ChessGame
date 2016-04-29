@@ -196,25 +196,47 @@ public class Game {
 			if (selectedKing.castleValid) {
 
 				if (secClick.col - fstClick.col == 2 && (fstClick.row == secClick.row)) {
-					ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
-					ChessBoard[fstClick.row][5] = ChessBoard[fstClick.row][7];
-					ChessBoard[fstClick.row][7] = null;
-					ChessBoard[fstClick.row][fstClick.col] = null;
+					if (!boardFlipped){
+						ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+						ChessBoard[fstClick.row][5] = ChessBoard[fstClick.row][7];
+						ChessBoard[fstClick.row][7] = null;
+						ChessBoard[fstClick.row][fstClick.col] = null;
 
-					selectedKing.castleValid = false;
-					justCastled = true;
+						selectedKing.castleValid = false;
+						justCastled = true;
 					return true;
+					}else{
+						ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+						ChessBoard[fstClick.row][4] = ChessBoard[fstClick.row][7];
+						ChessBoard[fstClick.row][7] = null;
+						ChessBoard[fstClick.row][fstClick.col] = null;
+
+						selectedKing.castleValid = false;
+						justCastled = true;
+						return true;
+					}
 				}
 
 				if (secClick.col - fstClick.col == -2 && (fstClick.row == secClick.row)) {
-					ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
-					ChessBoard[fstClick.row][3] = ChessBoard[fstClick.row][0];
-					ChessBoard[fstClick.row][0] = null;
-					ChessBoard[fstClick.row][fstClick.col] = null;
+					if (!boardFlipped){
+						ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+						ChessBoard[fstClick.row][3] = ChessBoard[fstClick.row][0];
+						ChessBoard[fstClick.row][0] = null;
+						ChessBoard[fstClick.row][fstClick.col] = null;
 
-					selectedKing.castleValid = false;
-					justCastled = true;
-					return true;
+						selectedKing.castleValid = false;
+						justCastled = true;
+						return true;
+					}else{
+						ChessBoard[secClick.row][secClick.col] = ChessBoard[fstClick.row][fstClick.col];
+						ChessBoard[fstClick.row][2] = ChessBoard[fstClick.row][0];
+						ChessBoard[fstClick.row][0] = null;
+						ChessBoard[fstClick.row][fstClick.col] = null;
+
+						selectedKing.castleValid = false;
+						justCastled = true;
+						return true;
+					}
 				}
 			}
 			selectedKing.castleValid = false;

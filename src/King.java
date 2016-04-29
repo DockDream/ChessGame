@@ -102,51 +102,55 @@ public class King extends Piece {
 			}
 		}
 
-//		if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol + 1, chessBoard)) {
-//			opponent = chessBoard[kingRow + 1][kingCol + 1];
-//			if (opponent != null) {
-//				if (opponent.team != kingTeam) {
-//					if (opponent instanceof Pawn) {
-//						if (!kingTeam) {
-//							check = true;
-//						}
-//					}
-//				}
-//			}
-//		} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol - 1, chessBoard)) {
-//			opponent = chessBoard[kingRow + 1][kingCol - 1];
-//			if (opponent != null) {
-//				if (opponent.team != kingTeam) {
-//					if (opponent instanceof Pawn) {
-//						if (!kingTeam) {
-//							check = true;
-//						}
-//					}
-//				}
-//			}
-//		} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol + 1, chessBoard)) {
-//			opponent = chessBoard[kingRow - 1][kingCol + 1];
-//			if (opponent != null) {
-//				if (opponent.team != kingTeam) {
-//					if (opponent instanceof Pawn) {
-//						if (kingTeam) {
-//							check = true;
-//						}
-//					}
-//				}
-//			}
-//		} else if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol - 1, chessBoard)) {
-//			opponent = chessBoard[kingRow - 1][kingCol - 1];
-//			if (opponent != null) {
-//				if (opponent.team != kingTeam) {
-//					if (opponent instanceof Pawn) {
-//						if (kingTeam) {
-//							check = true;
-//						}
-//					}
-//				}
-//			}
-//		}
+		// if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol + 1,
+		// chessBoard)) {
+		// opponent = chessBoard[kingRow + 1][kingCol + 1];
+		// if (opponent != null) {
+		// if (opponent.team != kingTeam) {
+		// if (opponent instanceof Pawn) {
+		// if (!kingTeam) {
+		// check = true;
+		// }
+		// }
+		// }
+		// }
+		// } else if (kingPawn.KillCheck(kingRow, kingCol, kingRow + 1, kingCol
+		// - 1, chessBoard)) {
+		// opponent = chessBoard[kingRow + 1][kingCol - 1];
+		// if (opponent != null) {
+		// if (opponent.team != kingTeam) {
+		// if (opponent instanceof Pawn) {
+		// if (!kingTeam) {
+		// check = true;
+		// }
+		// }
+		// }
+		// }
+		// } else if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol
+		// + 1, chessBoard)) {
+		// opponent = chessBoard[kingRow - 1][kingCol + 1];
+		// if (opponent != null) {
+		// if (opponent.team != kingTeam) {
+		// if (opponent instanceof Pawn) {
+		// if (kingTeam) {
+		// check = true;
+		// }
+		// }
+		// }
+		// }
+		// } else if (kingPawn.KillCheck(kingRow, kingCol, kingRow - 1, kingCol
+		// - 1, chessBoard)) {
+		// opponent = chessBoard[kingRow - 1][kingCol - 1];
+		// if (opponent != null) {
+		// if (opponent.team != kingTeam) {
+		// if (opponent instanceof Pawn) {
+		// if (kingTeam) {
+		// check = true;
+		// }
+		// }
+		// }
+		// }
+		// }
 
 		// System.out.println("Checking Knight: 5 of 5");
 		Knight kingKnight = new Knight(kingTeam);
@@ -228,31 +232,64 @@ public class King extends Piece {
 
 		// Only add 2 moves to the left or 2 moves to the right is castle is
 		// valid
-		if (castleValid && !this.KingCheck(currentBoard, startRow, startColumn, this.team, boardFlipped)) {
-			if (currentBoard[startRow][startColumn + 1] == null && currentBoard[startRow][startColumn + 2] == null) {
-				currentBoard[startRow][startColumn + 1] = currentBoard[startRow][startColumn];
-				if (!this.KingCheck(currentBoard, startRow, startColumn + 1, this.team, boardFlipped)) {
-					currentBoard[startRow][startColumn + 2] = currentBoard[startRow][startColumn + 1];
-					if (!this.KingCheck(currentBoard, startRow, startColumn + 2, this.team, boardFlipped)) {
-						possibleMoves.add(new int[] { startRow, startColumn + 2 });
-					}
-					currentBoard[startRow][startColumn + 2] = null;
-				}
-				currentBoard[startRow][startColumn + 1] = null;
-			}
+		System.out.println("castleValid: " + castleValid);
 
-			if (currentBoard[startRow][startColumn - 1] == null && currentBoard[startRow][startColumn - 2] == null
-					&& currentBoard[startRow][startColumn - 3] == null) {
-				currentBoard[startRow][startColumn - 1] = currentBoard[startRow][startColumn];
-				if (!this.KingCheck(currentBoard, startRow, startColumn - 1, this.team, boardFlipped)) {
-					currentBoard[startRow][startColumn - 2] = currentBoard[startRow][startColumn - 1];
-					if (!this.KingCheck(currentBoard, startRow, startColumn - 2, this.team, boardFlipped)) {
-						possibleMoves.add(new int[] { startRow, startColumn - 2 });
+		if (!boardFlipped) {
+			if (castleValid && !this.KingCheck(currentBoard, startRow, startColumn, this.team, boardFlipped)) {
+				if (currentBoard[startRow][startColumn + 1] == null
+						&& currentBoard[startRow][startColumn + 2] == null) {
+					currentBoard[startRow][startColumn + 1] = currentBoard[startRow][startColumn];
+					if (!this.KingCheck(currentBoard, startRow, startColumn + 1, this.team, boardFlipped)) {
+						currentBoard[startRow][startColumn + 2] = currentBoard[startRow][startColumn + 1];
+						if (!this.KingCheck(currentBoard, startRow, startColumn + 2, this.team, boardFlipped)) {
+							possibleMoves.add(new int[] { startRow, startColumn + 2 });
+						}
+						currentBoard[startRow][startColumn + 2] = null;
+					}
+					currentBoard[startRow][startColumn + 1] = null;
+				}
+
+				if (currentBoard[startRow][startColumn - 1] == null && currentBoard[startRow][startColumn - 2] == null
+						&& currentBoard[startRow][startColumn - 3] == null) {
+					currentBoard[startRow][startColumn - 1] = currentBoard[startRow][startColumn];
+					if (!this.KingCheck(currentBoard, startRow, startColumn - 1, this.team, boardFlipped)) {
+						currentBoard[startRow][startColumn - 2] = currentBoard[startRow][startColumn - 1];
+						if (!this.KingCheck(currentBoard, startRow, startColumn - 2, this.team, boardFlipped)) {
+							possibleMoves.add(new int[] { startRow, startColumn - 2 });
+						}
+						currentBoard[startRow][startColumn - 2] = null;
+					}
+					currentBoard[startRow][startColumn - 3] = null;
+					currentBoard[startRow][startColumn - 1] = null;
+				}
+			}
+		}else{
+			if (castleValid && !this.KingCheck(currentBoard, startRow, startColumn, this.team, boardFlipped)) {
+				if (currentBoard[startRow][startColumn + 1] == null
+						&& currentBoard[startRow][startColumn + 2] == null && currentBoard[startRow][startColumn+3] == null) {
+					currentBoard[startRow][startColumn + 1] = currentBoard[startRow][startColumn];
+					if (!this.KingCheck(currentBoard, startRow, startColumn + 1, this.team, boardFlipped)) {
+						currentBoard[startRow][startColumn + 2] = currentBoard[startRow][startColumn + 1];
+						if (!this.KingCheck(currentBoard, startRow, startColumn + 2, this.team, boardFlipped)) {
+							possibleMoves.add(new int[] { startRow, startColumn + 2 });
+						}
+						currentBoard[startRow][startColumn + 3] = null;
+					}
+					currentBoard[startRow][startColumn + 1] = null;
+				}
+
+				if (currentBoard[startRow][startColumn - 1] == null && currentBoard[startRow][startColumn - 2] == null) {
+					currentBoard[startRow][startColumn - 1] = currentBoard[startRow][startColumn];
+					if (!this.KingCheck(currentBoard, startRow, startColumn - 1, this.team, boardFlipped)) {
+						currentBoard[startRow][startColumn - 2] = currentBoard[startRow][startColumn - 1];
+						if (!this.KingCheck(currentBoard, startRow, startColumn - 2, this.team, boardFlipped)) {
+							possibleMoves.add(new int[] { startRow, startColumn - 2 });
+						}
+						currentBoard[startRow][startColumn - 2] = null;
 					}
 					currentBoard[startRow][startColumn - 2] = null;
+					currentBoard[startRow][startColumn - 1] = null;
 				}
-				currentBoard[startRow][startColumn - 3] = null;
-				currentBoard[startRow][startColumn - 1] = null;
 			}
 		}
 	}
