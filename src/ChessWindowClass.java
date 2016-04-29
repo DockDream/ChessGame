@@ -871,13 +871,13 @@ public class ChessWindowClass implements ActionListener {
 		 * This block will set starting square to unoccupied and correct color
 		 */
 		if ((start[0] + start[1]) % 2 == 0) {
-			
-				chessSquares[start[0]][start[1]]
-						.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+
+			chessSquares[start[0]][start[1]]
+					.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
 		} else {
-			
-				chessSquares[start[0]][start[1]]
-						.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+
+			chessSquares[start[0]][start[1]]
+					.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
 		}
 
 		/**
@@ -1072,17 +1072,13 @@ public class ChessWindowClass implements ActionListener {
 							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
 				} // end else
 			} else {
-				if (col == 6) {
-					chessSquares[row][7]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-					chessSquares[row][5]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				if(col == 6){
+					chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 				} // end if col == 6
-				else {
-					chessSquares[row][0]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-					chessSquares[row][3]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
+				else{
+					chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 				} // end else
 			}
 		} // end if row == 0 && pieceColor == true
@@ -1103,17 +1099,13 @@ public class ChessWindowClass implements ActionListener {
 							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
 				} // end else
 			} else {
-				if (col == 6 && !boardFlipped) {
-					chessSquares[row][7]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-					chessSquares[row][5]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				if(col == 6){
+					chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
 				} // end if col == 6
-				else {
-					chessSquares[row][0]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-					chessSquares[row][3]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
+				else{
+					chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
 				} // end else
 			}
 		} // end if row == 0 && pieceColor == false
@@ -1134,17 +1126,13 @@ public class ChessWindowClass implements ActionListener {
 							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 				} // end else
 			} else {
-				if (col == 6) {
-					chessSquares[row][7]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-					chessSquares[row][5]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				if(col == 6){
+					chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
 				} // end if col == 6
-				else {
-					chessSquares[row][0]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-					chessSquares[row][3]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
+				else{
+					chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BRookBBoard.png")));
 				} // end else
 			}
 		} // end else if row == 7 && pieceColor == true
@@ -1165,17 +1153,13 @@ public class ChessWindowClass implements ActionListener {
 							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/RRookWBoard.png")));
 				} // end else
 			} else {
-				if (col == 6) {
-					chessSquares[row][7]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-					chessSquares[row][5]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookBBoard.png")));
+				if(col == 6){
+					chessSquares[row][7].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
+					chessSquares[row][5].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
 				} // end if col == 6
-				else {
-					chessSquares[row][0]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-					chessSquares[row][3]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookBBoard.png")));
+				else{
+					chessSquares[row][0].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+					chessSquares[row][3].setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
 				} // end else
 			}
 		} // end else if row == 7 && pieceColor == false
@@ -1278,7 +1262,7 @@ public class ChessWindowClass implements ActionListener {
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				chessS[i][j] = chessSquares[7 - i][7-j].getIcon().toString();
+				chessS[i][j] = chessSquares[7 - i][7 - j].getIcon().toString();
 			}
 		}
 
@@ -1303,8 +1287,6 @@ public class ChessWindowClass implements ActionListener {
 				chessSquares[i][j].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 			}
 		}
-		
-		
 
 		fClick.Flip();
 
