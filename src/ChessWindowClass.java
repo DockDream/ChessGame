@@ -871,21 +871,13 @@ public class ChessWindowClass implements ActionListener {
 		 * This block will set starting square to unoccupied and correct color
 		 */
 		if ((start[0] + start[1]) % 2 == 0) {
-			if (boardFlipped) {
-				chessSquares[start[0]][start[1]]
-						.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-			} else {
+			
 				chessSquares[start[0]][start[1]]
 						.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-			}
 		} else {
-			if (boardFlipped) {
-				chessSquares[start[0]][start[1]]
-						.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
-			} else {
+			
 				chessSquares[start[0]][start[1]]
 						.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
-			}
 		}
 
 		/**
@@ -903,18 +895,10 @@ public class ChessWindowClass implements ActionListener {
 		piece = sb.reverse().toString();
 		piece = piece.substring(0, piece.length() - 10);
 		if ((end[0] + end[1]) % 2 == 0) {
-			if (boardFlipped) {
-				piece = piece + "BBoard.png";
-			} else {
-				piece = piece + "WBoard.png";
-			}
+			piece = piece + "WBoard.png";
 		} // end if even square
 		else if ((end[0] + end[1]) % 2 == 1) {
-			if (boardFlipped) {
-				piece = piece + "WBoard.png";
-			} else {
-				piece = piece + "BBoard.png";
-			}
+			piece = piece + "BBoard.png";
 		} // end else if odd square
 		chessSquares[end[0]][end[1]].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 
@@ -1037,17 +1021,9 @@ public class ChessWindowClass implements ActionListener {
 
 		// adds board color to image file path
 		if ((row + col) % 2 == 0) {
-			if (boardFlipped) {
-				newIcon.append("BBoard.png");
-			} else {
-				newIcon.append("WBoard.png");
-			}
+			newIcon.append("WBoard.png");
 		} else {
-			if (boardFlipped) {
-				newIcon.append("WBoard.png");
-			} else {
-				newIcon.append("BBoard.png");
-			}
+			newIcon.append("BBoard.png");
 		}
 
 		chessSquares[row][col].setIcon(new ImageIcon(ChessWindowClass.class.getResource(newIcon.toString())));
@@ -1098,7 +1074,7 @@ public class ChessWindowClass implements ActionListener {
 			} else {
 				if (col == 6) {
 					chessSquares[row][7]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
 					chessSquares[row][5]
 							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookWBoard.png")));
 				} // end if col == 6
@@ -1193,13 +1169,13 @@ public class ChessWindowClass implements ActionListener {
 					chessSquares[row][7]
 							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/BBoard.png")));
 					chessSquares[row][5]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookBBoard.png")));
 				} // end if col == 6
 				else {
 					chessSquares[row][0]
 							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WBoard.png")));
 					chessSquares[row][3]
-							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/URookBBoard.png")));
+							.setIcon(new ImageIcon(ChessWindowClass.class.getResource("/Images/WRookBBoard.png")));
 				} // end else
 			}
 		} // end else if row == 7 && pieceColor == false
@@ -1302,7 +1278,7 @@ public class ChessWindowClass implements ActionListener {
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				chessS[i][j] = chessSquares[7 - i][j].getIcon().toString();
+				chessS[i][j] = chessSquares[7 - i][7-j].getIcon().toString();
 			}
 		}
 
@@ -1327,6 +1303,8 @@ public class ChessWindowClass implements ActionListener {
 				chessSquares[i][j].setIcon(new ImageIcon(ChessWindowClass.class.getResource(piece)));
 			}
 		}
+		
+		
 
 		fClick.Flip();
 

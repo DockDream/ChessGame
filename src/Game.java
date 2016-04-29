@@ -422,7 +422,7 @@ public class Game {
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				tempBoard[i][j] = ChessBoard[7 - i][j];
+				tempBoard[i][j] = ChessBoard[7 - i][7 - j];
 
 				if (tempBoard[i][j] instanceof Pawn) {
 					tempPawn = (Pawn) tempBoard[i][j];
