@@ -1,0 +1,67 @@
+Pawn{
+	
+	Pawn(boolean sentTeam){
+		set team variable to sentTeam
+	}
+	
+	ReturnMovesAddon(startPosition, sentPosition, currentBoard){
+		if (sentPosition is on the board){
+			if (sentPosition is empty){
+				add to possibleMoves list;
+			}
+		}
+	}
+	
+	KillCheck(startPosition, killPosition, currentBoard){
+		boolean kill = false
+		if (killPosition is on the board){
+			if (killPosition isn't empty){
+				if (killPosition's team != startPosition's team){
+					kill = true;
+				}
+			}
+		}
+		return kill;
+	}
+	
+	ReturnPossibleMoves(startPosition, currentBoard){
+		if (possibleMoves != null){
+			clear possibleMoves;
+		}
+		
+		if (startPosition team is true(white)){
+			if (startPosition's row > 0 ){
+				call ReturnMovesAddon with sentPosition being Up a row
+			}
+			if (startPosition'row == 6){
+				call ReturnMovesAddon with sentPosition being Up two rows;
+			}
+			
+			if (KillCheck with killPosition being right diagonal up){
+				call ReturnMovesAddon with sentPosition being right diagonal up;
+			}
+			
+			if (KillCheck with killPosition being left diagonal up){
+				call ReturnMovesAddon with sentPosition being left diagonal up;
+			}
+			
+		}else (startPosition's team is false(black)){
+			if (startPosition's row < 7 ){
+				call ReturnMovesAddon with sentPosition being Down a row
+			}
+			if (startPosition'row == 1){
+				call ReturnMovesAddon with sentPosition being Down two rows;
+			}
+			
+			if (KillCheck with killPosition being right diagonal down){
+				call ReturnMovesAddon with sentPosition being right diagonal down;
+			}
+			
+			if (KillCheck with killPosition being left diagonal down){
+				call ReturnMovesAddon with sentPosition being left diagonal down;
+			}
+		}
+	}
+	
+
+}

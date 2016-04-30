@@ -1,0 +1,42 @@
+Bishop{
+	
+	Bishop(sentTeam){
+		Set this team to the sentTeam
+	}
+	
+	ReturnMovesAddon(startPosition, rowIncrement, columnIncrement, currentBoard){
+		CurrentPositon  = startPosition;
+		
+		for (8 times){
+			CurrentPositon'row = startPosition's row + rowIncrement
+			CurrentPositon'column = startPosition's row + rowIncrement
+			
+			if (CurrentPositon is in bounds){
+				if (CurrentPositon is empty on currentBoard){
+					add it to the possiblemoves list 
+				}else if (CurrentPositon's team isn't the same as the current team){
+					add it to the possiblemoves list
+				}else (CurrentPositon's team is the same as the current team){
+					break for loop
+				}
+			}else (CurrentPositon isn't in bounds) {
+				break for loop
+			}
+			
+		}
+		
+	}
+	
+	ReturnPossibleMoves(startPosition, currentBoard){
+		if (possiblemoves != null){
+			clear possiblemoves list
+		}
+		
+		Call ReturnMovesAddon with rowIncrement being 1 and columnIncrement being 1
+		Call ReturnMovesAddon with rowIncrement being 1 and columnIncrement being -1
+		Call ReturnMovesAddon with rowIncrement being -1 and columnIncrement being 1
+		Call ReturnMovesAddon with rowIncrement being -1 and columnIncrement being -1
+		
+	}
+
+}

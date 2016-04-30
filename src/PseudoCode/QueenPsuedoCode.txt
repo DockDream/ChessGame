@@ -1,0 +1,16 @@
+Queen{
+	
+	Queen{(sentTeam){
+		Set this team to the sentTeam
+	}
+	
+	ReturnPossibleMoves(startPosition, currentBoard){
+		if (possiblemoves isn't empty){
+			clear possiblemoves list
+		}
+		
+		Create a new rook with the current team and get possiblemoves and add it to current list
+		Create a new bishop with the current team and get possiblemoves and add it to current list
+	}
+	
+}

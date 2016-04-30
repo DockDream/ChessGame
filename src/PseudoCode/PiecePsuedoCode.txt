@@ -1,0 +1,44 @@
+//Creating this class as a base for all the other pieces
+
+Piece{
+
+	Piece{(sentTeam){
+		Set this team to the sentTeam
+	}
+
+	boolean team
+	ArrayList<in[]> possiblemoves
+	
+	ValidMoves(sentPosition){
+		For (all the moves in possiblemoves){
+			if (sentPosition is in the list){
+				return true
+			}
+		}
+	}
+	
+	inBounds(sentPosition){
+		if (sentPosition is out of the board){
+			return false
+		}else (sentPosition is on the board){
+			return true;
+		}
+	}
+	
+	ReturnPossibleMoves(sentPosition){
+		return possiblemoves
+	}
+	
+	PrintPossibleMoves(sentArrayList){
+		if (sentList is empty){
+			print sent an empty list
+			return
+		}
+		
+		for (run through the whole list){
+			print each individual item
+		}
+	}
+	
+	
+}
