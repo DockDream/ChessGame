@@ -10,6 +10,10 @@ public class King extends Piece {
 		this.castleValid = true;
 	}
 
+	/**
+	 * Method used to check if the position sent would place in the king in check
+	 * with respect to the current board.
+	 */
 	public boolean KingCheck(Piece[][] chessBoard, int currentRow, int currentCol, boolean kingTeam){
 
 		ArrayList<int[]> kingMoves = null;		
@@ -125,6 +129,9 @@ public class King extends Piece {
 		return check;
 	}	
 	
+	/**
+	 * Used as a supplement to return possibleMoves
+	 */
 	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startCol, int newRow, int newCol,
 			Piece[][] chessBoard) {
 
@@ -156,6 +163,9 @@ public class King extends Piece {
 		return tempList;
 	}
 
+	/**
+	 * Used for calculating the right moves this piece can make
+	 */
 	public void ReturnPossibleMoves(int startRow, int startColumn,
 			Piece[][] currentBoard) {
 		
@@ -216,7 +226,10 @@ public class King extends Piece {
 		}
 	}
 	
-	//Checks if there is a king of the sentTeam boolean in radius
+	/**
+	 * Used to check if the kind of a different team is in the
+	 * radius
+	 */
 	private boolean isKinginRadius(Click sentC,  Piece[][] currentBoard, boolean sentTeam){
 		if (this.inBounds(sentC.row+1, sentC.col) &&
 				currentBoard[sentC.row+1][sentC.col] instanceof King && 

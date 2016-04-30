@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Knight extends Piece {
 	
+	/**
+	 * Constructor used to set the correct team
+	 */
 	Knight(boolean sentTeam) {
 		super(sentTeam);
 	}
@@ -12,6 +15,9 @@ public class Knight extends Piece {
 		
 	}
 
+	/**
+	 * Used as a supplement to return possibleMoves
+	 */
 	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int newRow, int newColumn, Piece[][] currentBoard) {
 
@@ -32,6 +38,9 @@ public class Knight extends Piece {
 			return tempList;
 		}
 	
+	/**
+	 * Used for calculating the right moves this piece can make
+	 */
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		if (possibleMoves != null){
 			possibleMoves.clear();

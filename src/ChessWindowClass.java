@@ -551,7 +551,7 @@ public class ChessWindowClass implements ActionListener{
 		 * Decides and Shows Whose Turn it is
 		*/
 		
-		if (turn == 0)
+		if (!fClick.getTurn())
 		{
 			if (pieceColor == false)
 				label.setText("Blue Team");
@@ -559,7 +559,7 @@ public class ChessWindowClass implements ActionListener{
 				label.setText("Black Team");
 			turn++;
 		}
-		else if (turn == 1)
+		else
 		{
 			if (pieceColor == false)
 				label.setText("Red Team");

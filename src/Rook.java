@@ -2,7 +2,9 @@ import java.util.ArrayList;
 
 public class Rook extends Piece{
 	
-	
+	/**
+	 * Constructor used to set the right team
+	 */
 	Rook(boolean sentTeam) {
 		super(sentTeam);
 	}
@@ -11,6 +13,9 @@ public class Rook extends Piece{
 		
 	}
 
+	/**
+	 * Used for calculating the right moves this piece can make
+	 */
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard){
 		if (possibleMoves != null){
 			possibleMoves.clear();
@@ -29,7 +34,9 @@ public class Rook extends Piece{
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 0, -1, currentBoard));
 	}
 	
-	
+	/**
+	 * Used as a supplement to return possibleMoves
+	 */
 	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
 

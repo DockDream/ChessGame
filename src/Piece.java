@@ -1,7 +1,13 @@
 import java.util.ArrayList;
 
+/*
+* The entire class below is used as a base for the other pieces
+*/
 public abstract class Piece {
 	
+	/**
+	 * Constructor used to set the correct team
+	 */
 	Piece (boolean sentTeam){
 		this.team = sentTeam;
 	}
@@ -11,13 +17,16 @@ public abstract class Piece {
 	}
 
 	protected boolean team;
+	// team = true means white
+	// team = false means black
+	
 	protected ArrayList<int[]> possibleMoves = null; // store all possible moves for each
 											// piece
 
-	// team = true means white
-	// team = false means black
-
-	//returning a boolean saying whether the move is valid or not.
+	/**
+	 * Returns true if row and column sent is within 
+	 * the already generated possiblemoves.
+	 */
 	public boolean ValidMove(int destRow, int destColumn) {
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			if (possibleMoves.get(i)[0] == destRow && possibleMoves.get(i)[1] == destColumn) {
@@ -28,6 +37,10 @@ public abstract class Piece {
 		return false;
 	}
 	
+	/**
+	 * Used to check if the tile being considered is inbounds
+	 * of the board.
+	 */
 	protected boolean inBounds(int destRow, int destCol){
 		if (destRow <= 7 && destCol <= 7 && destRow >= 0 && destCol >= 0){
 			return true;
@@ -35,13 +48,17 @@ public abstract class Piece {
 		return false;
 	}
 
-	//Just making a list of all the possible moves that the respective piece can perform
+	/**
+	 * Used for calculating the right moves this piece can make
+	 */
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		
 		// Array = [row, column]
 	}
 
-	//Expanded and used by most pieces as a function to add all the moves
+	/**
+	 * Used as a supplement to return possibleMoves
+	 */
 	protected ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, Piece[][] currentBoard) {
 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
@@ -49,7 +66,9 @@ public abstract class Piece {
 		
 	}
 	
-	//Method to printPossibleMoves for testing purposes
+	/**
+	 * Used for troubleshooting problems
+	 */
 	protected void PrintPossibleMovesList(ArrayList<int[]> ListofItems){
 		if (ListofItems == null){
 			System.out.println("There is nothing in possibleMoves");

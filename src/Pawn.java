@@ -3,6 +3,9 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece {
 	
+	/**
+	 * Constructor used to set the correct team
+	 */
 	Pawn(boolean sentTeam) {
 		super(sentTeam);
 	}
@@ -10,6 +13,9 @@ public class Pawn extends Piece {
 
 	private boolean canKill = false;
 	
+	/**
+	 * Used as a supplement to return possibleMoves
+	 */
 	public ArrayList<int[]> ReturnMovesAddon(int newRow, int newColumn, Piece[][] currentBoard) {
 		//make sure cell being moved to is in bounds and clear 
 		ArrayList<int[]> tempList = new ArrayList<int[]>();
@@ -30,7 +36,9 @@ public class Pawn extends Piece {
 			return tempList;
 	}
 	
-	//check possible kill cells for opponent pieces
+	/**
+	 * Checks if there is a piece in the intended place with the right team
+	 */
 	public boolean KillCheck (int startRow, int startColumn, int killRow, int killColumn, Piece[][] currentBoard){
 		boolean kill = false;	
 		if(killRow <= 7 && killRow >= 0 && killColumn >= 0 && killColumn <= 7){
@@ -47,7 +55,9 @@ public class Pawn extends Piece {
 			return kill;			
 		}
 	
-	
+	/**
+	 * Used for calculating the right moves this piece can make
+	 */
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		
 		if (possibleMoves != null){

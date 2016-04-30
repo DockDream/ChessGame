@@ -23,7 +23,11 @@ public class Game {
 	private Click kingLoc;
 	private Piece tempPiece;
 
-	// Starts the Board at Initial Configuration
+	/**
+	 * InitializeGame method - Sets all the board
+	 * pieces in the right places
+	 * (Requirement 1.0.0)
+	 */
 	public void InitializeGame() {
 		this.whoseTurn = true;
 		// set up black back row
@@ -69,7 +73,11 @@ public class Game {
 		drawWith75Moves = 0;
 	}
 
-	// and returning true if it is valid first click
+	/**
+	 * FirstClick method - It is called when first square
+	 * is clicked. 
+	 * (Requirement 1.1.0)
+	 */
 	public boolean FirstClick(Click cSent) {
 		fstClick = null;
 
@@ -87,7 +95,6 @@ public class Game {
 				fstClick = new Click(cSent.row,cSent.col);
 				
 				// First get all possible moves
-//				ChessBoard[fstClick.row][fstClick.col].ReturnPossibleMoves(fstClick.row, fstClick.col, ChessBoard);
 				this.eliminatePossibleMoves(fstClick);
 				
 				if (ChessBoard[fstClick.row][fstClick.col].possibleMoves.size() == 0){
@@ -111,7 +118,11 @@ public class Game {
 		}
 	}
 
-	// Return true if it is a valid secondClick
+	/**
+	 * SecondClick method - Called when second square is clicked
+	 * Validates Moves or deselects piece based on click
+	 * (Requirements 1.1.0, 1.2.0, 2.0.0, 2.2.0)
+	 */
 	public boolean SecondClick(Click cSent) {
 		if (fstClick == null) {
 			System.out.println("Second click function is being called before first click is called");
@@ -174,7 +185,10 @@ public class Game {
 		}
 	}
 
-	//Check if king is castling & update king location
+	/**
+	 * isKingCastling method - Method used by SecondClick method
+	 * to check if the king is castling
+	 */
 	private boolean isKingCastling(){
 
 		justCastled = false;
@@ -220,7 +234,10 @@ public class Game {
 		return false;
 	}
 
-	//Call this to show a Dialog box
+	/**
+	 * ShowDialogBox method - Used to display a message
+	 * to the user. it is used in multiple methods
+	 */
 	public void ShowDialogBox(String message, String title) {
 		JOptionPane optionPane = new JOptionPane(message);
 
@@ -229,7 +246,12 @@ public class Game {
 		dialog.setVisible(true);
 	}
 	
-	//This is in case the king is in check, we need to eliminate the row and columns that show
+	/**
+	 * eliminatePossibleMoves method - Makes sure that all moves
+	 * that are not legal are eliminated. Used highly when moving
+	 * a piece places the king in check
+	 * (Requirements 2.0.0, 2.1.0)
+	 */
 	private void eliminatePossibleMoves(Click sentC){
 		
 		int kingRow;
@@ -284,8 +306,9 @@ public class Game {
 
 	}
 	
-	//Goes through the whole board and checks if there are any moves for the team playing
-	//Checks Stalemate for the team currently playing
+	/**
+	 * isDraw method - Checks for a draw or stalemate
+	 */
 	public boolean isDraw(){
 		
 		if (drawWith75Moves >= 75){
@@ -311,8 +334,9 @@ public class Game {
 		return true;
 	}
 	
-	//returns true if it is a checkmate
-	//TODO: get the convention right for isKingInCheck method
+	/**
+	 * isCheckMate method - Checks for a checkMate
+	 */
 	public boolean isCheckMate(){
 		
 		this.selectCurrentKing();
@@ -340,7 +364,11 @@ public class Game {
 	}
 	
 
-	//Return possibleMoves
+	/**
+	 * returnPossibleMoves method - returns the generated moves array
+	 * to the ChessWindowClass to be displayed 
+	 * (Requirements 2.1.0)
+	 */
 	public ArrayList<int[]> returnPossibleMoves(){
 		
 		if (fstClick == null){
@@ -350,7 +378,10 @@ public class Game {
 		return ChessBoard[fstClick.row][fstClick.col].possibleMoves;
 	}
 
-	//Check if pawnPromotion is eligible
+	/**
+	 * pawnPromotion method - informs the chessWindowClass
+	 * if the current move is a pawn promotion
+	 */
 	public boolean pawnPromotion(){
 		if ((ChessBoard[secClick.row][secClick.col] instanceof Pawn) && 
 				((secClick.row == 0) || secClick.row == 7)){
@@ -360,7 +391,10 @@ public class Game {
 		}
 	}
 
-	//Replace the pawn promotion
+	/**
+	 * pawnPromoted method - sets the pawn to be promoted to the piece sent
+	 * (Requirements 2.3.0)
+	 */
 	public void pawnPromoted(Piece sent){
 		sent.team = whoseTurn? false:true;
 		ChessBoard[secClick.row][secClick.col] = sent;
@@ -384,6 +418,10 @@ public class Game {
 		System.out.println("");
 	}
 	
+	/**
+	 * isKingInCheck method - informs the ChessWindowClass if the 
+	 * king is in Check
+	 */
 	public boolean isKingInCheck(){
 		
 		this.selectCurrentKing();
@@ -391,6 +429,10 @@ public class Game {
 		return selectedKing.KingCheck(ChessBoard, kingLoc.row, kingLoc.col , selectedKing.team);
 	}
 	
+	/**
+	 * selectCurrentKing method - used to update the current kings location
+	 * needed to check for Stalemate, Checkmate and check.
+	 */
 	private void selectCurrentKing(){
 		if (whoseTurn){
 			selectedKing = (King) ChessBoard[whiteKing.row][whiteKing.col];
@@ -403,10 +445,19 @@ public class Game {
 		return;
 	}
 	
+	/**
+	 * getjustCastled method - used to inform the chessWindowClass that
+	 * that last move was a castle
+	 */
 	public boolean getjustCastled(){
 		return this.justCastled;
 	}
 	
+	/**
+	 * getTurn method - used by the ChessWindowClass to show the
+	 * current players turn
+	 * (Requirements 1.3.0)
+	 */
 	public boolean getTurn(){
 		return this.whoseTurn;
 	}

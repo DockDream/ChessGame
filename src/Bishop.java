@@ -2,14 +2,20 @@ import java.util.ArrayList;
 
 public class Bishop extends Piece {
 
+	/**
+	 * Constructor used to set the right team
+	 */
 	Bishop(boolean sentTeam) {
 		super(sentTeam);
 	}
 
 	public Bishop() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
+	/**
+	 * Used for calculating the right moves this piece can make
+	 */
 	public void ReturnPossibleMoves(int startRow, int startColumn, Piece[][] currentBoard) {
 		if (possibleMoves != null){
 			possibleMoves.clear();
@@ -21,14 +27,17 @@ public class Bishop extends Piece {
 		//Moving toward the left down corner
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, 1, -1, currentBoard));
 		
-		//Moving toward top 
+		//Moving toward top right corner
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, 1, currentBoard));
 		
+		//Move towards top left corner
 		possibleMoves.addAll(this.ReturnMovesAddon(startRow, startColumn, -1, -1, currentBoard));
-		
 		
 	}
 	
+	/**
+	 * Used as a supplement to return possibleMoves
+	 */
 	private ArrayList<int[]> ReturnMovesAddon(int startRow, int startColumn, 
 			int rowIncrement, int columnIncrement, Piece[][] currentBoard) {
 

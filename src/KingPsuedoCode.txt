@@ -1,0 +1,106 @@
+Rook{
+	
+	Rook(sentTeam){
+		Set this team to the sentTeam
+	}
+	
+	KingCheck(currentBoard, currentPosition, king's team){
+		Make a rook at the currentPosition and find all the possible moves
+		
+		for (Rook's possible moves){
+			if (currentMove isn't empty){
+				if (currentMove's team isn't the same team as king's team){
+					if (currentMove is a rook or a queen){
+						this is a check
+					}
+				}
+			}
+		}
+		
+		Make a bishop at the currentPosition and find all the possible moves
+		
+		for (Bishop's possible moves){
+			if (currentMove isn't empty){
+				if (currentMove's team isn't the same team as king's team){
+					if (currentMove is a bishop or a queen){
+						this is a check
+					}
+				}
+			}
+		}
+		
+		Make a pawn at the currentPosition
+		
+		if (the king's team is black){
+			if (pawn is at either corner on top){
+				this is a check
+			}
+		}else (the king's team is white){
+			if (pawn is at either corner on bottom){
+				this is a check
+			}
+		}
+		
+		Make a knight at the currentPosition and find all the possible moves
+		
+		for (Knight's possible moves){
+			if (currentMove isn't empty){
+				if (currentMove's team isn't the same team as king's team){
+					if (currentMove is a knight){
+						this is a check
+					}
+				}
+			}
+		}
+		
+		return status of king check
+		
+	}
+	
+	ReturnMovesAddon(startPosition, sentPosition, currentBoard){
+		
+		if (sentPosition is in bounds){
+			if (sentPosition is empty){
+				if (There isn't a king in radius){
+					add the sentPosition to the possible moves list
+				}
+			} else if (sentPosition's team isn't the same as startPosition's team){
+				if (sentPosition is not King){
+					add the sentPosition to the possible moves list
+				}
+			}
+		}
+		
+	}
+	
+	ReturnPossibleMoves(startPosition, currentBoard){
+		
+		if (possible moves list isn't empty){
+			clear the possible moves
+		}
+		
+		Call ReturnMovesAddon with sentPosition being up a row
+		Call ReturnMovesAddon with sentPosition being down a row
+		Call ReturnMovesAddon with sentPosition being right a column
+		Call ReturnMovesAddon with sentPosition being left a column
+		Call ReturnMovesAddon with sentPosition being upper left corner
+		Call ReturnMovesAddon with sentPosition being upper right corner
+		Call ReturnMovesAddon with sentPosition being down left corner
+		Call ReturnMovesAddon with sentPosition being down right corner
+		
+		if (king castling is still valid){
+			if (there is no piece two spots to the left){
+				if (king isn't in check in the two spots to the left){
+					add to the possible moves list
+				}
+			}
+			if (there is no piece three spots to the right){
+				if (king isn't in check in the two spots to the left){
+					add to the possible moves list
+				}
+			}
+		}
+		
+	}
+	
+	

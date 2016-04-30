@@ -1,0 +1,22 @@
+Knight{
+	
+	Knight(boolean )
+
+	ReturnMovesAddon(startPosition, sentPosition, currentBoard){
+		if (sentPosition is on the board){
+			if (sentPosition is empty){
+				add to possibleMoves list;
+			}else if (sentPosition's Team != startPosition){
+				add to possibleMoves list;
+			}
+		}
+	}
+	
+	ReturnPossibleMoves(startPosition, currentBoard){
+		if (possibleMoves != null){
+			clear the old data
+		}
+		
+		Call ReturnMovesAddon for all the moves that a horse can make
+	}
+}
